@@ -40,25 +40,6 @@ const App = () => {
   // Keep the splash screen visible while we fetch resources
   SplashScreen.preventAutoHideAsync();
 
-  // useEffect(() => {
-  //   async function prepare() {
-  //     try {
-  //       // // Pre-load fonts, make any API calls you need to do here
-  //       // await Font.loadAsync(Tajawal.font);
-  //       // // Artificially delay for two seconds to simulate a slow loading
-  //       // // experience. Please remove this if you copy and paste the code!
-  //       await new Promise((resolve) => setTimeout(resolve, 2000));
-  //     } catch (e) {
-  //       console.warn(e);
-  //     } finally {
-  //       // Tell the application to render
-  //       setAppIsReady(true);
-  //       await SplashScreen.hideAsync();
-  //     }
-  //   }
-
-  //   prepare();
-  // }, []);
 
   let [fontsLoaded] = useFonts({
     Tajawal_200ExtraLight,
