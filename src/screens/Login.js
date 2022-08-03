@@ -5,14 +5,15 @@ import {
   StyleSheet,
   useWindowDimensions,
 } from "react-native";
-import React from "react";
+import React, { useState, useContext } from "react";
 import { Input, Stack, Button, Pressable, Heading } from "native-base";
 import { useTranslation } from "react-i18next";
-
+import { AuthContext } from "../components/Context";
 const Login = ({ navigation }) => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const { t } = useTranslation();
-
-  const { height } = useWindowDimensions();
+  const { signIn } = useContext(AuthContext);
   return (
     <View style={styles.container}>
       <View
@@ -40,7 +41,10 @@ const Login = ({ navigation }) => {
               }}
               fontFamily={"Tajawal_500Medium"}
               placeholder={t("username")}
+              value={username}
+              onChangeText={(text) => setUsername(text)}
             />
+
             <Input
               w={{
                 base: "75%",
@@ -49,6 +53,8 @@ const Login = ({ navigation }) => {
               type={"password"}
               fontFamily={"Tajawal_500Medium"}
               placeholder={t("password")}
+              value={password}
+              onChangeText={(text) => setPassword(text)}
             />
           </Stack>
           <View style={styles.clickContainer}>
@@ -60,7 +66,8 @@ const Login = ({ navigation }) => {
             </Pressable>
           </View>
           <Button
-            onPress={() => navigation.navigate("SellerHome")}
+            // onPress={() => navigation.navigate("SellerHome")}
+            onPress={() => signIn()}
             style={styles.firstBut}
             size="sm"
             backgroundColor={"#E56B1F"}
@@ -69,7 +76,7 @@ const Login = ({ navigation }) => {
             {t("log")}
           </Button>
           <Button
-            onPress={() => navigation.navigate("SellerHome")}
+            onPress={() => navigation.goBack()}
             style={styles.secBut}
             size="sm"
             background={"#FBF9F9"}

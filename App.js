@@ -1,6 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 // import SplashScreen from 'react-native-splash-screen';
-import { SafeAreaView, StatusBar, StyleSheet, Text, View } from "react-native";
+import {
+  SafeAreaView,
+  StatusBar,
+  StyleSheet,
+  Text,
+  View,
+  ActivityIndicator,
+} from "react-native";
 import { NativeBaseProvider } from "native-base";
 // navigation setup
 import { NavigationContainer } from "@react-navigation/native";
@@ -22,7 +29,7 @@ import TabNavigation from "./src/navigation/TabNabvigation";
 import * as SplashScreen from "expo-splash-screen";
 import AppLoading from "expo-app-loading";
 import * as Font from "expo-font";
-
+import { AuthContext } from "./src/components/Context";
 import {
   useFonts,
   Tajawal_200ExtraLight,
@@ -35,12 +42,37 @@ import {
 } from "@expo-google-fonts/tajawal";
 
 const App = () => {
-  const [appIsReady, setAppIsReady] = useState(false);
+  // for auth
+  const [isLoading, setIsLoading] = useState(false);
+  const [userToken, setUserToken] = useState(null);
+  const authContext = useMemo(
+    () => ({
+      signIn: () => {
+        setUserToken("faketoken");
+        setIsLoading(true);
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 1000);
+      },
+      signUp: () => {
+        setUserToken("fjdisjfpsd");
+        setIsLoading(false);
+      },
+      signOut: () => {
+        setUserToken(null);
+        setIsLoading(true);
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 1000);
+      },
+    }),
+    []
+  );
 
   // Keep the splash screen visible while we fetch resources
+  const [appIsReady, setAppIsReady] = useState(false);
   SplashScreen.preventAutoHideAsync();
-
-
+  // for the font
   let [fontsLoaded] = useFonts({
     Tajawal_200ExtraLight,
     Tajawal_300Light,
@@ -54,12 +86,27 @@ const App = () => {
     return <AppLoading />;
   }
 
+  if (isLoading) {
+    return (
+      <View
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <ActivityIndicator size={"large"} />
+      </View>
+    );
+  }
   return (
-    <NativeBaseProvider>
-      <NavigationContainer>
-        <AuthNavigation />
-      </NavigationContainer>
-    </NativeBaseProvider>
+    <AuthContext.Provider value={authContext}>
+      <NativeBaseProvider>
+        <NavigationContainer>
+          {userToken !== null ? <TabNavigation /> : <AuthNavigation />}
+        </NavigationContainer>
+      </NativeBaseProvider>
+    </AuthContext.Provider>
   );
 };
 
