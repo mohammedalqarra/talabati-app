@@ -8,9 +8,12 @@ import {
 } from "react-native";
 import React from "react";
 import { useTranslation } from "react-i18next";
+import { useDispatch } from "react-redux";
+import { handlelogOut } from "../../../features/auth/authSlice";
 
 const MyAccount = ({ navigation }) => {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
 
   return (
     <ScrollView style={styles.container}>
@@ -125,7 +128,7 @@ const MyAccount = ({ navigation }) => {
           </View>
         </Pressable>
         {/* 8th */}
-        <Pressable>
+        <Pressable onPress={() => dispatch(handlelogOut())}>
           <View style={styles.singlePressContainerlast}>
             <Text style={styles.txt}>{t("signout")}</Text>
             <Image source={require("../../../images/logout.png")} />

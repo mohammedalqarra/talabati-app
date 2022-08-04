@@ -18,16 +18,32 @@ import { useSelector } from "react-redux";
 
 const Stack = createNativeStackNavigator();
 
+const Renderpages = () => {
+  const IsUser = useSelector((state) => state.auth.IsUser);
+  const IsMerchant = useSelector((state) => state.auth.IsMerchant);
+  return (
+    <>
+      {IsUser && (
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="home" component={TabNavigation} />
+        </Stack.Navigator>
+      )}
+      {IsMerchant && (
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="MerchantHome" component={MerchantTabNavigation} />
+        </Stack.Navigator>
+      )}
+    </>
+  );
+};
+
 function Paths() {
   const IsLogged = useSelector((state) => state.auth.IsLogged);
-  const IsMerchantLogged = useSelector((state) => state.auth.IsMerchantLogged);
 
   return (
     <NavigationContainer>
       {IsLogged ? (
-        <Stack.Navigator screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="home" component={TabNavigation} />
-        </Stack.Navigator>
+        <Renderpages />
       ) : (
         <Stack.Navigator
           initialRouteName="WelcomeScreen"

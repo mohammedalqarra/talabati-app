@@ -8,8 +8,11 @@ import {
 import React, { useState } from "react";
 import { Input, Stack, Button, Pressable, Heading } from "native-base";
 import { useTranslation } from "react-i18next";
-import { AuthContext } from "../../components/Context";
+import { useDispatch } from "react-redux";
+import { handlelogInMerchant } from "../../features/auth/authSlice";
 const Login = ({ navigation }) => {
+  const dispatch = useDispatch();
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -65,7 +68,7 @@ const Login = ({ navigation }) => {
             </Pressable>
           </View>
           <Button
-            onPress={() => navigation.navigate("MerchantHome")}
+            onPress={() => dispatch(handlelogInMerchant())}
             style={styles.firstBut}
             size="sm"
             backgroundColor={"#E56B1F"}
@@ -74,7 +77,7 @@ const Login = ({ navigation }) => {
             {t("log")}
           </Button>
           <Button
-            onPress={() => navigation.navigate("MerchantHome")}
+            onPress={() => navigation.goBack()}
             style={styles.secBut}
             size="sm"
             background={"#FBF9F9"}
