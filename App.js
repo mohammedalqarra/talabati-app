@@ -7,22 +7,16 @@ import { NavigationContainer } from "@react-navigation/native";
 // multi languages setup
 import { tranulate } from "react-i18next";
 import "./src/i18n";
-// the screens
-import LoadingScreen from "./src/screens/LoadingScreen";
-import IntroScreen from "./src/screens/IntroScreen";
-import WelcomeScreen from "./src/screens/WelcomeScreen";
-import Login from "./src/screens/Login";
-import SignUp from "./src/screens/SignUp";
-import VerfiyNumber from "./src/screens/VerfiyNumber";
-import ForgetPassword from "./src/screens/ForgetPassword";
+
 // the navigations
-import AuthNavigation from "./src/navigation/AuthNavigation";
+import Paths from "./src/navigation/Paths";
 // the tab navigation
 import TabNavigation from "./src/navigation/TabNabvigation";
 import * as SplashScreen from "expo-splash-screen";
 import AppLoading from "expo-app-loading";
 import * as Font from "expo-font";
-
+import { store } from "./src/features/store";
+import { Provider } from "react-redux";
 import {
   useFonts,
   Tajawal_200ExtraLight,
@@ -35,11 +29,11 @@ import {
 } from "@expo-google-fonts/tajawal";
 
 const App = () => {
+  // for protected routes
   const [appIsReady, setAppIsReady] = useState(false);
 
   // Keep the splash screen visible while we fetch resources
   SplashScreen.preventAutoHideAsync();
-
 
   let [fontsLoaded] = useFonts({
     Tajawal_200ExtraLight,
@@ -55,11 +49,11 @@ const App = () => {
   }
 
   return (
-    <NativeBaseProvider>
-      <NavigationContainer>
-        <AuthNavigation />
-      </NavigationContainer>
-    </NativeBaseProvider>
+    <Provider store={store}>
+      <NativeBaseProvider>
+        <Paths />
+      </NativeBaseProvider>
+    </Provider>
   );
 };
 

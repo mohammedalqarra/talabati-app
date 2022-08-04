@@ -5,14 +5,17 @@ import {
   StyleSheet,
   useWindowDimensions,
 } from "react-native";
-import React from "react";
+import React , {useState} from "react";
 import { Input, Stack, Button, Pressable, Heading } from "native-base";
 import { useTranslation } from "react-i18next";
+import {useDispatch, useSelector} from 'react-redux';
 
 const Login = ({ navigation }) => {
   const { t } = useTranslation();
-
   const { height } = useWindowDimensions();
+  const [mobileNumber, setmobileNumber] = useState('');
+  const [password, setpassword] = useState('');
+  const [errorMessage, seterrorMessage] = useState(null);
   return (
     <View style={styles.container}>
       <View
