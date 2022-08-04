@@ -5,17 +5,30 @@ import {
   StyleSheet,
   useWindowDimensions,
 } from "react-native";
+<<<<<<< HEAD
 import React , {useState} from "react";
 import { Input, Stack, Button, Pressable, Heading } from "native-base";
 import { useTranslation } from "react-i18next";
 import {useDispatch, useSelector} from 'react-redux';
 
+=======
+import React, { useState, useContext } from "react";
+import { Input, Stack, Button, Pressable, Heading } from "native-base";
+import { useTranslation } from "react-i18next";
+import { AuthContext } from "../components/Context";
+>>>>>>> 4d638a36fc3946dc5f3cd65a47d34221f636bc56
 const Login = ({ navigation }) => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const { t } = useTranslation();
+<<<<<<< HEAD
   const { height } = useWindowDimensions();
   const [mobileNumber, setmobileNumber] = useState('');
   const [password, setpassword] = useState('');
   const [errorMessage, seterrorMessage] = useState(null);
+=======
+  const { signIn } = useContext(AuthContext);
+>>>>>>> 4d638a36fc3946dc5f3cd65a47d34221f636bc56
   return (
     <View style={styles.container}>
       <View
@@ -43,7 +56,10 @@ const Login = ({ navigation }) => {
               }}
               fontFamily={"Tajawal_500Medium"}
               placeholder={t("username")}
+              value={username}
+              onChangeText={(text) => setUsername(text)}
             />
+
             <Input
               w={{
                 base: "75%",
@@ -52,6 +68,8 @@ const Login = ({ navigation }) => {
               type={"password"}
               fontFamily={"Tajawal_500Medium"}
               placeholder={t("password")}
+              value={password}
+              onChangeText={(text) => setPassword(text)}
             />
           </Stack>
           <View style={styles.clickContainer}>
@@ -63,7 +81,8 @@ const Login = ({ navigation }) => {
             </Pressable>
           </View>
           <Button
-            onPress={() => navigation.navigate("SellerHome")}
+            // onPress={() => navigation.navigate("SellerHome")}
+            onPress={() => signIn()}
             style={styles.firstBut}
             size="sm"
             backgroundColor={"#E56B1F"}
@@ -72,7 +91,7 @@ const Login = ({ navigation }) => {
             {t("log")}
           </Button>
           <Button
-            onPress={() => navigation.navigate("SellerHome")}
+            onPress={() => navigation.goBack()}
             style={styles.secBut}
             size="sm"
             background={"#FBF9F9"}

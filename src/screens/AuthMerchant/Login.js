@@ -5,11 +5,14 @@ import {
   StyleSheet,
   useWindowDimensions,
 } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import { Input, Stack, Button, Pressable, Heading } from "native-base";
 import { useTranslation } from "react-i18next";
-
+import { AuthContext } from "../../components/Context";
 const Login = ({ navigation }) => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
   const { t } = useTranslation();
 
   const { height } = useWindowDimensions();
@@ -40,6 +43,8 @@ const Login = ({ navigation }) => {
               }}
               fontFamily={"Tajawal_500Medium"}
               placeholder={t("username")}
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
             />
             <Input
               w={{

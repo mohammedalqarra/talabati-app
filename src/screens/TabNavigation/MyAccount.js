@@ -6,12 +6,12 @@ import {
   Pressable,
   ScrollView,
 } from "react-native";
-import React from "react";
+import React, { useContext } from "react";
 import { useTranslation } from "react-i18next";
-
+import { AuthContext } from "../../components/Context";
 const MyAccount = ({ navigation }) => {
   const { t } = useTranslation();
-
+  const { signOut } = useContext(AuthContext);
   return (
     <ScrollView style={styles.container}>
       <View style={styles.Imgwrapper}>
@@ -137,7 +137,7 @@ const MyAccount = ({ navigation }) => {
           </View>
         </Pressable>
         {/* 9th */}
-        <Pressable>
+        <Pressable onPress={() => signOut()}>
           <View style={styles.singlePressContainerlast}>
             <Text style={styles.txt}>{t("signout")}</Text>
             <Image source={require("../../images/logout.png")} />
