@@ -57,7 +57,7 @@ const App = () => {
         }, 1000);
       },
       signUp: () => {
-        setUserToken("fjdisjfpsd");
+        setUserToken("fjdisjfp222sd");
         setIsLoading(false);
       },
       signOut: () => {
