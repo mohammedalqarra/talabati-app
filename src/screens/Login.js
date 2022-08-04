@@ -8,7 +8,11 @@ import {
 import React, { useState } from "react";
 import { Input, Stack, Button, Pressable, Heading } from "native-base";
 import { useTranslation } from "react-i18next";
+import { useSelector, useDispatch } from "react-redux";
+import { handlelogIn } from "../features/auth/authSlice";
+
 const Login = ({ navigation }) => {
+  const dispatch = useDispatch();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const { t } = useTranslation();
@@ -65,7 +69,7 @@ const Login = ({ navigation }) => {
           </View>
           <Button
             // onPress={() => navigation.navigate("SellerHome")}
-            onPress={() => console.warn("a7a")}
+            onPress={() => dispatch(handlelogIn())}
             style={styles.firstBut}
             size="sm"
             backgroundColor={"#E56B1F"}

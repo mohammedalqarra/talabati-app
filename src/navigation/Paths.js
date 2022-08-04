@@ -14,7 +14,7 @@ import ForgetPassword from "../screens/ForgetPassword";
 import MerchantAuthNavigation from "../navigation/MerchantAuthNavigation";
 import TabNavigation from "./TabNabvigation";
 import MerchantTabNavigation from "./MerchantTabNavigator";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 const Stack = createNativeStackNavigator();
 

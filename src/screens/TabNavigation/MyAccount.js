@@ -8,10 +8,12 @@ import {
 } from "react-native";
 import React, { useContext } from "react";
 import { useTranslation } from "react-i18next";
-import { AuthContext } from "../../components/Context";
+import { useDispatch } from "react-redux";
+import { handlelogOut } from "../../features/auth/authSlice";
+
 const MyAccount = ({ navigation }) => {
+  const dispatch = useDispatch();
   const { t } = useTranslation();
-  const { signOut } = useContext(AuthContext);
   return (
     <ScrollView style={styles.container}>
       <View style={styles.Imgwrapper}>
@@ -137,7 +139,7 @@ const MyAccount = ({ navigation }) => {
           </View>
         </Pressable>
         {/* 9th */}
-        <Pressable onPress={() => signOut()}>
+        <Pressable onPress={() => dispatch(handlelogOut())}>
           <View style={styles.singlePressContainerlast}>
             <Text style={styles.txt}>{t("signout")}</Text>
             <Image source={require("../../images/logout.png")} />
