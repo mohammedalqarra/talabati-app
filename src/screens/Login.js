@@ -10,7 +10,7 @@ import { Input, Stack, Button, Pressable, Heading } from "native-base";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import { handlelogInUser } from "../features/auth/authSlice";
-
+import { UserLogin } from "../utilites/functions/user";
 const Login = ({ navigation }) => {
   const dispatch = useDispatch();
   const [username, setUsername] = useState("");
@@ -68,8 +68,8 @@ const Login = ({ navigation }) => {
             </Pressable>
           </View>
           <Button
-            // onPress={() => navigation.navigate("SellerHome")}
-            onPress={() => dispatch(handlelogInUser())}
+            // onPress={() => dispatch(handlelogInUser())}
+            onPress={() => UserLogin(username, password)}
             style={styles.firstBut}
             size="sm"
             backgroundColor={"#E56B1F"}
