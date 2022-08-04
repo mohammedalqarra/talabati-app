@@ -40,11 +40,6 @@ function Paths() {
           <Stack.Screen name="SignUpWithPhone" component={SignUpWithPhone} />
           <Stack.Screen name="VerfiyNumber" component={VerfiyNumber} />
           <Stack.Screen name="ForgetPassword" component={ForgetPassword} />
-          <Stack.Screen name="SellerHome" component={TabNavigation} />
-          <Stack.Screen
-            name="MerchantAuth"
-            component={MerchantAuthNavigation}
-          />
         </Stack.Navigator>
       )}
     </NavigationContainer>
