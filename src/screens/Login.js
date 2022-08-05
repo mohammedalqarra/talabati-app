@@ -88,7 +88,6 @@ const Login = ({ navigation }) => {
                   <Text> Check Your Connection and retry to log in </Text>
                 )}
               </View>
-
               <Stack space={4} w="100%" alignItems="center">
                 <Input
                   w={{
@@ -127,8 +126,6 @@ const Login = ({ navigation }) => {
               </View>
               <Button
                 onPress={handleSubmit}
-                // onPress={() => dispatch(handlelogInUser())}
-                // onPress={() => dispatch(UserLogIn({ username, password }))}
                 style={styles.firstBut}
                 size="sm"
                 backgroundColor={"#E56B1F"}
