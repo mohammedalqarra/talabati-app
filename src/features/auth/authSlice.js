@@ -1,19 +1,23 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
+import { Api_url, login_api } from "../../utilites/ApiRequest";
 
 const initialState = {
-  username: null,
+  data: [],
   IsLogged: false,
   IsMerchant: false,
   IsUser: false,
+  Token: null,
 };
 
 export const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    handlelogInUser: (state) => {
+    handlelogInUser: (state, action) => {
       state.IsLogged = true;
       state.IsUser = true;
+      state.data = action.payload;
     },
 
     handlelogInMerchant: (state) => {
@@ -29,7 +33,6 @@ export const authSlice = createSlice({
   },
 });
 
-// Action creators are generated for each case reducer function
 export const { handlelogInUser, handlelogInMerchant, handlelogOut } =
   authSlice.actions;
 
