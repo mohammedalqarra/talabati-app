@@ -4,24 +4,27 @@ import {
   Image,
   StyleSheet,
   useWindowDimensions,
+  ActivityIndicator,
 } from "react-native";
 import React, { useState } from "react";
 import { Input, Stack, Button, Pressable, Heading } from "native-base";
 import { useTranslation } from "react-i18next";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 // import { UserLogIn } from "../features/auth/authSlice";
 import { Formik } from "formik";
-// import { handlelogInUser } from "../features/auth/authSlice";
-import { UserLogin } from "../utilites/functions/user";
+import { handlelogInUser } from "../features/auth/authSlice";
 import { login_api, Api_url } from "../utilites/ApiConstants";
+import axios from "axios";
+import { Modal } from "native-base";
+
 const Login = ({ navigation }) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
-
+  const [error, setError] = useState("");
+  const [showModal, setShowModal] = useState(false);
   const HandleUserLogin = async (login_id, password) => {
     const url = Api_url + login_api;
-    console.log(url);
-    console.log(login_id, password);
+    setShowModal(true);
     axios
       .post(url, {
         login_id,
@@ -30,11 +33,12 @@ const Login = ({ navigation }) => {
       .then((res) => {
         if (res && res.status == 200) {
           dispatch(handlelogInUser(res.data));
-          console.log(res.data);
+          setShowModal(false);
         }
       })
       .catch((err) => {
-        console.log(err);
+        setError(err.response.data.message);
+        setShowModal(false);
       });
   };
 
@@ -53,6 +57,17 @@ const Login = ({ navigation }) => {
               marginTop: 120,
             }}
           >
+            {/* start of modal */}
+            <Modal isOpen={showModal}>
+              <Modal.Content maxWidth="400px">
+                <Modal.Body>
+                  <View style={styles.centerizedCol}>
+                    <ActivityIndicator size="large" color="#0000ff" />
+                  </View>
+                </Modal.Body>
+              </Modal.Content>
+            </Modal>
+            {/* end of modal */}
             <Image
               source={require("../images/logo.png")}
               style={styles.logo}
@@ -67,6 +82,13 @@ const Login = ({ navigation }) => {
                   {t("login")}
                 </Heading>
               </View>
+              <View>{error && <Text>{error}</Text>}</View>
+              <View>
+                {error === undefined && (
+                  <Text> Check Your Connection and retry to log in </Text>
+                )}
+              </View>
+
               <Stack space={4} w="100%" alignItems="center">
                 <Input
                   w={{
@@ -172,6 +194,12 @@ const styles = StyleSheet.create({
   secBut: {
     marginTop: 15,
     fontSize: 14,
+  },
+  centerizedCol: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
 

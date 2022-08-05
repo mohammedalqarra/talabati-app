@@ -1,6 +1,4 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
-import { Api_url, login_api } from "../../utilites/ApiRequest";
 
 const initialState = {
   data: [],
@@ -29,6 +27,7 @@ export const authSlice = createSlice({
       state.IsLogged = false;
       state.IsMerchant = false;
       state.IsUser = false;
+      state.date = null;
     },
   },
 });
