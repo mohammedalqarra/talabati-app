@@ -8,11 +8,15 @@ import {
 } from "react-native";
 import React, { useContext } from "react";
 import { useTranslation } from "react-i18next";
-import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { handlelogOut } from "../../features/auth/authSlice";
 
 const MyAccount = ({ navigation }) => {
-  const dispatch = useDispatch();
+  // thedata
+  const name = useSelector((state) => state.auth.data.data.name);
+  const mobile = useSelector((state) => state.auth.data.data.mobile);
+  const email = useSelector((state) => state.auth.data.data.email);
+
   const { t } = useTranslation();
   return (
     <ScrollView style={styles.container}>
@@ -28,21 +32,23 @@ const MyAccount = ({ navigation }) => {
             fontFamily: "Tajawal_500Medium",
           }}
         >
-          حمزه احمد
+          {name}
         </Text>
         <View style={styles.smallcontainer}>
           <Image
             style={styles.smallcontainerimg}
             source={require("../../images/phonealt.png")}
           />
-          <Text>01555560534</Text>
+          <Text>{mobile}</Text>
         </View>
       </View>
       {/* first */}
       <View style={styles.pressablesacontainer}>
         <Pressable
           style={styles.singlePress}
-          onPress={() => navigation.navigate("AccountSettings")}
+          onPress={() =>
+            navigation.navigate("AccountSettings", { name, email, mobile })
+          }
         >
           <Image source={require("../../images/left-arrow1.png")} />
           <View style={styles.singlePressContainer}>

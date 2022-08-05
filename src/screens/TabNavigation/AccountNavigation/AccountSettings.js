@@ -4,7 +4,8 @@ import PhoneInput from "react-native-phone-number-input";
 import { Input, Button } from "native-base";
 import { useTranslation } from "react-i18next";
 
-const AccountSettings = ({ navigation }) => {
+const AccountSettings = ({ route, navigation }) => {
+  const { name, email, mobile } = route.params;
   const { t } = useTranslation();
   const [phoneNumber, setPhoneNumber] = useState("");
   return (
@@ -12,7 +13,7 @@ const AccountSettings = ({ navigation }) => {
       <View style={styles.inputWrapper}>
         <PhoneInput
           withShadow
-          defaultValue={phoneNumber}
+          defaultValue={mobile}
           backgroundColor={"white"}
           onChangeFormattedText={(text) => {
             setPhoneNumber(text);
@@ -32,7 +33,7 @@ const AccountSettings = ({ navigation }) => {
             }}
             height={50}
             fontFamily={"Tajawal_500Medium"}
-            placeholder={t("name")}
+            placeholder={name}
             style={styles.phoneNumberInputtxt}
             fontSize={14}
           />
@@ -47,7 +48,7 @@ const AccountSettings = ({ navigation }) => {
             }}
             height={50}
             fontFamily={"Tajawal_500Medium"}
-            placeholder={t("email")}
+            placeholder={email}
             style={styles.phoneNumberInputtxt}
             fontSize={14}
           />
