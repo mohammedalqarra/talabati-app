@@ -1,6 +1,6 @@
 export const Api_url = "https://dev.talbati.com/api/";
 export const login_api = "Login";
-// export const signup_api = "auth/signup";
+export const signup_api = "Register";
 // export const forget_pass_api = "auth/forget-password";
 // export const verify_password_otp_api = "auth/verify-password-otp";
 // export const reset_pss_api = "auth/reset-password";

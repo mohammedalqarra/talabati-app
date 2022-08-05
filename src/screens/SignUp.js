@@ -1,219 +1,302 @@
-import {
-  View,
-  Text,
-  Image,
-  StyleSheet,
-  useWindowDimensions,
-} from "react-native";
+import { View, Text, Image, StyleSheet, ActivityIndicator } from "react-native";
 import React, { useState } from "react";
 import { Input, Avatar, Stack, Button, Pressable, Heading } from "native-base";
 import { useTranslation } from "react-i18next";
-import { login_api, Api_url } from "../utilites/ApiConstants";
+import { signup_api, Api_url } from "../utilites/ApiConstants";
 import axios from "axios";
 import { Formik } from "formik";
+import { Modal } from "native-base";
 
 const SignUp = ({ navigation }) => {
   const [gender, setGender] = useState("male");
   const { t } = useTranslation();
+  const [error, setError] = useState("");
+  const [showModal, setShowModal] = useState(false);
+  const [ModalText, setModalText] = useState("");
+
+  const HandleUserRegister = async (
+    username,
+    name,
+    mobile,
+    email,
+    password,
+    role_id
+  ) => {
+    const url = Api_url + signup_api;
+    setShowModal(true);
+    axios
+      .post(url, {
+        username,
+        name,
+        mobile,
+        email,
+        password,
+        role_id,
+      })
+      .then((res) => {
+        if (res && res.status == 200) {
+          navigation.goBack();
+          setModalText("Sign Up Successfully");
+          console.log(res);
+          setShowModal(false);
+        }
+      })
+      .catch((err) => {
+        setError(err.response.data.message);
+        setShowModal(false);
+      });
+  };
+
   return (
     <Formik
-      initialValues={{ username: "", password: "" }}
+      initialValues={{
+        username: "",
+        name: "",
+        mobile: "",
+        email: "",
+        password: "",
+        role_id: "customer",
+      }}
       onSubmit={async (values) =>
-        await HandleUserLogin(values.username, values.password)
+        await HandleUserRegister(
+          values.username,
+          values.name,
+          values.mobile,
+          values.email,
+          values.password,
+          values.role_id
+        )
       }
     >
-      <View style={styles.container}>
-        <Image
-          source={require("../images/logo.png")}
-          style={styles.logo}
-          resizeMode={"contain"}
-        />
-        <View>
-          <View style={styles.headerContainer}>
-            <Heading style={styles.heading} fontFamily={"Tajawal_500Medium"}>
-              {t("newaccount1")}
-            </Heading>
-          </View>
-          <Stack space={4} w="100%" alignItems="center">
-            <Avatar
-              width={100}
-              height={100}
-              backgroundColor={"white"}
-              borderWidth={1}
-              borderColor={"#E56B1F"}
-            ></Avatar>
-            <Input
-              w={{
-                base: "75%",
-                md: "25%",
-              }}
-              _text={{
-                color: "#ECECEC",
-              }}
-              height={35}
-              fontFamily={"Tajawal_500Medium"}
-              placeholder={t("phonenumber")}
-            />
-            <Input
-              w={{
-                base: "75%",
-                md: "25%",
-              }}
-              _text={{
-                color: "#ECECEC",
-              }}
-              height={35}
-              fontFamily={"Tajawal_500Medium"}
-              placeholder={t("name")}
-            />
-            <Input
-              w={{
-                base: "75%",
-                md: "25%",
-              }}
-              _text={{
-                color: "#ECECEC",
-              }}
-              height={35}
-              fontFamily={"Tajawal_500Medium"}
-              placeholder={t("email")}
-            />
-            <Input
-              w={{
-                base: "75%",
-                md: "25%",
-              }}
-              _text={{
-                color: "#ECECEC",
-              }}
-              height={35}
-              fontFamily={"Tajawal_500Medium"}
-              placeholder={t("password")}
-            />
-            <Input
-              w={{
-                base: "75%",
-                md: "25%",
-              }}
-              _text={{
-                color: "#ECECEC",
-              }}
-              height={35}
-              fontFamily={"Tajawal_500Medium"}
-              placeholder={t("birthday")}
-            />
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-around",
-              }}
-            >
-              <Pressable
-                style={
-                  gender === "female" && {
-                    borderColor: "#E56B1F",
-                    borderWidth: 1,
-                  }
-                }
-                onPress={() => setGender("female")}
-              >
-                <View
-                  style={{
-                    flexDirection: "row",
-                    width: 150,
-                    height: 30,
-                    justifyContent: "flex-end",
-                  }}
-                >
-                  <Text
-                    style={{
-                      marginTop: 5,
-                      fontFamily: "Tajawal_500Medium",
-                      fontSize: 14,
-                    }}
-                  >
-                    {t("female")}
-                  </Text>
-                  <Image
-                    source={require("../images/Icononic-ios-woman.png")}
-                    style={{
-                      height: 25,
-                      marginTop: 5,
-                      marginRight: 15,
-                      marginLeft: 15,
-                      width: 10,
-                    }}
-                  />
+      {({ handleChange, handleBlur, handleSubmit, values }) => (
+        <View style={styles.container}>
+          <Image
+            source={require("../images/logo.png")}
+            style={styles.logo}
+            resizeMode={"contain"}
+          />
+          {/* start of modal */}
+          <Modal isOpen={showModal}>
+            <Modal.Content maxWidth="400px">
+              <Modal.Body>
+                <View style={styles.centerizedCol}>
+                  <ActivityIndicator size="large" color="#0000ff" />
                 </View>
-              </Pressable>
-              <Pressable
-                style={
-                  gender === "male" && {
-                    borderColor: "#E56B1F",
-                    borderWidth: 1,
-                  }
-                }
-                onPress={() => setGender("male")}
-              >
-                <View
-                  style={{
-                    flexDirection: "row",
-                    width: 150,
-                    height: 30,
-                    justifyContent: "flex-end",
-                  }}
-                >
-                  <Text
-                    style={{
-                      marginTop: 5,
-                      fontFamily: "Tajawal_500Medium",
-                      fontSize: 14,
-                    }}
-                  >
-                    {t("male")}
-                  </Text>
-                  <Image
-                    source={require("../images/Icononic-ios-woman.png")}
-                    style={{
-                      height: 25,
-                      marginTop: 5,
-                      marginRight: 15,
-                      marginLeft: 15,
-                      width: 10,
-                    }}
-                  />
-                </View>
-              </Pressable>
+              </Modal.Body>
+            </Modal.Content>
+          </Modal>
+          {/* end of modal */}
+          <View>
+            <View style={styles.headerContainer}>
+              <Heading style={styles.heading} fontFamily={"Tajawal_500Medium"}>
+                {t("newaccount1")}
+              </Heading>
             </View>
-          </Stack>
-          <View style={styles.clickContainer}>
-            <Pressable onPress={() => navigation.navigate("ForgetPassword")}>
-              <Text style={styles.click}> {t("loginnow")}</Text>
-            </Pressable>
-            <Text>{t("haveaccount")}</Text>
+            <View>{error && <Text>{error}</Text>}</View>
+            <View>
+              {error === undefined && (
+                <Text> Check Your Connection and retry to log in </Text>
+              )}
+            </View>
+            <Stack space={4} w="100%" alignItems="center">
+              <Avatar
+                width={100}
+                height={100}
+                backgroundColor={"white"}
+                borderWidth={1}
+                borderColor={"#E56B1F"}
+              ></Avatar>
+              <Input
+                w={{
+                  base: "75%",
+                  md: "25%",
+                }}
+                _text={{
+                  color: "#ECECEC",
+                }}
+                height={35}
+                fontFamily={"Tajawal_500Medium"}
+                placeholder={t("phonenumber")}
+                onBlur={handleBlur("mobile")}
+                value={values.mobile}
+                onChangeText={handleChange("mobile")}
+              />
+              <Input
+                w={{
+                  base: "75%",
+                  md: "25%",
+                }}
+                _text={{
+                  color: "#ECECEC",
+                }}
+                height={35}
+                fontFamily={"Tajawal_500Medium"}
+                placeholder={t("username")}
+                onBlur={handleBlur("username")}
+                value={values.username}
+                onChangeText={handleChange("username")}
+              />
+              <Input
+                w={{
+                  base: "75%",
+                  md: "25%",
+                }}
+                _text={{
+                  color: "#ECECEC",
+                }}
+                height={35}
+                fontFamily={"Tajawal_500Medium"}
+                placeholder={t("name")}
+                onBlur={handleBlur("name")}
+                value={values.name}
+                onChangeText={handleChange("name")}
+              />
+              <Input
+                w={{
+                  base: "75%",
+                  md: "25%",
+                }}
+                _text={{
+                  color: "#ECECEC",
+                }}
+                height={35}
+                fontFamily={"Tajawal_500Medium"}
+                placeholder={t("email")}
+                onBlur={handleBlur("email")}
+                value={values.email}
+                onChangeText={handleChange("email")}
+              />
+              <Input
+                w={{
+                  base: "75%",
+                  md: "25%",
+                }}
+                _text={{
+                  color: "#ECECEC",
+                }}
+                type={"password"}
+                height={35}
+                fontFamily={"Tajawal_500Medium"}
+                placeholder={t("password")}
+                onBlur={handleBlur("password")}
+                value={values.password}
+                onChangeText={handleChange("password")}
+              />
+
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-around",
+                }}
+              >
+                <Pressable
+                  style={
+                    gender === "female" && {
+                      borderColor: "#E56B1F",
+                      borderWidth: 1,
+                    }
+                  }
+                  onPress={() => setGender("female")}
+                >
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      width: 150,
+                      height: 30,
+                      justifyContent: "flex-end",
+                    }}
+                  >
+                    <Text
+                      style={{
+                        marginTop: 5,
+                        fontFamily: "Tajawal_500Medium",
+                        fontSize: 14,
+                      }}
+                    >
+                      {t("female")}
+                    </Text>
+                    <Image
+                      source={require("../images/Icononic-ios-woman.png")}
+                      style={{
+                        height: 25,
+                        marginTop: 5,
+                        marginRight: 15,
+                        marginLeft: 15,
+                        width: 10,
+                      }}
+                    />
+                  </View>
+                </Pressable>
+                <Pressable
+                  style={
+                    gender === "male" && {
+                      borderColor: "#E56B1F",
+                      borderWidth: 1,
+                    }
+                  }
+                  onPress={() => setGender("male")}
+                >
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      width: 150,
+                      height: 30,
+                      justifyContent: "flex-end",
+                    }}
+                  >
+                    <Text
+                      style={{
+                        marginTop: 5,
+                        fontFamily: "Tajawal_500Medium",
+                        fontSize: 14,
+                      }}
+                    >
+                      {t("male")}
+                    </Text>
+                    <Image
+                      source={require("../images/Icononic-ios-woman.png")}
+                      style={{
+                        height: 25,
+                        marginTop: 5,
+                        marginRight: 15,
+                        marginLeft: 15,
+                        width: 10,
+                      }}
+                    />
+                  </View>
+                </Pressable>
+              </View>
+            </Stack>
+            <View style={styles.clickContainer}>
+              <Pressable onPress={() => navigation.navigate("ForgetPassword")}>
+                <Text style={styles.click}> {t("loginnow")}</Text>
+              </Pressable>
+              <Text>{t("haveaccount")}</Text>
+            </View>
+            <Button
+              onPress={handleSubmit}
+              // onPress={() => navigation.navigate("VerfiyNumber")}
+              style={styles.firstBut}
+              size="sm"
+              backgroundColor={"#E56B1F"}
+              _text={{ fontSize: 14 }}
+            >
+              {t("register")}
+            </Button>
+            <Button
+              onPress={() => navigation.navigate("VerfiyNumber")}
+              style={styles.secBut}
+              size="sm"
+              background={"#FBF9F9"}
+              borderWidth={1}
+              borderColor={"#FFE3D2"}
+              _text={{ color: "#E56B1F", fontSize: 14 }}
+            >
+              {t("ignore")}
+            </Button>
           </View>
-          <Button
-            onPress={() => navigation.navigate("VerfiyNumber")}
-            style={styles.firstBut}
-            size="sm"
-            backgroundColor={"#E56B1F"}
-            _text={{ fontSize: 14 }}
-          >
-            {t("register")}
-          </Button>
-          <Button
-            onPress={() => navigation.navigate("VerfiyNumber")}
-            style={styles.secBut}
-            size="sm"
-            background={"#FBF9F9"}
-            borderWidth={1}
-            borderColor={"#FFE3D2"}
-            _text={{ color: "#E56B1F", fontSize: 14 }}
-          >
-            {t("ignore")}
-          </Button>
         </View>
-      </View>
+      )}
     </Formik>
   );
 };
@@ -251,6 +334,12 @@ const styles = StyleSheet.create({
   secBut: {
     marginTop: 15,
     fontSize: 14,
+  },
+  centerizedCol: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
 
