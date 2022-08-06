@@ -10,9 +10,9 @@ import { Modal } from "native-base";
 const SignUp = ({ navigation }) => {
   const [gender, setGender] = useState("male");
   const { t } = useTranslation();
-  const [error, setError] = useState("");
+  const [error, setError] = useState(null);
   const [showModal, setShowModal] = useState(false);
-  const [ModalText, setModalText] = useState("");
+  const [sucessModal, setSucessModal] = useState(false);
 
   const HandleUserRegister = async (
     username,
@@ -20,6 +20,7 @@ const SignUp = ({ navigation }) => {
     mobile,
     email,
     password,
+    password_confirmation,
     role_id
   ) => {
     const url = Api_url + signup_api;
@@ -31,13 +32,13 @@ const SignUp = ({ navigation }) => {
         mobile,
         email,
         password,
+        password_confirmation,
         role_id,
       })
       .then((res) => {
         if (res && res.status == 200) {
+          setSucessModal(true);
           navigation.goBack();
-          setModalText("Sign Up Successfully");
-          console.log(res);
           setShowModal(false);
         }
       })
@@ -55,6 +56,7 @@ const SignUp = ({ navigation }) => {
         mobile: "",
         email: "",
         password: "",
+        password_confirmation: "",
         role_id: "customer",
       }}
       onSubmit={async (values) =>
@@ -64,6 +66,7 @@ const SignUp = ({ navigation }) => {
           values.mobile,
           values.email,
           values.password,
+          values.password_confirmation,
           values.role_id
         )
       }
@@ -85,6 +88,26 @@ const SignUp = ({ navigation }) => {
               </Modal.Body>
             </Modal.Content>
           </Modal>
+          {/* Successfully sign up modal */}
+          <Modal isOpen={sucessModal}>
+            <Modal.Content maxWidth="400px">
+              <Modal.Body>
+                <View style={styles.centerizedCol}>
+                  <Image source={require("../images/thumbs-up.png")} />
+                  <Text
+                    style={{
+                      marginTop: 13,
+                      fontSize: 16,
+                      color: "#EF1D1D",
+                      fontFamily: "Tajawal_500Medium",
+                    }}
+                  >
+                    {t("signupsucess")}
+                  </Text>
+                </View>
+              </Modal.Body>
+            </Modal.Content>
+          </Modal>
           {/* end of modal */}
           <View>
             <View style={styles.headerContainer}>
@@ -92,12 +115,26 @@ const SignUp = ({ navigation }) => {
                 {t("newaccount1")}
               </Heading>
             </View>
-            <View>{error && <Text>{error}</Text>}</View>
             <View>
-              {error === undefined && (
-                <Text> Check Your Connection and retry to log in </Text>
-              )}
+              <View>
+                {error && (
+                  <View style={styles.errmessage}>
+                    <Text style={styles.errmessagetxt}>{error}</Text>
+                  </View>
+                )}
+              </View>
+              <View>
+                {error === undefined && (
+                  <View style={styles.errmessage}>
+                    <Text style={styles.errmessagetxt}>
+                      {" "}
+                      Check Your Connection and retry to log in{" "}
+                    </Text>
+                  </View>
+                )}
+              </View>
             </View>
+
             <Stack space={4} w="100%" alignItems="center">
               <Avatar
                 width={100}
@@ -182,7 +219,22 @@ const SignUp = ({ navigation }) => {
                 value={values.password}
                 onChangeText={handleChange("password")}
               />
-
+              <Input
+                w={{
+                  base: "75%",
+                  md: "25%",
+                }}
+                _text={{
+                  color: "#ECECEC",
+                }}
+                type={"password"}
+                height={35}
+                fontFamily={"Tajawal_500Medium"}
+                placeholder={t("confirmpassword")}
+                onBlur={handleBlur("password_confirmation")}
+                value={values.password_confirmation}
+                onChangeText={handleChange("password_confirmation")}
+              />
               <View
                 style={{
                   flexDirection: "row",
@@ -340,6 +392,16 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
+  },
+  errmessage: {
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 10,
+  },
+  errmessagetxt: {
+    fontSize: 14,
+    fontFamily: "Tajawal_500Medium",
+    color: "red",
   },
 });
 
