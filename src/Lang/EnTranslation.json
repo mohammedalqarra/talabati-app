@@ -138,6 +138,8 @@
   "products":"Products",
   "payy":"paying",
   "accountdetails":"Account details",
-  "langsetting":"Language settings"
+  "langsetting":"Language settings",
+  "confirmpassword":"confirmpassword",
+  "signupsucess":"Signed Up successfully"
 }
 

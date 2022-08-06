@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import React, { useContext } from "react";
 import { useTranslation } from "react-i18next";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { handlelogOut } from "../../features/auth/authSlice";
 
 const MyAccount = ({ navigation }) => {
@@ -16,6 +16,7 @@ const MyAccount = ({ navigation }) => {
   const name = useSelector((state) => state.auth.data.data.name);
   const mobile = useSelector((state) => state.auth.data.data.mobile);
   const email = useSelector((state) => state.auth.data.data.email);
+  const dispatch = useDispatch();
 
   const { t } = useTranslation();
   return (

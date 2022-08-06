@@ -20,7 +20,7 @@ import { Modal } from "native-base";
 const Login = ({ navigation }) => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const [error, setError] = useState("");
+  const [error, setError] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const HandleUserLogin = async (login_id, password) => {
     const url = Api_url + login_api;
@@ -82,12 +82,26 @@ const Login = ({ navigation }) => {
                   {t("login")}
                 </Heading>
               </View>
-              <View>{error && <Text>{error}</Text>}</View>
               <View>
-                {error === undefined && (
-                  <Text> Check Your Connection and retry to log in </Text>
-                )}
+                <View>
+                  {error && (
+                    <View style={styles.errmessage}>
+                      <Text style={styles.errmessagetxt}>{error}</Text>
+                    </View>
+                  )}
+                </View>
+                <View>
+                  {error === undefined && (
+                    <View style={styles.errmessage}>
+                      <Text style={styles.errmessagetxt}>
+                        {" "}
+                        Check Your Connection and retry to log in{" "}
+                      </Text>
+                    </View>
+                  )}
+                </View>
               </View>
+
               <Stack space={4} w="100%" alignItems="center">
                 <Input
                   w={{
@@ -197,6 +211,16 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
+  },
+  errmessage: {
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 10,
+  },
+  errmessagetxt: {
+    fontSize: 14,
+    fontFamily: "Tajawal_500Medium",
+    color: "red",
   },
 });
 

@@ -138,7 +138,9 @@
   "products":"المنتجات",
   "payy":"الدفع",
   "accountdetails":"بيانات الحساب",
-  "langsetting":"اعدادات اللغه"
+  "langsetting":"اعدادات اللغه",
+  "confirmpassword":"تاكيد كلمه المرور",
+  "signupsucess":"تم تسجيل الحساب بنجاح"
 
 }
 
