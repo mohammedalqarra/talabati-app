@@ -39,6 +39,7 @@ const SignUp = ({ navigation }) => {
         if (res && res.status == 200) {
           setSucessModal(true);
           navigation.goBack();
+          // navigation.navigate("VerfiyNumber");
           setShowModal(false);
         }
       })

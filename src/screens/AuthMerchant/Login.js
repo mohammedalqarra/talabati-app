@@ -1,3 +1,4 @@
+//finished
 import {
   View,
   Text,
