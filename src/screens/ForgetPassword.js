@@ -11,6 +11,7 @@ const ForgetPassword = () => {
   const { t } = useTranslation();
   const [error, setError] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [showSucessModal, setShowSucessModal] = useState(false);
   const HandleForgetPassword = async (login_id) => {
     const url = Api_url + forget_pass_api;
     setShowModal(true);
@@ -22,10 +23,11 @@ const ForgetPassword = () => {
         if (res && res.status == 200) {
           console.log(res.data);
           setShowModal(false);
+          setShowSucessModal(true);
         }
       })
       .catch((err) => {
-        // setError(err.response.data.message);
+        setError(err.response.data.message);
         console.log(err.response.data.message);
         setShowModal(false);
       });
@@ -49,7 +51,7 @@ const ForgetPassword = () => {
               resizeMode={"contain"}
             />
             {/* start of modal */}
-            <Modal isOpen={showModal}>
+            <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
               <Modal.Content maxWidth="400px">
                 <Modal.Body>
                   <View style={styles.centerizedCol}>
@@ -59,7 +61,29 @@ const ForgetPassword = () => {
               </Modal.Content>
             </Modal>
             {/* end of modal */}
-
+            {/* start sucess of modal */}
+            <Modal
+              isOpen={showSucessModal}
+              onClose={() => setShowSucessModal(false)}
+            >
+              <Modal.Content maxWidth="400px">
+                <Modal.Body>
+                  <View style={styles.centerizedCol}>
+                    <Text
+                      style={{
+                        marginTop: 13,
+                        fontSize: 16,
+                        color: "#EF1D1D",
+                        fontFamily: "Tajawal_500Medium",
+                      }}
+                    >
+                      تم إرسال رمز إعادة تعيين كلمة المرور
+                    </Text>
+                  </View>
+                </Modal.Body>
+              </Modal.Content>
+            </Modal>
+            {/* end sucess of modal */}
             <View>
               <View style={styles.headerContainer}>
                 <Heading
