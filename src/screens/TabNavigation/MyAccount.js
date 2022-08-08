@@ -31,9 +31,9 @@ const MyAccount = ({ navigation }) => {
     navigation.addListener("focus", () => {
       RefresingData(token);
     });
-    navigation.addListener("blur", () => {
-      dispatch(RemoveData());
-    });
+    // navigation.addListener("blur", () => {
+    //   dispatch(RemoveData());
+    // });
   }, []);
 
   const RefresingData = async (token) => {
@@ -117,9 +117,7 @@ const MyAccount = ({ navigation }) => {
         <View style={styles.pressablesacontainer}>
           <Pressable
             style={styles.singlePress}
-            onPress={() =>
-              navigation.navigate("AccountSettings", { name, email, mobile })
-            }
+            onPress={() => navigation.navigate("AccountSettings")}
           >
             <Image source={require("../../images/left-arrow1.png")} />
             <View style={styles.singlePressContainer}>

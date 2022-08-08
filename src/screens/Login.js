@@ -109,11 +109,11 @@ const Login = ({ navigation }) => {
                     base: "75%",
                     md: "25%",
                   }}
-                  onBlur={handleBlur("username")}
                   fontFamily={"Tajawal_500Medium"}
                   placeholder={t("username")}
                   value={values.username}
                   onChangeText={handleChange("username")}
+                  onBlur={handleBlur("username")}
                 />
 
                 <Input
