@@ -18,9 +18,10 @@ export const authSlice = createSlice({
       state.data = action.payload;
     },
 
-    handlelogInMerchant: (state) => {
+    handlelogInMerchant: (state, action) => {
       state.IsLogged = true;
       state.IsMerchant = true;
+      state.data = action.payload;
     },
 
     handlelogOut: (state) => {

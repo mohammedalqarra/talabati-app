@@ -5,27 +5,92 @@ import {
   Image,
   Pressable,
   ScrollView,
+  ActivityIndicator,
 } from "react-native";
-import React, { useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { handlelogOut } from "../../features/auth/authSlice";
+import axios from "axios";
+import { check_token, Api_url } from "../../utilites/ApiConstants";
+import { storeData, RemoveData } from "../../features/dataSlice";
 
 const MyAccount = ({ navigation }) => {
-  // thedata
-  const name = useSelector((state) => state.auth.data.data.name);
-  const mobile = useSelector((state) => state.auth.data.data.mobile);
-  const email = useSelector((state) => state.auth.data.data.email);
-  const dispatch = useDispatch();
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
+  // The Data
+  const token = useSelector((state) => state.auth.data.token);
 
+  const data = useSelector((state) => state.data.data);
+  const { name, email, mobile } = data;
+
+  const dispatch = useDispatch();
   const { t } = useTranslation();
+
+  useEffect(() => {
+    navigation.addListener("focus", () => {
+      RefresingData(token);
+    });
+    navigation.addListener("blur", () => {
+      dispatch(RemoveData());
+    });
+  }, []);
+
+  const RefresingData = async (token) => {
+    setLoading(true);
+    const url = Api_url + check_token;
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
+    axios
+      .get(url, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        if (res && res.status == 200) {
+          dispatch(storeData(res.data.data));
+          setLoading(false);
+        }
+      })
+      // .then(() => {
+      //   const data = useSelector((state) => state.data);
+      // })
+
+      .catch((err) => {
+        setError(err.response.data.message);
+        setLoading(false);
+      });
+  };
+
   return (
     <ScrollView style={styles.container}>
+      <View>
+        <View>
+          {error && (
+            <View style={styles.errmessage}>
+              <Text style={styles.errmessagetxt}>{error}</Text>
+            </View>
+          )}
+        </View>
+        <View>
+          {error === undefined && (
+            <View style={styles.errmessage}>
+              <Text style={styles.errmessagetxt}>
+                {" "}
+                Check Your Connection and Refresh Your App{" "}
+              </Text>
+            </View>
+          )}
+        </View>
+      </View>
       <View style={styles.Imgwrapper}>
         <Image
           style={styles.Imgwrapperimg}
           source={require("../../images/profile-placeholder.png")}
         />
+
         <Text
           style={{
             color: "#E56B1F",
@@ -33,6 +98,7 @@ const MyAccount = ({ navigation }) => {
             fontFamily: "Tajawal_500Medium",
           }}
         >
+          {/* {name} */}
           {name}
         </Text>
         <View style={styles.smallcontainer}>
@@ -43,116 +109,137 @@ const MyAccount = ({ navigation }) => {
           <Text>{mobile}</Text>
         </View>
       </View>
-      {/* first */}
-      <View style={styles.pressablesacontainer}>
-        <Pressable
-          style={styles.singlePress}
-          onPress={() =>
-            navigation.navigate("AccountSettings", { name, email, mobile })
-          }
-        >
-          <Image source={require("../../images/left-arrow1.png")} />
-          <View style={styles.singlePressContainer}>
-            <Text style={styles.txt}>{t("accountsettings")}</Text>
-            <Image source={require("../../images/Iconawesome-user-alt.png")} />
-          </View>
-        </Pressable>
-        {/* second */}
-        <Pressable
-          style={styles.singlePress}
-          onPress={() => navigation.navigate("LangSettings")}
-        >
-          <Image source={require("../../images/left-arrow1.png")} />
+      {loading == true ? (
+        <View>
+          <ActivityIndicator />
+        </View>
+      ) : (
+        <View style={styles.pressablesacontainer}>
+          <Pressable
+            style={styles.singlePress}
+            onPress={() =>
+              navigation.navigate("AccountSettings", { name, email, mobile })
+            }
+          >
+            <Image source={require("../../images/left-arrow1.png")} />
+            <View style={styles.singlePressContainer}>
+              <Text style={styles.txt}>{t("accountsettings")}</Text>
+              <Image
+                source={require("../../images/Iconawesome-user-alt.png")}
+              />
+            </View>
+          </Pressable>
+          {/* second */}
+          <Pressable
+            style={styles.singlePress}
+            onPress={() => navigation.navigate("LangSettings")}
+          >
+            <Image source={require("../../images/left-arrow1.png")} />
 
-          <View style={styles.singlePressContainer}>
-            <Text style={styles.txt}>{t("langsettings")}</Text>
-            <Image source={require("../../images/Iconmaterial-language.png")} />
-          </View>
-        </Pressable>
-        {/* third */}
-        <Pressable
-          style={styles.singlePress}
-          onPress={() => navigation.navigate("MyAdresses")}
-        >
-          <Image source={require("../../images/left-arrow1.png")} />
+            <View style={styles.singlePressContainer}>
+              <Text style={styles.txt}>{t("langsettings")}</Text>
+              <Image
+                source={require("../../images/Iconmaterial-language.png")}
+              />
+            </View>
+          </Pressable>
+          {/* second */}
+          <Pressable
+            style={styles.singlePress}
+            onPress={() => navigation.navigate("ChangePasswordss")}
+          >
+            <Image source={require("../../images/left-arrow1.png")} />
 
-          <View style={styles.singlePressContainer}>
-            <Text style={styles.txt}>{t("myadresses")}</Text>
-            <Image source={require("../../images/map.png")} />
-          </View>
-        </Pressable>
-        {/* 4th */}
-        <Pressable
-          style={styles.singlePress}
-          onPress={() => navigation.navigate("RatingApp")}
-        >
-          <Image source={require("../../images/left-arrow1.png")} />
+            <View style={styles.singlePressContainer}>
+              <Text style={styles.txt}>{t("editpassword")}</Text>
+              <Image source={require("../../images/padlock.png")} />
+            </View>
+          </Pressable>
+          {/* third */}
+          <Pressable
+            style={styles.singlePress}
+            onPress={() => navigation.navigate("MyAdresses")}
+          >
+            <Image source={require("../../images/left-arrow1.png")} />
 
-          <View style={styles.singlePressContainer}>
-            <Text style={styles.txt}>{t("rateapp")}</Text>
-            <Image
-              source={require("../../images/Iconawesome-star-half-alt.png")}
-            />
-          </View>
-        </Pressable>
-        {/* 5th */}
-        <Pressable
-          style={styles.singlePress}
-          onPress={() => navigation.navigate("Notifications")}
-        >
-          <Image source={require("../../images/left-arrow1.png")} />
+            <View style={styles.singlePressContainer}>
+              <Text style={styles.txt}>{t("myadresses")}</Text>
+              <Image source={require("../../images/map.png")} />
+            </View>
+          </Pressable>
+          {/* 4th */}
+          <Pressable
+            style={styles.singlePress}
+            onPress={() => navigation.navigate("RatingApp")}
+          >
+            <Image source={require("../../images/left-arrow1.png")} />
 
-          <View style={styles.singlePressContainer}>
-            <Text style={styles.txt}>{t("notifications")}</Text>
-            <Image
-              source={require("../../images/Iconmaterial-notifications-active.png")}
-            />
-          </View>
-        </Pressable>
-        {/* 6th */}
-        <Pressable
-          style={styles.singlePress}
-          onPress={() => navigation.navigate("UsingConditions")}
-        >
-          <Image source={require("../../images/left-arrow1.png")} />
+            <View style={styles.singlePressContainer}>
+              <Text style={styles.txt}>{t("rateapp")}</Text>
+              <Image
+                source={require("../../images/Iconawesome-star-half-alt.png")}
+              />
+            </View>
+          </Pressable>
+          {/* 5th */}
+          <Pressable
+            style={styles.singlePress}
+            onPress={() => navigation.navigate("Notifications")}
+          >
+            <Image source={require("../../images/left-arrow1.png")} />
 
-          <View style={styles.singlePressContainer}>
-            <Text style={styles.txt}>{t("usingterms")}</Text>
-            <Image source={require("../../images/to-do-list.png")} />
-          </View>
-        </Pressable>
-        {/* 7th */}
-        <Pressable
-          style={styles.singlePress}
-          onPress={() => navigation.navigate("PrivacySettings")}
-        >
-          <Image source={require("../../images/left-arrow1.png")} />
+            <View style={styles.singlePressContainer}>
+              <Text style={styles.txt}>{t("notifications")}</Text>
+              <Image
+                source={require("../../images/Iconmaterial-notifications-active.png")}
+              />
+            </View>
+          </Pressable>
+          {/* 6th */}
+          <Pressable
+            style={styles.singlePress}
+            onPress={() => navigation.navigate("UsingConditions")}
+          >
+            <Image source={require("../../images/left-arrow1.png")} />
 
-          <View style={styles.singlePressContainer}>
-            <Text style={styles.txt}>{t("privacyterms")}</Text>
-            <Image source={require("../../images/shield.png")} />
-          </View>
-        </Pressable>
-        {/* 8th */}
-        <Pressable
-          style={styles.singlePress}
-          onPress={() => navigation.navigate("AboutApp")}
-        >
-          <Image source={require("../../images/left-arrow1.png")} />
+            <View style={styles.singlePressContainer}>
+              <Text style={styles.txt}>{t("usingterms")}</Text>
+              <Image source={require("../../images/to-do-list.png")} />
+            </View>
+          </Pressable>
+          {/* 7th */}
+          <Pressable
+            style={styles.singlePress}
+            onPress={() => navigation.navigate("PrivacySettings")}
+          >
+            <Image source={require("../../images/left-arrow1.png")} />
 
-          <View style={styles.singlePressContainer}>
-            <Text style={styles.txt}>{t("aboutapp")}</Text>
-            <Image source={require("../../images/information.png")} />
-          </View>
-        </Pressable>
-        {/* 9th */}
-        <Pressable onPress={() => dispatch(handlelogOut())}>
-          <View style={styles.singlePressContainerlast}>
-            <Text style={styles.txt}>{t("signout")}</Text>
-            <Image source={require("../../images/logout.png")} />
-          </View>
-        </Pressable>
-      </View>
+            <View style={styles.singlePressContainer}>
+              <Text style={styles.txt}>{t("privacyterms")}</Text>
+              <Image source={require("../../images/shield.png")} />
+            </View>
+          </Pressable>
+          {/* 8th */}
+          <Pressable
+            style={styles.singlePress}
+            onPress={() => navigation.navigate("AboutApp")}
+          >
+            <Image source={require("../../images/left-arrow1.png")} />
+
+            <View style={styles.singlePressContainer}>
+              <Text style={styles.txt}>{t("aboutapp")}</Text>
+              <Image source={require("../../images/information.png")} />
+            </View>
+          </Pressable>
+          {/* 9th */}
+          <Pressable onPress={() => dispatch(handlelogOut())}>
+            <View style={styles.singlePressContainerlast}>
+              <Text style={styles.txt}>{t("signout")}</Text>
+              <Image source={require("../../images/logout.png")} />
+            </View>
+          </Pressable>
+        </View>
+      )}
     </ScrollView>
   );
 };
@@ -218,5 +305,21 @@ const styles = StyleSheet.create({
     fontFamily: "Tajawal_500Medium",
     color: "#555555",
     marginRight: 10,
+  },
+  centerizedCol: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  errmessage: {
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 10,
+  },
+  errmessagetxt: {
+    fontSize: 14,
+    fontFamily: "Tajawal_500Medium",
+    color: "red",
   },
 });

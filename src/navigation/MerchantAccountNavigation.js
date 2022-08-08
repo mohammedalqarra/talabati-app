@@ -6,6 +6,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import MyAccount from "../screens/Merchant/TabNavigation/MyAccount";
 import EditingAccount from "../screens/Merchant/TabNavigation/MerchantAccountNavigation/EditingAccount";
 import ChangePassword from "../screens/Merchant/TabNavigation/MerchantAccountNavigation/ChangePassword";
+import LangSettings from "../screens/TabNavigation/AccountNavigation/LangSettings";
 import NumberOfProducts from "../screens/Merchant/TabNavigation/MerchantAccountNavigation/NumberOfProducts";
 import Offers from "../screens/Merchant/TabNavigation/MerchantAccountNavigation/Offers";
 import PrivacySettings from "../screens/Merchant/TabNavigation/MerchantAccountNavigation/PrivacySettings";
@@ -24,6 +25,18 @@ function MerchantAccountNavigation() {
         component={MyAccount}
         options={{
           title: i18n.t("MyAccount"),
+          headerTintColor: "#E56B1F",
+          headerTitleAlign: "center",
+          headerTitleStyle: {
+            fontFamily: "Tajawal_700Bold",
+          },
+        }}
+      />
+      <Stack.Screen
+        name="LangSettings"
+        component={LangSettings}
+        options={{
+          title: i18n.t("langsetting"),
           headerTintColor: "#E56B1F",
           headerTitleAlign: "center",
           headerTitleStyle: {

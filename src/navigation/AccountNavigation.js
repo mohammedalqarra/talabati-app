@@ -6,6 +6,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import MyAccount from "../screens/TabNavigation/MyAccount";
 import AccountSettings from "../screens/TabNavigation/AccountNavigation/AccountSettings";
 import LangSettings from "../screens/TabNavigation/AccountNavigation/LangSettings";
+import ChangePassword from "../screens/Merchant/TabNavigation/MerchantAccountNavigation/ChangePassword";
 import UsingConditions from "../screens/TabNavigation/AccountNavigation/UsingConditions";
 import PrivacySettings from "../screens/TabNavigation/AccountNavigation/PrivacySettings";
 import AboutApp from "../screens/TabNavigation/AccountNavigation/AboutApp";
@@ -17,6 +18,7 @@ import RatingApp from "../screens/TabNavigation/AccountNavigation/RatingApp";
 const Stack = createNativeStackNavigator();
 import { useTranslation } from "react-i18next";
 import i18n from "../i18n";
+
 function AccountNavigation() {
   const { t } = useTranslation();
 
@@ -51,6 +53,18 @@ function AccountNavigation() {
         component={LangSettings}
         options={{
           title: i18n.t("langsetting"),
+          headerTintColor: "#E56B1F",
+          headerTitleAlign: "center",
+          headerTitleStyle: {
+            fontFamily: "Tajawal_700Bold",
+          },
+        }}
+      />
+      <Stack.Screen
+        name="ChangePasswordss"
+        component={ChangePassword}
+        options={{
+          title: i18n.t("editpassword"),
           headerTintColor: "#E56B1F",
           headerTitleAlign: "center",
           headerTitleStyle: {
