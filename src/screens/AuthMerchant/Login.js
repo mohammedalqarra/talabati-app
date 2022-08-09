@@ -113,6 +113,7 @@ const Login = ({ navigation }) => {
                     md: "25%",
                   }}
                   fontFamily={"Tajawal_500Medium"}
+                  variant="underlined"
                   placeholder={t("username")}
                   value={values.username}
                   onChangeText={handleChange("username")}
@@ -122,6 +123,7 @@ const Login = ({ navigation }) => {
                     base: "75%",
                     md: "25%",
                   }}
+                  variant="underlined"
                   type={"password"}
                   fontFamily={"Tajawal_500Medium"}
                   placeholder={t("password")}

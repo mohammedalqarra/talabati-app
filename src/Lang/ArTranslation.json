@@ -141,7 +141,9 @@
   "langsetting":"اعدادات اللغه",
   "confirmpassword":"تاكيد كلمه المرور",
   "signupsucess":"تم تسجيل الحساب بنجاح",
-  "passwordchange":"تم تعديل الرقم السري بنجاح"
+  "passwordchange":"تم تعديل الرقم السري بنجاح",
+  "organizationname":"اسم المنظمة"
+
 
 }
 

@@ -141,7 +141,8 @@
   "langsetting":"Language settings",
   "confirmpassword":"confirmpassword",
   "signupsucess":"Signed Up successfully",
-  "passwordchange":"Password has been Updated"
+  "passwordchange":"Password has been Updated",
+  "organizationname":"Organization Name"
 
 }
 

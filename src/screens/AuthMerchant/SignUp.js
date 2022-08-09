@@ -17,16 +17,29 @@ import {
   Select,
 } from "native-base";
 import { useTranslation } from "react-i18next";
+import * as ImagePicker from "expo-image-picker";
 
 const SignUp = ({ navigation }) => {
   const [gender, setGender] = useState("male");
   const [country, setCountry] = useState("");
   const [district, setDistrict] = useState("");
   const [city, setCity] = useState("");
-
   const { t } = useTranslation();
-
   const { height } = useWindowDimensions();
+  // for picking images
+  // avatarImage
+  const [avatar, setAvatar] = useState(null);
+  const pickAvatarImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+    if (!result.cancelled) {
+      setAvatar(result.uri);
+    }
+  };
   return (
     <ScrollView>
       <View style={styles.container}>
@@ -42,13 +55,22 @@ const SignUp = ({ navigation }) => {
             </Heading>
           </View>
           <Stack space={4} w="100%" alignItems="center">
-            <Avatar
-              width={100}
-              height={100}
-              backgroundColor={"white"}
-              borderWidth={1}
-              borderColor={"#E56B1F"}
-            ></Avatar>
+            <Pressable onPress={pickAvatarImage}>
+              <Avatar
+                width={100}
+                height={100}
+                backgroundColor={"white"}
+                borderWidth={1}
+                borderColor={"#E56B1F"}
+              >
+                {avatar && (
+                  <Image
+                    source={{ uri: avatar }}
+                    style={{ width: 90, height: 90, borderRadius: 50 }}
+                  />
+                )}
+              </Avatar>
+            </Pressable>
             <Input
               w={{
                 base: "75%",
@@ -57,9 +79,10 @@ const SignUp = ({ navigation }) => {
               _text={{
                 color: "#ECECEC",
               }}
+              variant="underlined"
               height={35}
               fontFamily={"Tajawal_500Medium"}
-              placeholder={t("phonenumber")}
+              placeholder={t("username")}
             />
             <Input
               w={{
@@ -70,6 +93,7 @@ const SignUp = ({ navigation }) => {
                 color: "#ECECEC",
               }}
               height={35}
+              variant="underlined"
               fontFamily={"Tajawal_500Medium"}
               placeholder={t("name")}
             />
@@ -82,9 +106,11 @@ const SignUp = ({ navigation }) => {
                 color: "#ECECEC",
               }}
               height={35}
+              variant="underlined"
               fontFamily={"Tajawal_500Medium"}
-              placeholder={t("email")}
+              placeholder={t("phonenumber")}
             />
+
             <Input
               w={{
                 base: "75%",
@@ -94,6 +120,8 @@ const SignUp = ({ navigation }) => {
                 color: "#ECECEC",
               }}
               height={35}
+              type={"password"}
+              variant="underlined"
               fontFamily={"Tajawal_500Medium"}
               placeholder={t("password")}
             />
@@ -106,9 +134,11 @@ const SignUp = ({ navigation }) => {
                 color: "#ECECEC",
               }}
               height={35}
+              variant="underlined"
               fontFamily={"Tajawal_500Medium"}
-              placeholder={t("birthday")}
+              placeholder={t("organizationname")}
             />
+
             <View
               style={{
                 flexDirection: "row",
@@ -192,90 +222,6 @@ const SignUp = ({ navigation }) => {
                 </View>
               </Pressable>
             </View>
-            <Input
-              w={{
-                base: "75%",
-                md: "25%",
-              }}
-              _text={{
-                color: "#ECECEC",
-              }}
-              height={35}
-              fontFamily={"Tajawal_500Medium"}
-              placeholder={t("workingfields")}
-            />
-            <Select
-              selectedValue={country}
-              minWidth="310"
-              accessibilityLabel="Choose country"
-              placeholder={t("country")}
-              mt={1}
-              onValueChange={(itemValue) => setCountry(itemValue)}
-            >
-              <Select.Item label="egypt" value="eg" />
-              <Select.Item label="saudi arabia" value="sa" />
-              <Select.Item label="UAE" value="uae" />
-            </Select>
-            <Select
-              selectedValue={district}
-              minWidth="310"
-              accessibilityLabel="Choose district"
-              placeholder={t("region")}
-              mt={1}
-              onValueChange={(itemValue) => setDistrict(itemValue)}
-            >
-              <Select.Item label="egypt" value="eg" />
-              <Select.Item label="saudi arabia" value="sa" />
-              <Select.Item label="UAE" value="uae" />
-            </Select>
-            <Select
-              selectedValue={city}
-              minWidth="310"
-              accessibilityLabel="Choose city"
-              placeholder={t("city")}
-              mt={1}
-              onValueChange={(itemValue) => setCity(itemValue)}
-            >
-              <Select.Item label="egypt" value="eg" />
-              <Select.Item label="saudi arabia" value="sa" />
-              <Select.Item label="UAE" value="uae" />
-            </Select>
-            <Input
-              w={{
-                base: "75%",
-                md: "25%",
-              }}
-              _text={{
-                color: "#ECECEC",
-              }}
-              height={35}
-              fontFamily={"Tajawal_500Medium"}
-              placeholder={t("workdays")}
-            />
-            <Input
-              w={{
-                base: "75%",
-                md: "25%",
-              }}
-              _text={{
-                color: "#ECECEC",
-              }}
-              height={35}
-              fontFamily={"Tajawal_500Medium"}
-              placeholder={t("openfrom")}
-            />
-            <Input
-              w={{
-                base: "75%",
-                md: "25%",
-              }}
-              _text={{
-                color: "#ECECEC",
-              }}
-              height={35}
-              fontFamily={"Tajawal_500Medium"}
-              placeholder={t("closefrom")}
-            />
             <View style={styles.smallcontainer}>
               <View style={styles.txtaround}>
                 <Text style={styles.txt}>choose file</Text>
