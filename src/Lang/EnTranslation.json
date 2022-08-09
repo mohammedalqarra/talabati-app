@@ -140,6 +140,8 @@
   "accountdetails":"Account details",
   "langsetting":"Language settings",
   "confirmpassword":"confirmpassword",
-  "signupsucess":"Signed Up successfully"
+  "signupsucess":"Signed Up successfully",
+  "passwordchange":"Password has been Updated"
+
 }
 

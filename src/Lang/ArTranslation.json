@@ -140,7 +140,8 @@
   "accountdetails":"بيانات الحساب",
   "langsetting":"اعدادات اللغه",
   "confirmpassword":"تاكيد كلمه المرور",
-  "signupsucess":"تم تسجيل الحساب بنجاح"
+  "signupsucess":"تم تسجيل الحساب بنجاح",
+  "passwordchange":"تم تعديل الرقم السري بنجاح"
 
 }
 
