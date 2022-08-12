@@ -153,6 +153,7 @@ const SignUp = ({ navigation }) => {
                   color: "#ECECEC",
                 }}
                 height={35}
+                variant="underlined"
                 fontFamily={"Tajawal_500Medium"}
                 placeholder={t("phonenumber")}
                 onBlur={handleBlur("mobile")}
@@ -168,6 +169,7 @@ const SignUp = ({ navigation }) => {
                   color: "#ECECEC",
                 }}
                 height={35}
+                variant="underlined"
                 fontFamily={"Tajawal_500Medium"}
                 placeholder={t("username")}
                 onBlur={handleBlur("username")}
@@ -183,6 +185,7 @@ const SignUp = ({ navigation }) => {
                   color: "#ECECEC",
                 }}
                 height={35}
+                variant="underlined"
                 fontFamily={"Tajawal_500Medium"}
                 placeholder={t("name")}
                 onBlur={handleBlur("name")}
@@ -198,6 +201,7 @@ const SignUp = ({ navigation }) => {
                   color: "#ECECEC",
                 }}
                 height={35}
+                variant="underlined"
                 fontFamily={"Tajawal_500Medium"}
                 placeholder={t("email")}
                 onBlur={handleBlur("email")}
@@ -214,6 +218,7 @@ const SignUp = ({ navigation }) => {
                 }}
                 type={"password"}
                 height={35}
+                variant="underlined"
                 fontFamily={"Tajawal_500Medium"}
                 placeholder={t("password")}
                 onBlur={handleBlur("password")}
@@ -229,6 +234,7 @@ const SignUp = ({ navigation }) => {
                   color: "#ECECEC",
                 }}
                 type={"password"}
+                variant="underlined"
                 height={35}
                 fontFamily={"Tajawal_500Medium"}
                 placeholder={t("confirmpassword")}

@@ -11,79 +11,222 @@ import React, { useState } from "react";
 import { Input, Avatar, Stack, Button, Pressable, Heading } from "native-base";
 import { useTranslation } from "react-i18next";
 import * as ImagePicker from "expo-image-picker";
+import * as DocumentPicker from "expo-document-picker";
 import { signup_api, Api_url } from "../../utilites/ApiConstants";
 import axios from "axios";
 import { Formik } from "formik";
 import { Modal } from "native-base";
+// import RNFetchBlob from "rn-fetch-blob";
 
 const SignUp = ({ navigation }) => {
   const [gender, setGender] = useState("male");
   const [error, setError] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [sucessModal, setSucessModal] = useState(false);
+  const [avatarBlob, setAvatarBlob] = useState({
+    uri: "",
+    name: "",
+    type: "",
+  });
+  const [storeBlob, setStoreBlob] = useState("");
+  const [commercialBlob, setCommercialBlob] = useState("");
+
   const { t } = useTranslation();
   const { height } = useWindowDimensions();
   // for picking images
-  // avatarImage
-  const [avatar, setAvatar] = useState(null);
-  const pickAvatarImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
-    if (!result.cancelled) {
-      setAvatar(result.uri);
-    }
-  };
-  // storefront
-  const [storefront, setStorefront] = useState(null);
-  const pickStorefront = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
-    if (!result.cancelled) {
-      setStorefront(result.uri);
-    }
-  };
-  // avatarImage
-  const [commercialImg, setCommercialImg] = useState(null);
-  const pickCommercialImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
-    if (!result.cancelled) {
-      setCommercialImg(result.uri);
-    }
-  };
-  // handling signup
 
+  const pickAvatar = async (handleChange) => {
+    const { type, uri } = await DocumentPicker.getDocumentAsync({
+      copyToCacheDirectory: false,
+      type: "*/*",
+    });
+
+    if (type === "cancel") {
+      return;
+    }
+    console.log("pickerResponse", uri);
+
+    try {
+      const fetchResponse = await fetch(uri);
+      console.log("fetchResponse", fetchResponse);
+      const blob = await fetchResponse.blob();
+      console.log("blob avatar", blob);
+      setAvatarBlob({ uri, name: "media", type: `image/${type}` });
+      console.log("blob avatar 1111", avatarBlob);
+
+      handleChange(fetchResponse.url);
+    } catch (error) {
+      console.log("ERR: " + error.message);
+    }
+  };
+
+  const pickStore = async (handleChange) => {
+    const { type, uri } = await DocumentPicker.getDocumentAsync({
+      copyToCacheDirectory: false,
+      type: "*/*",
+    });
+
+    if (type === "cancel") {
+      return;
+    }
+    console.log("pickerResponse", uri);
+
+    try {
+      const fetchResponse = await fetch(uri);
+      console.log("fetchResponse", fetchResponse);
+      const blob = await fetchResponse.blob();
+      console.log("blob store", blob);
+      setStoreBlob({ uri, name: "media", type: `image/${type}` });
+      handleChange(fetchResponse.url);
+    } catch (error) {
+      console.log("ERR: " + error.message);
+    }
+  };
+
+  const pickCommercial = async (handleChange) => {
+    const { type, uri } = await DocumentPicker.getDocumentAsync({
+      copyToCacheDirectory: false,
+      type: "*/*",
+    });
+
+    if (type === "cancel") {
+      return;
+    }
+    console.log("pickerResponse", uri);
+
+    try {
+      const fetchResponse = await fetch(uri);
+      console.log("fetchResponse", fetchResponse);
+      const blob = await fetchResponse.blob();
+      console.log("blob commercial", blob);
+      setCommercialBlob({ uri, name: "media", type: `image/${type}` });
+      handleChange(fetchResponse.url);
+    } catch (error) {
+      console.log("ERR: " + error.message);
+    }
+  };
+
+  // const pickDocument = async (handleChange) => {
+  //   let result = await DocumentPicker.getDocumentAsync({});
+  //   handleChange(result.uri);
+  //   console.log(result.uri);
+  // };
+
+  // avatarImage
+  // const [avatar, setAvatar] = useState(null);
+  const pickAvatarImage = async (handleChange) => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      allowsEditing: true,
+      aspect: [4, 3],
+      // includeBase64: true,
+    });
+    if (!result.cancelled) {
+      handleChange(result.uri);
+      console.log(result.uri);
+      console.log(result);
+    }
+  };
+
+  // storefront
+  // const [storefront, setStorefront] = useState(null);
+  const pickStorefront = async (handleChange) => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      allowsEditing: true,
+      aspect: [4, 3],
+    });
+    if (!result.cancelled) {
+      handleChange(result.uri);
+    }
+  };
+  // avatarImage
+  // const [commercialImg, setCommercialImg] = useState(null);
+  const pickCommercialImage = async (handleChange) => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      allowsEditing: true,
+      aspect: [4, 3],
+    });
+    if (!result.cancelled) {
+      handleChange(result.uri);
+    }
+  };
+
+  // const HandleSellerRegister = async (
+  //   username,
+  //   name,
+  //   mobile,
+  //   password,
+  //   password_confirmation,
+  //   blobAvatar,
+  //   blobStorefront,
+  //   blobCommercialLicense,
+  //   organization_name,
+  //   role_id
+  // ) => {
+  //   const url = Api_url + signup_api;
+  //   RNFetchBlob.fetch(
+  //     "POST",
+  //     url,
+  //     {
+  //       "Content-Type": "multipart/form-data",
+  //     },
+  //     [
+  //       { name: "username", data: username },
+  //       { name: "name", data: name },
+  //       { name: "mobile", data: mobile },
+  //       { name: "password", data: password },
+  //       { name: "password_confirmation", data: password_confirmation },
+  //       { name: "blobAvatar", filename: "blobAvatar.png", data: blobAvatar },
+  //       {
+  //         name: "blobStorefront",
+  //         filename: "blobStorefront.png",
+  //         data: blobStorefront,
+  //       },
+  //       {
+  //         name: "blobCommercialLicense",
+  //         filename: "blobCommercialLicense.png",
+  //         data: blobCommercialLicense,
+  //       },
+  //       { name: "organization_name", data: organization_name },
+  //       { name: "role_id", data: role_id },
+  //       ,
+  //     ]
+  //   )
+  //     .then((res) => {
+  //       console.log(res);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
   const HandleSellerRegister = async (
     username,
     name,
     mobile,
-    email,
     password,
     password_confirmation,
+    avatarBlob,
+    storeBlob,
+    commercialBlob,
+    organization_name,
     role_id
   ) => {
     const url = Api_url + signup_api;
+    // const avatarpic = await blobAvatar.blob();
+    // const storepic = await blobStorefront.blob();
+    // const commericalpic = await blobCommercialLicense.blob();
+
     setShowModal(true);
     axios
       .post(url, {
         username,
         name,
         mobile,
-        email,
         password,
         password_confirmation,
+        avatarBlob,
+        storeBlob,
+        commercialBlob,
+        organization_name,
         role_id,
       })
       .then((res) => {
@@ -92,14 +235,15 @@ const SignUp = ({ navigation }) => {
           navigation.goBack();
           // navigation.navigate("VerfiyNumber");
           setShowModal(false);
+          console.log(res);
         }
       })
       .catch((err) => {
         setError(err.response.data.message);
         setShowModal(false);
+        console.log(res);
       });
   };
-
   return (
     <ScrollView>
       <Formik
@@ -108,19 +252,27 @@ const SignUp = ({ navigation }) => {
           name: "",
           mobile: "",
           password: "",
+          password_confirmation: "",
+          blobAvatar: "",
+          blobStorefront: "",
+          blobCommercialLicense: "",
           organization_name: "",
-          role_id: "seller",
+          role_id: "provider",
         }}
-        onSubmit={async (values) =>
-          await HandleUserRegister(
+        onSubmit={async (values) => {
+          HandleSellerRegister(
             values.username,
             values.name,
             values.mobile,
             values.password,
+            values.password_confirmation,
+            avatarBlob,
+            storeBlob,
+            commercialBlob,
             values.organization_name,
             values.role_id
-          )
-        }
+          );
+        }}
       >
         {({ handleChange, handleBlur, handleSubmit, values }) => (
           <View style={styles.container}>
@@ -189,7 +341,9 @@ const SignUp = ({ navigation }) => {
                 </Heading>
               </View>
               <Stack space={4} w="100%" alignItems="center">
-                <Pressable onPress={pickAvatarImage}>
+                <Pressable
+                  onPress={() => pickAvatar(handleChange("blobAvatar"))}
+                >
                   <Avatar
                     width={100}
                     height={100}
@@ -197,9 +351,9 @@ const SignUp = ({ navigation }) => {
                     borderWidth={1}
                     borderColor={"#E56B1F"}
                   >
-                    {avatar && (
+                    {values.blobAvatar && (
                       <Image
-                        source={{ uri: avatar }}
+                        source={{ uri: values.blobAvatar }}
                         style={{ width: 90, height: 90, borderRadius: 50 }}
                       />
                     )}
@@ -249,9 +403,9 @@ const SignUp = ({ navigation }) => {
                   variant="underlined"
                   fontFamily={"Tajawal_500Medium"}
                   placeholder={t("phonenumber")}
-                  onBlur={handleBlur("phonenumber")}
-                  value={values.phonenumber}
-                  onChangeText={handleChange("phonenumber")}
+                  onBlur={handleBlur("mobile")}
+                  value={values.mobile}
+                  onChangeText={handleChange("mobile")}
                 />
 
                 <Input
@@ -279,13 +433,30 @@ const SignUp = ({ navigation }) => {
                   _text={{
                     color: "#ECECEC",
                   }}
+                  type={"password"}
+                  variant="underlined"
+                  height={35}
+                  fontFamily={"Tajawal_500Medium"}
+                  placeholder={t("confirmpassword")}
+                  onBlur={handleBlur("password_confirmation")}
+                  value={values.password_confirmation}
+                  onChangeText={handleChange("password_confirmation")}
+                />
+                <Input
+                  w={{
+                    base: "75%",
+                    md: "25%",
+                  }}
+                  _text={{
+                    color: "#ECECEC",
+                  }}
                   height={35}
                   variant="underlined"
                   fontFamily={"Tajawal_500Medium"}
                   placeholder={t("organizationname")}
-                  onBlur={handleBlur("organizationname")}
-                  value={values.organizationname}
-                  onChangeText={handleChange("organizationname")}
+                  onBlur={handleBlur("organization_name")}
+                  value={values.organization_name}
+                  onChangeText={handleChange("organization_name")}
                 />
 
                 <View
@@ -373,15 +544,17 @@ const SignUp = ({ navigation }) => {
                 </View>
                 <View style={styles.smallcontainer}>
                   <View style={styles.txtaround}>
-                    <Pressable onPress={pickStorefront}>
+                    <Pressable
+                      onPress={() => pickStore(handleChange("blobStorefront"))}
+                    >
                       <Text style={styles.txt}>choose file</Text>
                     </Pressable>
                   </View>
                   <Text style={styles.txt}>{t("merchantlogoo")}</Text>
                 </View>
-                {storefront && (
+                {values.blobStorefront && (
                   <Image
-                    source={{ uri: storefront }}
+                    source={{ uri: values.blobStorefront }}
                     style={{
                       height: 150,
                       width: 300,
@@ -392,15 +565,19 @@ const SignUp = ({ navigation }) => {
                 )}
                 <View style={styles.smallcontainer}>
                   <View style={styles.txtaround2}>
-                    <Pressable onPress={pickCommercialImage}>
+                    <Pressable
+                      onPress={() =>
+                        pickCommercial(handleChange("blobCommercialLicense"))
+                      }
+                    >
                       <Text style={styles.txt}>choose file</Text>
                     </Pressable>
                   </View>
                   <Text style={styles.txt}>{t("picoflicencemerchant")}</Text>
                 </View>
-                {commercialImg && (
+                {values.blobCommercialLicense && (
                   <Image
-                    source={{ uri: commercialImg }}
+                    source={{ uri: values.blobCommercialLicense }}
                     style={{
                       height: 150,
                       width: 300,
@@ -412,7 +589,7 @@ const SignUp = ({ navigation }) => {
               </Stack>
 
               <Button
-                onPress={() => navigation.navigate("VerfiyNumbers")}
+                onPress={handleSubmit}
                 style={styles.firstBut}
                 marginTop={15}
                 size="sm"
@@ -422,9 +599,7 @@ const SignUp = ({ navigation }) => {
                 {t("register")}
               </Button>
               <View style={styles.clickContainer}>
-                <Pressable
-                  onPress={() => navigation.navigate("ForgetPasswords")}
-                >
+                <Pressable onPress={() => navigation.goBack()}>
                   <Text style={styles.click}> {t("loginnow")}</Text>
                 </Pressable>
                 <Text>{t("haveaccount")}</Text>
