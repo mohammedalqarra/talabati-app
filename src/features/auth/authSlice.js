@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   data: [],
+  IsGuest: false,
   IsLogged: false,
   IsMerchant: false,
   IsUser: false,
@@ -15,12 +16,20 @@ export const authSlice = createSlice({
     handlelogInUser: (state, action) => {
       state.IsLogged = true;
       state.IsUser = true;
+      state.IsGuest = false;
       state.data = action.payload;
     },
 
     handlelogInMerchant: (state, action) => {
       state.IsLogged = true;
       state.IsMerchant = true;
+      state.IsGuest = false;
+      state.data = action.payload;
+    },
+    handlelogInGuest: (state, action) => {
+      state.IsLogged = false;
+      state.IsUser = false;
+      state.IsGuest = true;
       state.data = action.payload;
     },
 
@@ -28,12 +37,17 @@ export const authSlice = createSlice({
       state.IsLogged = false;
       state.IsMerchant = false;
       state.IsUser = false;
+      state.IsGuest = false;
       state.date = null;
     },
   },
 });
 
-export const { handlelogInUser, handlelogInMerchant, handlelogOut } =
-  authSlice.actions;
+export const {
+  handlelogInUser,
+  handlelogInMerchant,
+  handlelogInGuest,
+  handlelogOut,
+} = authSlice.actions;
 
 export default authSlice.reducer;

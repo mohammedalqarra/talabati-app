@@ -37,13 +37,15 @@ const Renderpages = () => {
   );
 };
 
-function Paths() {
-  const IsLogged = useSelector((state) => state.auth.IsLogged);
+const Renderpages2 = () => {
+  const IsGuest = useSelector((state) => state.auth.IsGuest);
 
   return (
-    <NavigationContainer>
-      {IsLogged ? (
-        <Renderpages />
+    <>
+      {IsGuest ? (
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="home" component={TabNavigation} />
+        </Stack.Navigator>
       ) : (
         <Stack.Navigator
           initialRouteName="WelcomeScreen"
@@ -62,6 +64,15 @@ function Paths() {
           />
         </Stack.Navigator>
       )}
+    </>
+  );
+};
+function Paths() {
+  const IsLogged = useSelector((state) => state.auth.IsLogged);
+
+  return (
+    <NavigationContainer>
+      {IsLogged ? <Renderpages /> : <Renderpages2 />}
     </NavigationContainer>
   );
 }

@@ -1,19 +1,12 @@
 //finished
-import {
-  View,
-  Text,
-  Image,
-  StyleSheet,
-  useWindowDimensions,
-  ActivityIndicator,
-} from "react-native";
+import { View, Text, Image, StyleSheet, ActivityIndicator } from "react-native";
 import React, { useState } from "react";
 import { Input, Stack, Button, Pressable, Heading } from "native-base";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 // import { UserLogIn } from "../features/auth/authSlice";
 import { Formik } from "formik";
-import { handlelogInUser } from "../features/auth/authSlice";
+import { handlelogInUser, handlelogInGuest } from "../features/auth/authSlice";
 import { login_api, Api_url } from "../utilites/ApiConstants";
 import axios from "axios";
 import { Modal } from "native-base";
@@ -151,7 +144,7 @@ const Login = ({ navigation }) => {
                 {t("log")}
               </Button>
               <Button
-                onPress={() => navigation.goBack()}
+                onPress={() => dispatch(handlelogInGuest())}
                 style={styles.secBut}
                 size="sm"
                 background={"#FBF9F9"}
