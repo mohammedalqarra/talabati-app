@@ -15,6 +15,7 @@ import axios from "axios";
 import { check_token, Api_url } from "../../utilites/ApiConstants";
 import { storeData, RemoveData } from "../../features/dataSlice";
 import { Modal } from "native-base";
+import { Button } from "native-base";
 
 const MyAccount = ({ navigation }) => {
   const IsGuest = useSelector((state) => state.auth.IsGuest);
@@ -261,7 +262,17 @@ const MyAccount = ({ navigation }) => {
             <Modal.Content maxWidth="400px">
               <Modal.Body>
                 <View style={styles.centerizedCol}>
-                  <Text>please log in </Text>
+                  <Text>Please Log In </Text>
+                  <Button
+                    onPress={() => dispatch(handlelogOut())}
+                    style={styles.firstBut}
+                    size="sm"
+                    backgroundColor={"#E56B1F"}
+                    marginTop={10}
+                    _text={{ fontSize: 14 }}
+                  >
+                    {t("log")}
+                  </Button>
                 </View>
               </Modal.Body>
             </Modal.Content>
