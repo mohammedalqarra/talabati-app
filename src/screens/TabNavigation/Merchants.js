@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Image,
@@ -6,6 +6,7 @@ import {
   useWindowDimensions,
   FlatList,
   ScrollView,
+  ActivityIndicator,
 } from "react-native";
 import {
   Text,
@@ -20,7 +21,9 @@ import {
   AspectRatio,
   Center,
   Divider,
+  Modal,
 } from "native-base";
+// dummy images
 import SmallLogo1 from "../../images/smallLogo/1.png";
 import SmallLogo2 from "../../images/smallLogo/2.png";
 import SmallLogo3 from "../../images/smallLogo/3.png";
@@ -35,41 +38,50 @@ import Logo4 from "../../images/logo/logo4.png";
 import Logo5 from "../../images/logo/logo5.png";
 import Logo6 from "../../images/logo/logo6.png";
 import { useTranslation } from "react-i18next";
+import { Api_url, guest_categories_api } from "../../utilites/ApiConstants";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
 
 const Merchants = ({ navigation }) => {
   const { t, i18n } = useTranslation();
-  const [FlatListData1, setFlatListData1] = useState([
-    {
-      id: "bd7acbea-c1b1-461231c2-aed5-3ad53abb28ba",
-      title: "بقاله",
-      photo: SmallLogo1,
-    },
-    {
-      id: "3ac68afc-c605-48d3-a3124f8-fbd91aa97f63",
-      title: "صيدليات",
-      photo: SmallLogo2,
-    },
-    {
-      id: "58694a0f-3da1-471f-bd496-145571e29d72",
-      title: "مطاعم",
-      photo: SmallLogo3,
-    },
-    {
-      id: "58694a0f-3da1-471f-bd596-14545431e29d72",
-      title: "مشروبات",
-      photo: SmallLogo4,
-    },
-    {
-      id: "58694a0f-3da1-2471f-bd96-1451123e29d72",
-      title: "حلويات",
-      photo: SmallLogo5,
-    },
-    {
-      id: "58694a0f-3da1-471f-bd96-145ada66se29d72",
-      title: "تمور",
-      photo: SmallLogo6,
-    },
-  ]);
+  const [FlatListData1, setFlatListData1] = useState([]);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const IsGuest = useSelector((state) => state.auth.IsGuest);
+
+  //! start Dummy Data just for testing
+  //  const [FlatListData1, setFlatListData1] = useState([
+  //     {
+  //       id: "bd7acbea-c1b1-461231c2-aed5-3ad53abb28ba",
+  //       title: "بقاله",
+  //       photo: SmallLogo1,
+  //     },
+  //     {
+  //       id: "3ac68afc-c605-48d3-a3124f8-fbd91aa97f63",
+  //       title: "صيدليات",
+  //       photo: SmallLogo2,
+  //     },
+  //     {
+  //       id: "58694a0f-3da1-471f-bd496-145571e29d72",
+  //       title: "مطاعم",
+  //       photo: SmallLogo3,
+  //     },
+  //     {
+  //       id: "58694a0f-3da1-471f-bd596-14545431e29d72",
+  //       title: "مشروبات",
+  //       photo: SmallLogo4,
+  //     },
+  //     {
+  //       id: "58694a0f-3da1-2471f-bd96-1451123e29d72",
+  //       title: "حلويات",
+  //       photo: SmallLogo5,
+  //     },
+  //     {
+  //       id: "58694a0f-3da1-471f-bd96-145ada66se29d72",
+  //       title: "تمور",
+  //       photo: SmallLogo6,
+  //     },
+  //   ]);
 
   const [FlatListData2, setFlatListData2] = useState([
     {
@@ -103,72 +115,130 @@ const Merchants = ({ navigation }) => {
       photo: Logo6,
     },
   ]);
+  //! end of Dummy Data
+
+  const RefresingData = async () => {
+    setLoading(true);
+    if (IsGuest) {
+      const url = Api_url + guest_categories_api;
+      console.log(url);
+      axios
+        .get(url)
+        .then((res) => {
+          if (res && res.status == 200) {
+            setLoading(false);
+            console.log(res.data.data);
+            setFlatListData1(res.data.data);
+          }
+        })
+        .catch((err) => {
+          setError(err.response.data.message);
+          setLoading(false);
+        });
+    } else {
+      console.log("error");
+    }
+  };
+
+  useEffect(() => {
+    navigation.addListener("focus", () => {
+      RefresingData();
+    });
+  }, []);
+
   const { height } = useWindowDimensions();
   return (
     <View style={styles.container}>
-      <View>
-        <FlatList
-          height={80}
-          style={{}}
-          horizontal
-          data={FlatListData1}
-          renderItem={({ item }) => (
-            <Pressable
-              marginHorizontal={10}
-              onPress={() => console.warn(`you clicked num ${item.title}`)}
-            >
-              <Box>
-                <Box width={75} height={75} alignItems="center">
-                  <Image
-                    style={styles.smalllogo}
-                    source={item.photo}
-                    alt="image"
-                    width={50}
-                    height={50}
-                    resizeMode="contain"
-                  />
-                  <Center width={"100%"} height={"40%"}>
-                    <View style={styles.FlatListContainerUnder3}>
-                      <Text style={styles.txt1}>{item.title}</Text>
-                    </View>
-                  </Center>
-                </Box>
-              </Box>
-            </Pressable>
-          )}
-          keyExtractor={(item) => item.id}
-        />
-      </View>
-      {/* second flatlist */}
-      <View
-        style={{
-          marginTop: 10,
-        }}
-      >
-        <FlatList
-          data={FlatListData2}
-          keyExtractor={(item) => item.id}
-          numColumns={2}
-          style={{
-            marginBottom: 90,
-          }}
-          renderItem={({ item }) => (
-            <Pressable onPress={() => navigation.navigate("ShopDetail")}>
-              <Box
-                padding={8}
-                backgroundColor={"#FFFFFF"}
-                margin={2}
-                width={185}
-                height={240}
-              >
-                <Image source={item.photo} />
-                <View style={styles.line}></View>
-                <Text style={styles.txt}>{item.title}</Text>
-              </Box>
-            </Pressable>
-          )}
-        />
-      </View>
+      {loading == true ? (
+        <View>
+          <ActivityIndicator />
+        </View>
+      ) : (
+        <View>
+          <View>
+            <View>
+              <View>
+                {error && (
+                  <View style={styles.errmessage}>
+                    <Text style={styles.errmessagetxt}>{error}</Text>
+                  </View>
+                )}
+              </View>
+              <View>
+                {error === undefined && (
+                  <View style={styles.errmessage}>
+                    <Text style={styles.errmessagetxt}>
+                      {" "}
+                      Check Your Connection and Refresh Your App{" "}
+                    </Text>
+                  </View>
+                )}
+              </View>
+            </View>
+            <FlatList
+              height={80}
+              style={{}}
+              horizontal
+              keyExtractor={(item) => item.id}
+              data={FlatListData1}
+              renderItem={({ item }) => (
+                <Pressable
+                  marginHorizontal={10}
+                  onPress={() => console.warn(`you clicked num ${item.name}`)}
+                >
+                  <Box>
+                    <Box width={75} height={75} alignItems="center">
+                      <Image
+                        style={styles.smalllogo}
+                        source={"https://dev.talbati.com/storage/media/3/0.png"}
+                        alt="image"
+                        width={50}
+                        height={50}
+                        resizeMode="contain"
+                      />
+                      <Center width={"100%"} height={"40%"}>
+                        <View style={styles.FlatListContainerUnder3}>
+                          <Text style={styles.txt1}>{item.name}</Text>
+                        </View>
+                      </Center>
+                    </Box>
+                  </Box>
+                </Pressable>
+              )}
+            />
+          </View>
+          {/* second flatlist */}
+          <View
+            style={{
+              marginTop: 10,
+            }}
+          >
+            <FlatList
+              data={FlatListData2}
+              keyExtractor={(item) => item.id}
+              numColumns={2}
+              style={{
+                marginBottom: 90,
+              }}
+              renderItem={({ item }) => (
+                <Pressable onPress={() => navigation.navigate("ShopDetail")}>
+                  <Box
+                    padding={8}
+                    backgroundColor={"#FFFFFF"}
+                    margin={2}
+                    width={185}
+                    height={240}
+                  >
+                    <Image source={item.photo} />
+                    <View style={styles.line}></View>
+                    <Text style={styles.txt}>{item.title}</Text>
+                  </Box>
+                </Pressable>
+              )}
+            />
+          </View>
+        </View>
+      )}
     </View>
   );
 };
@@ -205,6 +275,22 @@ const styles = StyleSheet.create({
     color: "#555555",
     fontSize: 14,
     fontFamily: "Tajawal_500Medium",
+  },
+  centerizedCol: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  errmessage: {
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 10,
+  },
+  errmessagetxt: {
+    fontSize: 14,
+    fontFamily: "Tajawal_500Medium",
+    color: "red",
   },
 });
 

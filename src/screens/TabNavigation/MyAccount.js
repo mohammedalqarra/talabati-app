@@ -22,22 +22,18 @@ const MyAccount = ({ navigation }) => {
   const [showModal, setShowModal] = useState(false);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
-
+  const token = useSelector((state) => state.auth.data.token);
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
-  const refreshingData = () => {
+  useEffect(() => {
     if (IsGuest == false) {
       navigation.addListener("focus", () => {
         RefresingData(token);
       });
     } else {
-      ("");
+      return "";
     }
-  };
-
-  useEffect(() => {
-    refreshingData();
   }, []);
 
   const RefresingData = async (token) => {
@@ -58,10 +54,6 @@ const MyAccount = ({ navigation }) => {
           setLoading(false);
         }
       })
-      // .then(() => {
-      //   const data = useSelector((state) => state.data);
-      // })
-
       .catch((err) => {
         setError(err.response.data.message);
         setLoading(false);
@@ -70,7 +62,6 @@ const MyAccount = ({ navigation }) => {
 
   const RenderItems = () => {
     // The Data
-    const token = useSelector((state) => state.auth.data.token);
     const data = useSelector((state) => state.data.data);
     const { name, email, mobile } = data;
     return (
@@ -233,8 +224,35 @@ const MyAccount = ({ navigation }) => {
     );
   };
 
+  const RenderGuestItems = () => {
+    return (
+      <>
+        {/* start of modal */}
+        <Modal isOpen={IsGuest}>
+          <Modal.Content maxWidth="400px">
+            <Modal.Body>
+              <View style={styles.centerizedCol}>
+                <Text>Please Log In </Text>
+                <Button
+                  onPress={() => dispatch(handlelogOut())}
+                  style={styles.firstBut}
+                  size="sm"
+                  backgroundColor={"#E56B1F"}
+                  marginTop={10}
+                  _text={{ fontSize: 14 }}
+                >
+                  {t("log")}
+                </Button>
+              </View>
+            </Modal.Body>
+          </Modal.Content>
+        </Modal>
+        {/* end of modal */}
+      </>
+    );
+  };
+
   return (
-    // {IsGuest == true ? () : ()}
     <ScrollView style={styles.container}>
       <View>
         <View>
@@ -256,29 +274,7 @@ const MyAccount = ({ navigation }) => {
         </View>
       </View>
       {IsGuest == true ? (
-        <>
-          {/* start of modal */}
-          <Modal isOpen={IsGuest}>
-            <Modal.Content maxWidth="400px">
-              <Modal.Body>
-                <View style={styles.centerizedCol}>
-                  <Text>Please Log In </Text>
-                  <Button
-                    onPress={() => dispatch(handlelogOut())}
-                    style={styles.firstBut}
-                    size="sm"
-                    backgroundColor={"#E56B1F"}
-                    marginTop={10}
-                    _text={{ fontSize: 14 }}
-                  >
-                    {t("log")}
-                  </Button>
-                </View>
-              </Modal.Body>
-            </Modal.Content>
-          </Modal>
-          {/* end of modal */}
-        </>
+        <RenderGuestItems />
       ) : (
         <>
           <RenderItems />

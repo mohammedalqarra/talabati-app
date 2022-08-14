@@ -5,7 +5,8 @@ export const forget_pass_api = "ForgotPassword";
 export const check_token = "check-token";
 export const change_password_api = "User/update-password";
 export const notifications = "Notification";
-// export const categories_api = 'categories/list';
+// For Guest
+export const guest_categories_api = "Static/Category";
 // export const products_api = 'product/list';
 // export const banner_api = 'banners/list';
 // export const add_address_api = 'address/add';
