@@ -188,14 +188,19 @@ const Merchants = ({ navigation }) => {
                 >
                   <Box>
                     <Box width={75} height={75} alignItems="center">
-                      <Image
+                      {/* <Image
                         style={styles.smalllogo}
-                        source={"https://dev.talbati.com/storage/media/3/0.png"}
+                        source={{ uri: "https://dev.talbati.com/storage/media/3/0.png" }}
                         alt="image"
                         width={50}
                         height={50}
                         resizeMode="contain"
-                      />
+                      /> */}
+                      <Image source={{
+                        uri: "https://wallpaperaccess.com/full/317501.jpg"
+                      }} alt="Alternate Text" size="xl" width={50}
+                        height={50}
+                        resizeMode="contain" />
                       <Center width={"100%"} height={"40%"}>
                         <View style={styles.FlatListContainerUnder3}>
                           <Text style={styles.txt1}>{item.name}</Text>
