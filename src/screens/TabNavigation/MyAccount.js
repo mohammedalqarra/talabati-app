@@ -22,48 +22,50 @@ const MyAccount = ({ navigation }) => {
   const [showModal, setShowModal] = useState(false);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
-  const token = useSelector((state) => state.auth.data.token);
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
-  useEffect(() => {
-    if (IsGuest == false) {
-      navigation.addListener("focus", () => {
-        RefresingData(token);
-      });
-    } else {
-      return "";
-    }
-  }, []);
-
-  const RefresingData = async (token) => {
-    setLoading(true);
-    const url = Api_url + check_token;
-    const config = {
-      headers: { Authorization: `Bearer ${token}` },
-    };
-    axios
-      .get(url, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((res) => {
-        if (res && res.status == 200) {
-          dispatch(storeData(res.data.data));
-          setLoading(false);
-        }
-      })
-      .catch((err) => {
-        setError(err.response.data.message);
-        setLoading(false);
-      });
-  };
-
   const RenderItems = () => {
+    const token = useSelector((state) => state.auth.data.token);
+
     // The Data
     const data = useSelector((state) => state.data.data);
     const { name, email, mobile } = data;
+
+    useEffect(() => {
+      if (IsGuest == false) {
+        navigation.addListener("focus", () => {
+          RefresingData(token);
+        });
+      } else {
+        return "";
+      }
+    }, []);
+
+    const RefresingData = async (token) => {
+      setLoading(true);
+      const url = Api_url + check_token;
+      const config = {
+        headers: { Authorization: `Bearer ${token}` },
+      };
+      axios
+        .get(url, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((res) => {
+          if (res && res.status == 200) {
+            dispatch(storeData(res.data.data));
+            setLoading(false);
+          }
+        })
+        .catch((err) => {
+          setError(err.response.data.message);
+          setLoading(false);
+        });
+    };
+
     return (
       <>
         <View>

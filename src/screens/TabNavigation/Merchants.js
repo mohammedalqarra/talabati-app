@@ -184,7 +184,7 @@ const Merchants = ({ navigation }) => {
               renderItem={({ item }) => (
                 <Pressable
                   marginHorizontal={10}
-                  onPress={() => console.warn(`you clicked num ${item.name}`)}
+                  // onPress={() => console.warn(`you clicked num ${item.name}`)}
                 >
                   <Box>
                     <Box width={75} height={75} alignItems="center">
@@ -196,11 +196,16 @@ const Merchants = ({ navigation }) => {
                         height={50}
                         resizeMode="contain"
                       /> */}
-                      <Image source={{
-                        uri: "https://wallpaperaccess.com/full/317501.jpg"
-                      }} alt="Alternate Text" size="xl" width={50}
+                      <Image
+                        source={{
+                          uri: item.avatar,
+                        }}
+                        alt="Alternate Text"
+                        size="xl"
+                        width={50}
                         height={50}
-                        resizeMode="contain" />
+                        resizeMode="contain"
+                      />
                       <Center width={"100%"} height={"40%"}>
                         <View style={styles.FlatListContainerUnder3}>
                           <Text style={styles.txt1}>{item.name}</Text>
