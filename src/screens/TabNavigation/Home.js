@@ -149,7 +149,17 @@ const Home = ({ navigation }) => {
           setLoading(false);
         });
     } else {
-      console.log("error");
+      setFlatListData0([
+        {
+          id: "bd7acbrewea-c1b1-461231c2-aed5-3ad53abb28ba",
+          avatar: "https://dev.talbati.com/storage/media/1/1.png",
+        },
+        {
+          id: "bd7acbrew44ea-c1b1-461231c2-aed5-3ad53abb28ba",
+          avatar: "https://dev.talbati.com/storage/media/2/2.png",
+        },
+      ]);
+      setLoading(false);
     }
   };
 
