@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Image,
@@ -7,6 +7,7 @@ import {
   FlatList,
   ScrollView,
   Dimensions,
+  ActivityIndicator,
 } from "react-native";
 
 import { Text, Pressable, Box, Center } from "native-base";
@@ -18,22 +19,28 @@ import Logo5 from "../../images/logo/logo5.png";
 import Logo6 from "../../images/logo/logo6.png";
 
 import { useTranslation } from "react-i18next";
+import { Api_url, guest_orders_api } from "../../utilites/ApiConstants";
+import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
 
 const Home = ({ navigation }) => {
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const IsGuest = useSelector((state) => state.auth.IsGuest);
   const dimensions = useWindowDimensions();
-
   const { t } = useTranslation();
+  const [FlatListData0, setFlatListData0] = useState([]);
   // ! start Dummy Data just for testing
-  const [FlatListData0, setFlatListData0] = useState([
-    {
-      id: "bd7acbrewea-c1b1-461231c2-aed5-3ad53abb28ba",
-      photo: "https://dev.talbati.com/storage/media/1/1.png",
-    },
-    {
-      id: "bd7acbrew44ea-c1b1-461231c2-aed5-3ad53abb28ba",
-      photo: "https://dev.talbati.com/storage/media/1/1.png",
-    },
-  ]);
+  // const [FlatListData0, setFlatListData0] = useState([
+  //   {
+  //     id: "bd7acbrewea-c1b1-461231c2-aed5-3ad53abb28ba",
+  //     photo: "https://dev.talbati.com/storage/media/1/1.png",
+  //   },
+  //   {
+  //     id: "bd7acbrew44ea-c1b1-461231c2-aed5-3ad53abb28ba",
+  //     photo: "https://dev.talbati.com/storage/media/2/2.png",
+  //   },
+  // ]);
 
   const [FlatListData1, setFlatListData1] = useState([
     {
@@ -118,174 +125,216 @@ const Home = ({ navigation }) => {
       photo: Logo6,
     },
   ]);
+  //! end of dummy Data
+
+  const RefresingData = async () => {
+    setLoading(true);
+    if (IsGuest) {
+      const url = Api_url + guest_orders_api;
+      console.log(url);
+      axios
+        .get(url)
+        .then((res) => {
+          if (res && res.status == 200) {
+            setLoading(false);
+            console.log(res.data.data);
+            setFlatListData0(res.data.data);
+          }
+        })
+        .then(() => {
+          console.log("flatlist is ", FlatListData0);
+        })
+        .catch((err) => {
+          setError(err.response.data.message);
+          setLoading(false);
+        });
+    } else {
+      console.log("error");
+    }
+  };
+
+  useEffect(() => {
+    navigation.addListener("focus", () => {
+      RefresingData();
+    });
+  }, []);
+
   return (
     <ScrollView style={styles.container}>
-      <View style={styles.firstText}>
-        <Text
-          style={styles.txt}
-          color={"#555555"}
-          fontSize={15}
-          fontFamily={"Tajawal_500Medium"}
-        >
-          {t("Offers")}
-        </Text>
-      </View>
-      <View>
-        <FlatList
-          pagingEnabled={true}
-          showsHorizontalScrollIndicator={false}
-          height={80}
-          style={styles.FirstImgContainer}
-          horizontal
-          keyExtractor={(item) => item.id}
-          data={FlatListData0}
-          renderItem={({ item }) => (
-            <View>
-              <Image
-                source={{ uri: item.photo }}
-                resizeMode={"contain"}
-                style={styles.bannerImg}
-              />
-            </View>
-          )}
-        />
-      </View>
-      <View style={styles.secondText}>
-        <Pressable onPress={() => navigation.navigate("Merchants")}>
-          <Text
-            style={styles.txt}
-            color={"#555555"}
-            fontSize={15}
-            fontFamily={"Tajawal_500Medium"}
-          >
-            {t("showAll")}
-          </Text>
-        </Pressable>
-        <Text
-          style={styles.txt}
-          color={"#555555"}
-          fontSize={15}
-          fontFamily={"Tajawal_500Medium"}
-        >
-          {t("famousMerchant")}
-        </Text>
-      </View>
-      <FlatList
-        data={FlatListData1}
-        renderItem={({ item }) => (
-          <Pressable
-            marginHorizontal={10}
-            onPress={() => console.warn(`you clicked num ${item.title}`)}
-          >
-            <Box alignItems="center">
-              <Box
-                width={210}
-                rounded="lg"
-                overflow="hidden"
-                borderColor="coolGray.200"
-                borderWidth="1"
-                justifyItems={"center"}
-                height={160}
+      {loading == true ? (
+        <View>
+          <ActivityIndicator />
+        </View>
+      ) : (
+        <View>
+          <View style={styles.firstText}>
+            <Text
+              style={styles.txt}
+              color={"#555555"}
+              fontSize={15}
+              fontFamily={"Tajawal_500Medium"}
+            >
+              {t("Offers")}
+            </Text>
+          </View>
+          <View>
+            <FlatList
+              pagingEnabled={true}
+              showsHorizontalScrollIndicator={false}
+              height={80}
+              style={styles.FirstImgContainer}
+              horizontal
+              keyExtractor={(item) => item.id}
+              data={FlatListData0}
+              renderItem={({ item }) => (
+                <View>
+                  <Image
+                    source={{ uri: item.avatar }}
+                    resizeMode={"contain"}
+                    style={styles.bannerImg}
+                  />
+                </View>
+              )}
+            />
+          </View>
+          <View style={styles.secondText}>
+            <Pressable onPress={() => navigation.navigate("Merchants")}>
+              <Text
+                style={styles.txt}
+                color={"#555555"}
+                fontSize={15}
+                fontFamily={"Tajawal_500Medium"}
               >
-                <Image
-                  source={item.photo}
-                  alt="image"
-                  style={{ marginLeft: 50 }}
-                />
-                <Center
-                  backgroundColor={"rgba(0,0,0,0.5)"}
-                  _text={{
-                    color: "#FFFFFF",
-                  }}
-                  position="absolute"
-                  bottom="0"
-                  width={"100%"}
-                  height={"40%"}
-                  flexDirection={"row"}
-                  justifyItems={"center"}
-                >
-                  <View style={styles.FlatListContainerUnder}>
-                    <View style={styles.FlatListContainerUnder1}>
-                      <Image
-                        style={styles.star}
-                        source={require("../../images/star.png")}
-                      />
-                      <Text style={styles.txt} color={"#FFFFFF"}>
-                        {item.star}
-                      </Text>
-                    </View>
-                    <View style={styles.FlatListContainerUnder2}>
-                      <Text style={styles.txt} color={"#FFFFFF"}>
-                        {item.title}
-                      </Text>
-                      <Text style={styles.txt} color={"#FFFFFF"}>
-                        {item.distance} {t("km")}
-                      </Text>
-                    </View>
-                  </View>
-                </Center>
-              </Box>
-            </Box>
-          </Pressable>
-        )}
-        keyExtractor={(item) => item.id}
-        horizontal
-      />
-      <View style={styles.thirdText}>
-        <Pressable onPress={() => navigation.navigate("Merchants")}>
-          <Text color={"#555555"} fontSize={15} style={styles.txt}>
-            {t("showAll")}
-          </Text>
-        </Pressable>
-        <Text color={"#555555"} fontSize={15} style={styles.txt}>
-          {t("Merchant")}
-        </Text>
-      </View>
-      <FlatList
-        data={FlatListData2}
-        renderItem={({ item }) => (
-          <Pressable
-            marginHorizontal={10}
-            onPress={() => console.warn(`you clicked num ${item.title}`)}
-          >
-            <Box alignItems="center">
-              <Box
-                width={150}
-                rounded="lg"
-                overflow="hidden"
-                borderColor="coolGray.200"
-                borderWidth="1"
-                justifyItems={"center"}
-                height={160}
+                {t("showAll")}
+              </Text>
+            </Pressable>
+            <Text
+              style={styles.txt}
+              color={"#555555"}
+              fontSize={15}
+              fontFamily={"Tajawal_500Medium"}
+            >
+              {t("famousMerchant")}
+            </Text>
+          </View>
+          <FlatList
+            data={FlatListData1}
+            renderItem={({ item }) => (
+              <Pressable
+                marginHorizontal={10}
+                onPress={() => console.warn(`you clicked num ${item.title}`)}
               >
-                <Image
-                  source={item.photo}
-                  alt="image"
-                  style={{ marginLeft: 20, height: 110, marginTop: 5 }}
-                />
-                <View style={styles.line}></View>
-                <Center
-                  _text={{
-                    color: "#FFFFFF",
-                  }}
-                  position="absolute"
-                  bottom="0"
-                  width={"100%"}
-                  height={"40%"}
-                  flexDirection={"row"}
-                  justifyItems={"center"}
-                >
-                  <View style={styles.FlatListContainerUnder3}>
-                    <Text style={styles.txt}>{item.title}</Text>
-                  </View>
-                </Center>
-              </Box>
-            </Box>
-          </Pressable>
-        )}
-        keyExtractor={(item) => item.id}
-        horizontal
-      />
+                <Box alignItems="center">
+                  <Box
+                    width={210}
+                    rounded="lg"
+                    overflow="hidden"
+                    borderColor="coolGray.200"
+                    borderWidth="1"
+                    justifyItems={"center"}
+                    height={160}
+                  >
+                    <Image
+                      source={item.photo}
+                      alt="image"
+                      style={{ marginLeft: 50 }}
+                    />
+                    <Center
+                      backgroundColor={"rgba(0,0,0,0.5)"}
+                      _text={{
+                        color: "#FFFFFF",
+                      }}
+                      position="absolute"
+                      bottom="0"
+                      width={"100%"}
+                      height={"40%"}
+                      flexDirection={"row"}
+                      justifyItems={"center"}
+                    >
+                      <View style={styles.FlatListContainerUnder}>
+                        <View style={styles.FlatListContainerUnder1}>
+                          <Image
+                            style={styles.star}
+                            source={require("../../images/star.png")}
+                          />
+                          <Text style={styles.txt} color={"#FFFFFF"}>
+                            {item.star}
+                          </Text>
+                        </View>
+                        <View style={styles.FlatListContainerUnder2}>
+                          <Text style={styles.txt} color={"#FFFFFF"}>
+                            {item.title}
+                          </Text>
+                          <Text style={styles.txt} color={"#FFFFFF"}>
+                            {item.distance} {t("km")}
+                          </Text>
+                        </View>
+                      </View>
+                    </Center>
+                  </Box>
+                </Box>
+              </Pressable>
+            )}
+            keyExtractor={(item) => item.id}
+            horizontal
+          />
+          <View style={styles.thirdText}>
+            <Pressable onPress={() => navigation.navigate("Merchants")}>
+              <Text color={"#555555"} fontSize={15} style={styles.txt}>
+                {t("showAll")}
+              </Text>
+            </Pressable>
+            <Text color={"#555555"} fontSize={15} style={styles.txt}>
+              {t("Merchant")}
+            </Text>
+          </View>
+          <FlatList
+            data={FlatListData2}
+            renderItem={({ item }) => (
+              <Pressable
+                marginHorizontal={10}
+                onPress={() => console.warn(`you clicked num ${item.title}`)}
+              >
+                <Box alignItems="center">
+                  <Box
+                    width={150}
+                    rounded="lg"
+                    overflow="hidden"
+                    borderColor="coolGray.200"
+                    borderWidth="1"
+                    justifyItems={"center"}
+                    height={160}
+                  >
+                    <Image
+                      source={item.photo}
+                      alt="image"
+                      style={{ marginLeft: 20, height: 110, marginTop: 5 }}
+                    />
+                    <View style={styles.line}></View>
+                    <Center
+                      _text={{
+                        color: "#FFFFFF",
+                      }}
+                      position="absolute"
+                      bottom="0"
+                      width={"100%"}
+                      height={"40%"}
+                      flexDirection={"row"}
+                      justifyItems={"center"}
+                    >
+                      <View style={styles.FlatListContainerUnder3}>
+                        <Text style={styles.txt}>{item.title}</Text>
+                      </View>
+                    </Center>
+                  </Box>
+                </Box>
+              </Pressable>
+            )}
+            keyExtractor={(item) => item.id}
+            horizontal
+          />
+        </View>
+      )}
     </ScrollView>
   );
 };
@@ -359,6 +408,22 @@ const styles = StyleSheet.create({
   },
   txt: {
     fontFamily: "Tajawal_500Medium",
+  },
+  centerizedCol: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  errmessage: {
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 10,
+  },
+  errmessagetxt: {
+    fontSize: 14,
+    fontFamily: "Tajawal_500Medium",
+    color: "red",
   },
 });
 

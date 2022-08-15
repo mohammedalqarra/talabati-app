@@ -8,7 +8,7 @@ export const notifications = "Notification";
 export const update_account = "User/update-account";
 // For Guest
 export const guest_categories_api = "Static/Category";
-// export const products_api = 'product/list';
+export const guest_orders_api = "Static/Offer";
 // export const banner_api = 'banners/list';
 // export const add_address_api = 'address/add';
 // export const update_address_api = 'address/update';
