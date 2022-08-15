@@ -131,6 +131,9 @@ const Merchants = ({ navigation }) => {
             setFlatListData1(res.data.data);
           }
         })
+        .then(() => {
+          console.log("flatlist is ", FlatListData1);
+        })
         .catch((err) => {
           setError(err.response.data.message);
           setLoading(false);
@@ -188,24 +191,13 @@ const Merchants = ({ navigation }) => {
                 >
                   <Box>
                     <Box width={75} height={75} alignItems="center">
-                      {/* <Image
-                        style={styles.smalllogo}
-                        source={{ uri: "https://dev.talbati.com/storage/media/3/0.png" }}
-                        alt="image"
-                        width={50}
-                        height={50}
-                        resizeMode="contain"
-                      /> */}
                       <Image
-                        source={{
-                          uri: item.avatar,
-                        }}
-                        alt="Alternate Text"
-                        size="xl"
-                        width={50}
-                        height={50}
+                        style={styles.smalllogo}
+                        source={{ uri: item.avatar }}
+                        alt="image"
                         resizeMode="contain"
                       />
+
                       <Center width={"100%"} height={"40%"}>
                         <View style={styles.FlatListContainerUnder3}>
                           <Text style={styles.txt1}>{item.name}</Text>
@@ -259,6 +251,8 @@ const styles = StyleSheet.create({
   },
   smalllogo: {
     borderRadius: 50,
+    width: 50,
+    height: 50,
   },
   FlatListContainerUnder3: {
     display: "flex",
