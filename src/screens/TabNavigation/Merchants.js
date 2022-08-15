@@ -48,7 +48,6 @@ const Merchants = ({ navigation }) => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const IsGuest = useSelector((state) => state.auth.IsGuest);
-
   //! start Dummy Data just for testing
   //  const [FlatListData1, setFlatListData1] = useState([
   //     {
@@ -139,13 +138,52 @@ const Merchants = ({ navigation }) => {
           setLoading(false);
         });
     } else {
-      console.log("error");
+      setFlatListData1([
+        {
+          id: "bd7acbea-c1b1-461231c2-aed5-3ad53abb28ba",
+          name_ar: "بقاله",
+          name_en: "store",
+          avatar: SmallLogo1,
+        },
+        {
+          id: "3ac68afc-c605-48d3-a3124f8-fbd91aa97f63",
+          name_ar: "صيدليات",
+          name_en: "pharmacy",
+          avatar: SmallLogo2,
+        },
+        {
+          id: "58694a0f-3da1-471f-bd496-145571e29d72",
+          name_ar: "مطاعم",
+          name_en: "resturant",
+          avatar: SmallLogo3,
+        },
+        {
+          id: "58694a0f-3da1-471f-bd596-14545431e29d72",
+          name_ar: "مشروبات",
+          name_en: "drinks",
+          avatar: SmallLogo4,
+        },
+        {
+          id: "58694a0f-3da1-2471f-bd96-1451123e29d72",
+          name_ar: "حلويات",
+          name_en: "deserts",
+          avatar: SmallLogo5,
+        },
+        {
+          id: "58694a0f-3da1-471f-bd96-145ada66se29d72",
+          name_ar: "تمور",
+          name_en: "tomor",
+          avatar: SmallLogo6,
+        },
+      ]);
+      setLoading(false);
     }
   };
 
   useEffect(() => {
     navigation.addListener("focus", () => {
       RefresingData();
+      // console.log(i18n.language);
     });
   }, []);
 
@@ -200,7 +238,12 @@ const Merchants = ({ navigation }) => {
 
                       <Center width={"100%"} height={"40%"}>
                         <View style={styles.FlatListContainerUnder3}>
-                          <Text style={styles.txt1}>{item.name}</Text>
+                          {i18n.language === "ar" && (
+                            <Text style={styles.txt1}>{item.name_ar}</Text>
+                          )}
+                          {i18n.language === "en" && (
+                            <Text style={styles.txt1}>{item.name_en}</Text>
+                          )}
                         </View>
                       </Center>
                     </Box>
