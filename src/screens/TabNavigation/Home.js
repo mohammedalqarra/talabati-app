@@ -6,7 +6,9 @@ import {
   useWindowDimensions,
   FlatList,
   ScrollView,
+  Dimensions,
 } from "react-native";
+
 import { Text, Pressable, Box, Center } from "native-base";
 import Logo1 from "../../images/logo/logo1.png";
 import Logo2 from "../../images/logo/logo2.png";
@@ -18,7 +20,21 @@ import Logo6 from "../../images/logo/logo6.png";
 import { useTranslation } from "react-i18next";
 
 const Home = ({ navigation }) => {
+  const dimensions = useWindowDimensions();
+
   const { t } = useTranslation();
+  // ! start Dummy Data just for testing
+  const [FlatListData0, setFlatListData0] = useState([
+    {
+      id: "bd7acbrewea-c1b1-461231c2-aed5-3ad53abb28ba",
+      photo: "https://dev.talbati.com/storage/media/1/1.png",
+    },
+    {
+      id: "bd7acbrew44ea-c1b1-461231c2-aed5-3ad53abb28ba",
+      photo: "https://dev.talbati.com/storage/media/1/1.png",
+    },
+  ]);
+
   const [FlatListData1, setFlatListData1] = useState([
     {
       id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
@@ -102,7 +118,6 @@ const Home = ({ navigation }) => {
       photo: Logo6,
     },
   ]);
-  const { height } = useWindowDimensions();
   return (
     <ScrollView style={styles.container}>
       <View style={styles.firstText}>
@@ -115,10 +130,24 @@ const Home = ({ navigation }) => {
           {t("Offers")}
         </Text>
       </View>
-      <View style={styles.FirstImgContainer}>
-        <Image
-          source={require("../../images/PremiumPSD.png")}
-          resizeMode={"contain"}
+      <View>
+        <FlatList
+          pagingEnabled={true}
+          showsHorizontalScrollIndicator={false}
+          height={80}
+          style={styles.FirstImgContainer}
+          horizontal
+          keyExtractor={(item) => item.id}
+          data={FlatListData0}
+          renderItem={({ item }) => (
+            <View>
+              <Image
+                source={{ uri: item.photo }}
+                resizeMode={"contain"}
+                style={styles.bannerImg}
+              />
+            </View>
+          )}
         />
       </View>
       <View style={styles.secondText}>
@@ -158,7 +187,11 @@ const Home = ({ navigation }) => {
                 justifyItems={"center"}
                 height={160}
               >
-                <Image source={item.photo} alt="image" />
+                <Image
+                  source={item.photo}
+                  alt="image"
+                  style={{ marginLeft: 50 }}
+                />
                 <Center
                   backgroundColor={"rgba(0,0,0,0.5)"}
                   _text={{
@@ -225,7 +258,11 @@ const Home = ({ navigation }) => {
                 justifyItems={"center"}
                 height={160}
               >
-                <Image source={item.photo} alt="image" />
+                <Image
+                  source={item.photo}
+                  alt="image"
+                  style={{ marginLeft: 20, height: 110, marginTop: 5 }}
+                />
                 <View style={styles.line}></View>
                 <Center
                   _text={{
@@ -265,8 +302,14 @@ const styles = StyleSheet.create({
     fontFamily: "Tajawal_500Medium",
   },
   FirstImgContainer: {
-    marginLeft: 35,
     marginTop: 10,
+    height: 150,
+  },
+  bannerImg: {
+    marginHorizontal: 35,
+    width: 350,
+    height: 150,
+    marginBottom: 60,
   },
   secondText: {
     display: "flex",
