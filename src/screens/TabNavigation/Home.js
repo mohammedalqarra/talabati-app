@@ -131,7 +131,6 @@ const Home = ({ navigation }) => {
     setLoading(true);
     if (IsGuest) {
       const url = Api_url + guest_orders_api;
-      console.log(url);
       axios
         .get(url)
         .then((res) => {

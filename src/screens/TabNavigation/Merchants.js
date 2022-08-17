@@ -120,7 +120,6 @@ const Merchants = ({ navigation }) => {
     setLoading(true);
     if (IsGuest) {
       const url = Api_url + guest_categories_api;
-      console.log(url);
       axios
         .get(url)
         .then((res) => {
@@ -183,7 +182,6 @@ const Merchants = ({ navigation }) => {
   useEffect(() => {
     navigation.addListener("focus", () => {
       RefresingData();
-      // console.log(i18n.language);
     });
   }, []);
 
@@ -223,10 +221,7 @@ const Merchants = ({ navigation }) => {
               keyExtractor={(item) => item.id}
               data={FlatListData1}
               renderItem={({ item }) => (
-                <Pressable
-                  marginHorizontal={10}
-                  // onPress={() => console.warn(`you clicked num ${item.name}`)}
-                >
+                <Pressable marginHorizontal={10}>
                   <Box>
                     <Box width={75} height={75} alignItems="center">
                       <Image

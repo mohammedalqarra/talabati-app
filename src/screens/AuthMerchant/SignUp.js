@@ -6,6 +6,7 @@ import {
   useWindowDimensions,
   ScrollView,
   ActivityIndicator,
+  Platform,
 } from "react-native";
 import React, { useState } from "react";
 import { Input, Avatar, Stack, Button, Pressable, Heading } from "native-base";
@@ -19,23 +20,107 @@ import { Modal } from "native-base";
 // import RNFetchBlob from "rn-fetch-blob";
 
 const SignUp = ({ navigation }) => {
+  const [username, setUsername] = useState("");
+  const [name, setName] = useState("");
+  const [mobile, setMobile] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordConfirmation, setPasswordConfirmation] = useState("");
+  const [blobavatar, setBlobavatar] = useState({});
+  const [avatarphoto, setAvatarphoto] = useState("");
+  const [blobStorefront, setBlobStorefront] = useState("");
+  const [storephoto, setStorephoto] = useState("");
+  const [blobCommercialLicense, setBlobCommercialLicense] = useState("");
+  const [commercialphoto, setCommercialphoto] = useState("");
+  const [organizationName, setOrganizationName] = useState("");
+  const [roleId, setRoleId] = useState("provider");
   const [gender, setGender] = useState("male");
   const [error, setError] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [sucessModal, setSucessModal] = useState(false);
-  const [avatarBlob, setAvatarBlob] = useState({
-    uri: "",
-    name: "",
-    type: "",
-  });
-  const [storeBlob, setStoreBlob] = useState("");
-  const [commercialBlob, setCommercialBlob] = useState("");
-
   const { t } = useTranslation();
   const { height } = useWindowDimensions();
+  const formData = new FormData();
   // for picking images
+  // pick avatar
+  //? try one
+  // const pickAvatar = async () => {
+  //   const { uri } = await DocumentPicker.getDocumentAsync();
+  //   console.log("pickerResponse", uri);
+  //   const { uri: avatar } = result;
+  //   const filename = avatar.split("/").pop();
+  //   const match = /\.(\w+)$/.exec(filename);
+  //   const type = match ? `image/${match[1]}` : "image";
+  //   const blobFile = { uri: avatar, name: filename, type };
+  //   setBlobavatar(blobFile);
+  //   setAvatarphoto(fetchResponse.url);
+  //   console.log(blobavatar);
+  //   console.log(avatarphoto);
+  // };
+  //? try two
+  // const pickAvatar = async () => {
+  //   const { uri } = await DocumentPicker.getDocumentAsync({
+  //     copyToCacheDirectory: false,
+  //     type: "*/*",
+  //   });
+  //   console.log("pickerResponse", uri);
+  //   try {
+  //     const fetchResponse = await fetch(uri);
+  //     console.log("fetchResponse", fetchResponse);
+  //     const blob = await fetchResponse.blob();
+  //     const filename = uri.split("/").pop();
+  //     const match = /\.(\w+)$/.exec(filename);
+  //     const type = match ? `image/${match[1]}` : "image";
+  //     setBlobavatar({ uri, name: filename, type });
+  //     setAvatarphoto(fetchResponse.url);
+  //     console.log(blobavatar);
+  //   } catch (error) {
+  //     console.log("ERR: " + error.message);
+  //   }
+  // };
+  //? try three
 
-  const pickAvatar = async (handleChange) => {
+  const pickAvatar = async () => {
+    const { uri } = await DocumentPicker.getDocumentAsync({
+      copyToCacheDirectory: false,
+      type: "*/*",
+    });
+    try {
+      const response = await fetch(uri);
+      setAvatarphoto(response.url);
+      const avatarblob = await response.blob().then(() => {
+        formData.append("avatarBlob", avatarblob, "avatarBlob");
+      });
+    } catch (error) {
+      console.log("ERR: " + error.message);
+    }
+  };
+
+  //! origional
+
+  // const pickAvatar = async () => {
+  //   const { type, uri } = await DocumentPicker.getDocumentAsync({
+  //     copyToCacheDirectory: false,
+  //     type: "*/*",
+  //   });
+
+  //   if (type === "cancel") {
+  //     return;
+  //   }
+  //   console.log("pickerResponse", uri);
+
+  //   try {
+  //     const fetchResponse = await fetch(uri);
+  //     console.log("fetchResponse", fetchResponse);
+  //     const blob = await fetchResponse.blob();
+  //     setBlobavatar({ uri, name: "media", type: `image/${type}` });
+  //     setAvatarphoto(fetchResponse.url);
+  //     console.log(blobavatar);
+  //   } catch (error) {
+  //     console.log("ERR: " + error.message);
+  //   }
+  // };
+  // pick store
+  const pickStore = async () => {
     const { type, uri } = await DocumentPicker.getDocumentAsync({
       copyToCacheDirectory: false,
       type: "*/*",
@@ -50,17 +135,15 @@ const SignUp = ({ navigation }) => {
       const fetchResponse = await fetch(uri);
       console.log("fetchResponse", fetchResponse);
       const blob = await fetchResponse.blob();
-      console.log("blob avatar", blob);
-      setAvatarBlob({ uri, name: "media", type: `image/${type}` });
-      console.log("blob avatar 1111", avatarBlob);
-
-      handleChange(fetchResponse.url);
+      setBlobStorefront({ uri, name: "media", type: `image/${type}` });
+      setStorephoto(fetchResponse.url);
+      console.log(blobavatar);
     } catch (error) {
       console.log("ERR: " + error.message);
     }
   };
-
-  const pickStore = async (handleChange) => {
+  // pickcommercial
+  const pickCommercial = async () => {
     const { type, uri } = await DocumentPicker.getDocumentAsync({
       copyToCacheDirectory: false,
       type: "*/*",
@@ -75,163 +158,50 @@ const SignUp = ({ navigation }) => {
       const fetchResponse = await fetch(uri);
       console.log("fetchResponse", fetchResponse);
       const blob = await fetchResponse.blob();
-      console.log("blob store", blob);
-      setStoreBlob({ uri, name: "media", type: `image/${type}` });
-      handleChange(fetchResponse.url);
+      setBlobCommercialLicense({ uri, name: "media", type: `image/${type}` });
+      setCommercialphoto(fetchResponse.url);
+      console.log(blobavatar);
     } catch (error) {
       console.log("ERR: " + error.message);
     }
   };
 
-  const pickCommercial = async (handleChange) => {
-    const { type, uri } = await DocumentPicker.getDocumentAsync({
-      copyToCacheDirectory: false,
-      type: "*/*",
-    });
+  //////////////////////////////////////////
 
-    if (type === "cancel") {
-      return;
-    }
-    console.log("pickerResponse", uri);
-
-    try {
-      const fetchResponse = await fetch(uri);
-      console.log("fetchResponse", fetchResponse);
-      const blob = await fetchResponse.blob();
-      console.log("blob commercial", blob);
-      setCommercialBlob({ uri, name: "media", type: `image/${type}` });
-      handleChange(fetchResponse.url);
-    } catch (error) {
-      console.log("ERR: " + error.message);
-    }
-  };
-
-  // const pickDocument = async (handleChange) => {
-  //   let result = await DocumentPicker.getDocumentAsync({});
-  //   handleChange(result.uri);
-  //   console.log(result.uri);
+  // const HandleSellerRegister = () => {
+  //   console.log(username);
   // };
 
-  // avatarImage
-  // const [avatar, setAvatar] = useState(null);
-  const pickAvatarImage = async (handleChange) => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      allowsEditing: true,
-      aspect: [4, 3],
-      // includeBase64: true,
-    });
-    if (!result.cancelled) {
-      handleChange(result.uri);
-      console.log(result.uri);
-      console.log(result);
-    }
-  };
-
-  // storefront
-  // const [storefront, setStorefront] = useState(null);
-  const pickStorefront = async (handleChange) => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      allowsEditing: true,
-      aspect: [4, 3],
-    });
-    if (!result.cancelled) {
-      handleChange(result.uri);
-    }
-  };
-  // avatarImage
-  // const [commercialImg, setCommercialImg] = useState(null);
-  const pickCommercialImage = async (handleChange) => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      allowsEditing: true,
-      aspect: [4, 3],
-    });
-    if (!result.cancelled) {
-      handleChange(result.uri);
-    }
-  };
-
-  // const HandleSellerRegister = async (
-  //   username,
-  //   name,
-  //   mobile,
-  //   password,
-  //   password_confirmation,
-  //   blobAvatar,
-  //   blobStorefront,
-  //   blobCommercialLicense,
-  //   organization_name,
-  //   role_id
-  // ) => {
-  //   const url = Api_url + signup_api;
-  //   RNFetchBlob.fetch(
-  //     "POST",
-  //     url,
-  //     {
-  //       "Content-Type": "multipart/form-data",
-  //     },
-  //     [
-  //       { name: "username", data: username },
-  //       { name: "name", data: name },
-  //       { name: "mobile", data: mobile },
-  //       { name: "password", data: password },
-  //       { name: "password_confirmation", data: password_confirmation },
-  //       { name: "blobAvatar", filename: "blobAvatar.png", data: blobAvatar },
-  //       {
-  //         name: "blobStorefront",
-  //         filename: "blobStorefront.png",
-  //         data: blobStorefront,
-  //       },
-  //       {
-  //         name: "blobCommercialLicense",
-  //         filename: "blobCommercialLicense.png",
-  //         data: blobCommercialLicense,
-  //       },
-  //       { name: "organization_name", data: organization_name },
-  //       { name: "role_id", data: role_id },
-  //       ,
-  //     ]
-  //   )
-  //     .then((res) => {
-  //       console.log(res);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // };
-  const HandleSellerRegister = async (
-    username,
-    name,
-    mobile,
-    password,
-    password_confirmation,
-    avatarBlob,
-    storeBlob,
-    commercialBlob,
-    organization_name,
-    role_id
-  ) => {
+  const HandleSellerRegister = async () => {
     const url = Api_url + signup_api;
-    // const avatarpic = await blobAvatar.blob();
-    // const storepic = await blobStorefront.blob();
-    // const commericalpic = await blobCommercialLicense.blob();
+    // const formData = new FormData();
+    // const avatarb = await avatarphoto.blob();
+    // console.log(avatarphoto);
+    // console.log(avatarb);
 
+    // formData.append("username", username);
+    // formData.append("name", name);
+    // formData.append("mobile", mobile);
+    // formData.append("password", password);
+    // formData.append("password_confirmation", passwordConfirmation);
+    // // formData.append("avatarBlob", blobavatar, "avatarBlob");
+    // // formData.append("storeBlob", blobStorefront, "storeBlob");
+    // // formData.append("commercialBlob", blobCommercialLicense, "commercialBlob");
+    // formData.append("organization_name", organizationName);
+    // formData.append("role_id", roleId);
+    console.log(formData);
     setShowModal(true);
     axios
-      .post(url, {
-        username,
-        name,
-        mobile,
-        password,
-        password_confirmation,
-        avatarBlob,
-        storeBlob,
-        commercialBlob,
-        organization_name,
-        role_id,
+      .post(url, formData, {
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "multipart/form-data",
+        },
       })
       .then((res) => {
         if (res && res.status == 200) {
           setSucessModal(true);
+          console.log(formData);
           navigation.goBack();
           // navigation.navigate("VerfiyNumber");
           setShowModal(false);
@@ -246,368 +216,322 @@ const SignUp = ({ navigation }) => {
   };
   return (
     <ScrollView>
-      <Formik
-        initialValues={{
-          username: "",
-          name: "",
-          mobile: "",
-          password: "",
-          password_confirmation: "",
-          blobAvatar: "",
-          blobStorefront: "",
-          blobCommercialLicense: "",
-          organization_name: "",
-          role_id: "provider",
-        }}
-        onSubmit={async (values) => {
-          HandleSellerRegister(
-            values.username,
-            values.name,
-            values.mobile,
-            values.password,
-            values.password_confirmation,
-            avatarBlob,
-            storeBlob,
-            commercialBlob,
-            values.organization_name,
-            values.role_id
-          );
-        }}
-      >
-        {({ handleChange, handleBlur, handleSubmit, values }) => (
-          <View style={styles.container}>
-            <Image
-              source={require("../../images/logo.png")}
-              style={styles.logo}
-              resizeMode={"contain"}
+      <View style={styles.container}>
+        <Image
+          source={require("../../images/logo.png")}
+          style={styles.logo}
+          resizeMode={"contain"}
+        />
+        {/* start of modal */}
+        <Modal isOpen={showModal}>
+          <Modal.Content maxWidth="400px">
+            <Modal.Body>
+              <View style={styles.centerizedCol}>
+                <ActivityIndicator size="large" color="#0000ff" />
+              </View>
+            </Modal.Body>
+          </Modal.Content>
+        </Modal>
+        {/* Successfully sign up modal */}
+        <Modal isOpen={sucessModal}>
+          <Modal.Content maxWidth="400px">
+            <Modal.Body>
+              <View style={styles.centerizedCol}>
+                <Image source={require("../../images/thumbs-up.png")} />
+                <Text
+                  style={{
+                    marginTop: 13,
+                    fontSize: 16,
+                    color: "#EF1D1D",
+                    fontFamily: "Tajawal_500Medium",
+                  }}
+                >
+                  {t("signupsucess")}
+                </Text>
+              </View>
+            </Modal.Body>
+          </Modal.Content>
+        </Modal>
+        {/* end of modal */}
+        {/* start of error */}
+        <View>
+          <View>
+            {error && (
+              <View style={styles.errmessage}>
+                <Text style={styles.errmessagetxt}>{error}</Text>
+              </View>
+            )}
+          </View>
+          <View>
+            {error === undefined && (
+              <View style={styles.errmessage}>
+                <Text style={styles.errmessagetxt}>
+                  {" "}
+                  Check Your Connection and retry to log in{" "}
+                </Text>
+              </View>
+            )}
+          </View>
+        </View>
+        {/* end of error */}
+        <View>
+          <View style={styles.headerContainer}>
+            <Heading style={styles.heading} fontFamily={"Tajawal_500Medium"}>
+              {t("newaccount1")}
+            </Heading>
+          </View>
+          <Stack space={4} w="100%" alignItems="center">
+            <Pressable onPress={() => pickAvatar()}>
+              <Avatar
+                width={100}
+                height={100}
+                backgroundColor={"white"}
+                borderWidth={1}
+                borderColor={"#E56B1F"}
+              >
+                {avatarphoto && (
+                  <Image
+                    source={{ uri: avatarphoto }}
+                    style={{ width: 90, height: 90, borderRadius: 50 }}
+                  />
+                )}
+              </Avatar>
+            </Pressable>
+            <Input
+              w={{
+                base: "75%",
+                md: "25%",
+              }}
+              _text={{
+                color: "#ECECEC",
+              }}
+              variant="underlined"
+              height={35}
+              fontFamily={"Tajawal_500Medium"}
+              placeholder={t("username")}
+              value={username}
+              onChangeText={(text) => setUsername(text)}
             />
-            {/* start of modal */}
-            <Modal isOpen={showModal}>
-              <Modal.Content maxWidth="400px">
-                <Modal.Body>
-                  <View style={styles.centerizedCol}>
-                    <ActivityIndicator size="large" color="#0000ff" />
-                  </View>
-                </Modal.Body>
-              </Modal.Content>
-            </Modal>
-            {/* Successfully sign up modal */}
-            <Modal isOpen={sucessModal}>
-              <Modal.Content maxWidth="400px">
-                <Modal.Body>
-                  <View style={styles.centerizedCol}>
-                    <Image source={require("../../images/thumbs-up.png")} />
-                    <Text
-                      style={{
-                        marginTop: 13,
-                        fontSize: 16,
-                        color: "#EF1D1D",
-                        fontFamily: "Tajawal_500Medium",
-                      }}
-                    >
-                      {t("signupsucess")}
-                    </Text>
-                  </View>
-                </Modal.Body>
-              </Modal.Content>
-            </Modal>
-            {/* end of modal */}
-            <View>
-              <View>
-                {error && (
-                  <View style={styles.errmessage}>
-                    <Text style={styles.errmessagetxt}>{error}</Text>
-                  </View>
-                )}
-              </View>
-              <View>
-                {error === undefined && (
-                  <View style={styles.errmessage}>
-                    <Text style={styles.errmessagetxt}>
-                      {" "}
-                      Check Your Connection and retry to log in{" "}
-                    </Text>
-                  </View>
-                )}
-              </View>
-            </View>
-            <View>
-              <View style={styles.headerContainer}>
-                <Heading
-                  style={styles.heading}
-                  fontFamily={"Tajawal_500Medium"}
-                >
-                  {t("newaccount1")}
-                </Heading>
-              </View>
-              <Stack space={4} w="100%" alignItems="center">
-                <Pressable
-                  onPress={() => pickAvatar(handleChange("blobAvatar"))}
-                >
-                  <Avatar
-                    width={100}
-                    height={100}
-                    backgroundColor={"white"}
-                    borderWidth={1}
-                    borderColor={"#E56B1F"}
-                  >
-                    {values.blobAvatar && (
-                      <Image
-                        source={{ uri: values.blobAvatar }}
-                        style={{ width: 90, height: 90, borderRadius: 50 }}
-                      />
-                    )}
-                  </Avatar>
-                </Pressable>
-                <Input
-                  w={{
-                    base: "75%",
-                    md: "25%",
-                  }}
-                  _text={{
-                    color: "#ECECEC",
-                  }}
-                  variant="underlined"
-                  height={35}
-                  fontFamily={"Tajawal_500Medium"}
-                  placeholder={t("username")}
-                  onBlur={handleBlur("username")}
-                  value={values.username}
-                  onChangeText={handleChange("username")}
-                />
-                <Input
-                  w={{
-                    base: "75%",
-                    md: "25%",
-                  }}
-                  _text={{
-                    color: "#ECECEC",
-                  }}
-                  height={35}
-                  variant="underlined"
-                  fontFamily={"Tajawal_500Medium"}
-                  placeholder={t("name")}
-                  onBlur={handleBlur("name")}
-                  value={values.name}
-                  onChangeText={handleChange("name")}
-                />
-                <Input
-                  w={{
-                    base: "75%",
-                    md: "25%",
-                  }}
-                  _text={{
-                    color: "#ECECEC",
-                  }}
-                  height={35}
-                  variant="underlined"
-                  fontFamily={"Tajawal_500Medium"}
-                  placeholder={t("phonenumber")}
-                  onBlur={handleBlur("mobile")}
-                  value={values.mobile}
-                  onChangeText={handleChange("mobile")}
-                />
+            <Input
+              w={{
+                base: "75%",
+                md: "25%",
+              }}
+              _text={{
+                color: "#ECECEC",
+              }}
+              height={35}
+              variant="underlined"
+              fontFamily={"Tajawal_500Medium"}
+              placeholder={t("name")}
+              value={name}
+              onChangeText={(text) => setName(text)}
+            />
+            <Input
+              w={{
+                base: "75%",
+                md: "25%",
+              }}
+              _text={{
+                color: "#ECECEC",
+              }}
+              height={35}
+              variant="underlined"
+              fontFamily={"Tajawal_500Medium"}
+              placeholder={t("phonenumber")}
+              value={mobile}
+              onChangeText={(text) => setMobile(text)}
+            />
+            <Input
+              w={{
+                base: "75%",
+                md: "25%",
+              }}
+              _text={{
+                color: "#ECECEC",
+              }}
+              height={35}
+              type={"password"}
+              variant="underlined"
+              fontFamily={"Tajawal_500Medium"}
+              placeholder={t("password")}
+              value={password}
+              onChangeText={(text) => setPassword(text)}
+            />
 
-                <Input
-                  w={{
-                    base: "75%",
-                    md: "25%",
-                  }}
-                  _text={{
-                    color: "#ECECEC",
-                  }}
-                  height={35}
-                  type={"password"}
-                  variant="underlined"
-                  fontFamily={"Tajawal_500Medium"}
-                  placeholder={t("password")}
-                  onBlur={handleBlur("password")}
-                  value={values.password}
-                  onChangeText={handleChange("password")}
-                />
-                <Input
-                  w={{
-                    base: "75%",
-                    md: "25%",
-                  }}
-                  _text={{
-                    color: "#ECECEC",
-                  }}
-                  type={"password"}
-                  variant="underlined"
-                  height={35}
-                  fontFamily={"Tajawal_500Medium"}
-                  placeholder={t("confirmpassword")}
-                  onBlur={handleBlur("password_confirmation")}
-                  value={values.password_confirmation}
-                  onChangeText={handleChange("password_confirmation")}
-                />
-                <Input
-                  w={{
-                    base: "75%",
-                    md: "25%",
-                  }}
-                  _text={{
-                    color: "#ECECEC",
-                  }}
-                  height={35}
-                  variant="underlined"
-                  fontFamily={"Tajawal_500Medium"}
-                  placeholder={t("organizationname")}
-                  onBlur={handleBlur("organization_name")}
-                  value={values.organization_name}
-                  onChangeText={handleChange("organization_name")}
-                />
+            <Input
+              w={{
+                base: "75%",
+                md: "25%",
+              }}
+              _text={{
+                color: "#ECECEC",
+              }}
+              type={"password"}
+              variant="underlined"
+              height={35}
+              fontFamily={"Tajawal_500Medium"}
+              placeholder={t("confirmpassword")}
+              value={passwordConfirmation}
+              onChangeText={(text) => setPasswordConfirmation(text)}
+            />
+            <Input
+              w={{
+                base: "75%",
+                md: "25%",
+              }}
+              _text={{
+                color: "#ECECEC",
+              }}
+              height={35}
+              variant="underlined"
+              fontFamily={"Tajawal_500Medium"}
+              placeholder={t("organizationname")}
+              value={organizationName}
+              onChangeText={(text) => setOrganizationName(text)}
+            />
 
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-around",
+              }}
+            >
+              <Pressable
+                style={
+                  gender === "female" && {
+                    borderColor: "#E56B1F",
+                    borderWidth: 1,
+                  }
+                }
+                onPress={() => setGender("female")}
+              >
                 <View
                   style={{
                     flexDirection: "row",
-                    justifyContent: "space-around",
+                    width: 150,
+                    height: 30,
+                    justifyContent: "flex-end",
                   }}
                 >
-                  <Pressable
-                    style={
-                      gender === "female" && {
-                        borderColor: "#E56B1F",
-                        borderWidth: 1,
-                      }
-                    }
-                    onPress={() => setGender("female")}
-                  >
-                    <View
-                      style={{
-                        flexDirection: "row",
-                        width: 150,
-                        height: 30,
-                        justifyContent: "flex-end",
-                      }}
-                    >
-                      <Text
-                        style={{
-                          marginTop: 5,
-                          fontFamily: "Tajawal_500Medium",
-                          fontSize: 14,
-                        }}
-                      >
-                        {t("female")}
-                      </Text>
-                      <Image
-                        source={require("../../images/Icononic-ios-woman.png")}
-                        style={{
-                          height: 25,
-                          marginTop: 5,
-                          marginRight: 15,
-                          marginLeft: 15,
-                          width: 10,
-                        }}
-                      />
-                    </View>
-                  </Pressable>
-                  <Pressable
-                    style={
-                      gender === "male" && {
-                        borderColor: "#E56B1F",
-                        borderWidth: 1,
-                      }
-                    }
-                    onPress={() => setGender("male")}
-                  >
-                    <View
-                      style={{
-                        flexDirection: "row",
-                        width: 150,
-                        height: 30,
-                        justifyContent: "flex-end",
-                      }}
-                    >
-                      <Text
-                        style={{
-                          marginTop: 5,
-                          fontFamily: "Tajawal_500Medium",
-                          fontSize: 14,
-                        }}
-                      >
-                        {t("male")}
-                      </Text>
-                      <Image
-                        source={require("../../images/Icononic-ios-woman.png")}
-                        style={{
-                          height: 25,
-                          marginTop: 5,
-                          marginRight: 15,
-                          marginLeft: 15,
-                          width: 10,
-                        }}
-                      />
-                    </View>
-                  </Pressable>
-                </View>
-                <View style={styles.smallcontainer}>
-                  <View style={styles.txtaround}>
-                    <Pressable
-                      onPress={() => pickStore(handleChange("blobStorefront"))}
-                    >
-                      <Text style={styles.txt}>choose file</Text>
-                    </Pressable>
-                  </View>
-                  <Text style={styles.txt}>{t("merchantlogoo")}</Text>
-                </View>
-                {values.blobStorefront && (
-                  <Image
-                    source={{ uri: values.blobStorefront }}
+                  <Text
                     style={{
-                      height: 150,
-                      width: 300,
-                      borderWidth: 1,
-                      borderColor: "#E56B1F",
+                      marginTop: 5,
+                      fontFamily: "Tajawal_500Medium",
+                      fontSize: 14,
+                    }}
+                  >
+                    {t("female")}
+                  </Text>
+                  <Image
+                    source={require("../../images/Icononic-ios-woman.png")}
+                    style={{
+                      height: 25,
+                      marginTop: 5,
+                      marginRight: 15,
+                      marginLeft: 15,
+                      width: 10,
                     }}
                   />
-                )}
-                <View style={styles.smallcontainer}>
-                  <View style={styles.txtaround2}>
-                    <Pressable
-                      onPress={() =>
-                        pickCommercial(handleChange("blobCommercialLicense"))
-                      }
-                    >
-                      <Text style={styles.txt}>choose file</Text>
-                    </Pressable>
-                  </View>
-                  <Text style={styles.txt}>{t("picoflicencemerchant")}</Text>
                 </View>
-                {values.blobCommercialLicense && (
-                  <Image
-                    source={{ uri: values.blobCommercialLicense }}
-                    style={{
-                      height: 150,
-                      width: 300,
-                      borderWidth: 1,
-                      borderColor: "#E56B1F",
-                    }}
-                  />
-                )}
-              </Stack>
-
-              <Button
-                onPress={handleSubmit}
-                style={styles.firstBut}
-                marginTop={15}
-                size="sm"
-                backgroundColor={"#E56B1F"}
-                _text={{ fontSize: 14 }}
+              </Pressable>
+              <Pressable
+                style={
+                  gender === "male" && {
+                    borderColor: "#E56B1F",
+                    borderWidth: 1,
+                  }
+                }
+                onPress={() => setGender("male")}
               >
-                {t("register")}
-              </Button>
-              <View style={styles.clickContainer}>
-                <Pressable onPress={() => navigation.goBack()}>
-                  <Text style={styles.click}> {t("loginnow")}</Text>
-                </Pressable>
-                <Text>{t("haveaccount")}</Text>
-              </View>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    width: 150,
+                    height: 30,
+                    justifyContent: "flex-end",
+                  }}
+                >
+                  <Text
+                    style={{
+                      marginTop: 5,
+                      fontFamily: "Tajawal_500Medium",
+                      fontSize: 14,
+                    }}
+                  >
+                    {t("male")}
+                  </Text>
+                  <Image
+                    source={require("../../images/Icononic-ios-woman.png")}
+                    style={{
+                      height: 25,
+                      marginTop: 5,
+                      marginRight: 15,
+                      marginLeft: 15,
+                      width: 10,
+                    }}
+                  />
+                </View>
+              </Pressable>
             </View>
+            <View style={styles.smallcontainer}>
+              <View style={styles.txtaround}>
+                <Pressable onPress={() => pickStore()}>
+                  <Text style={styles.txt}>choose file</Text>
+                </Pressable>
+              </View>
+              <Text style={styles.txt}>{t("merchantlogoo")}</Text>
+            </View>
+            {storephoto && (
+              <Image
+                source={{ uri: storephoto }}
+                style={{
+                  height: 150,
+                  width: 300,
+                  borderWidth: 1,
+                  borderColor: "#E56B1F",
+                }}
+              />
+            )}
+            <View style={styles.smallcontainer}>
+              <View style={styles.txtaround2}>
+                <Pressable onPress={() => pickCommercial()}>
+                  <Text style={styles.txt}>choose file</Text>
+                </Pressable>
+              </View>
+              <Text style={styles.txt}>{t("picoflicencemerchant")}</Text>
+            </View>
+            {commercialphoto && (
+              <Image
+                source={{ uri: commercialphoto }}
+                style={{
+                  height: 150,
+                  width: 300,
+                  borderWidth: 1,
+                  borderColor: "#E56B1F",
+                }}
+              />
+            )}
+          </Stack>
+
+          <Button
+            onPress={HandleSellerRegister}
+            style={styles.firstBut}
+            marginTop={15}
+            size="sm"
+            backgroundColor={"#E56B1F"}
+            _text={{ fontSize: 14 }}
+          >
+            {t("register")}
+          </Button>
+          <View style={styles.clickContainer}>
+            <Pressable onPress={() => navigation.goBack()}>
+              <Text style={styles.click}> {t("loginnow")}</Text>
+            </Pressable>
+            <Text>{t("haveaccount")}</Text>
           </View>
-        )}
-      </Formik>
+        </View>
+      </View>
     </ScrollView>
   );
 };
