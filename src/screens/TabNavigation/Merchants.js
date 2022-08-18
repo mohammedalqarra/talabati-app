@@ -243,7 +243,14 @@ const Merchants = ({ navigation }) => {
                 marginBottom: 90,
               }}
               renderItem={({ item }) => (
-                <Pressable onPress={() => navigation.navigate("ShopDetail")}>
+                <Pressable
+                  onPress={() =>
+                    navigation.navigate("ShopDetail", {
+                      avatar: item.avatar,
+                      name: item.name,
+                    })
+                  }
+                >
                   <Box
                     padding={8}
                     backgroundColor={"#FFFFFF"}

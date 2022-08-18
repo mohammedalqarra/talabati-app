@@ -11,7 +11,8 @@ import { TextArea, Button, Modal } from "native-base";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 
-const ShopDetail = ({ navigation }) => {
+const ShopDetail = ({ route, navigation }) => {
+  const { avatar, name } = route.params;
   const [showModal, setShowModal] = useState(false);
   const [defaultRating, setDefaultRating] = useState(1);
   const [maxRating, setMaxRating] = useState([1, 2, 3, 4, 5]);
@@ -129,7 +130,7 @@ const ShopDetail = ({ navigation }) => {
               <View>
                 <Pressable onPress={() => navigation.goBack()}>
                   <Image
-                    source={require("../../images/left-arrow2.png")}
+                    source={{ uri: avatar }}
                     width={25}
                     height={25}
                     padding={8}
@@ -139,7 +140,7 @@ const ShopDetail = ({ navigation }) => {
             </View>
             <View style={styles.upperlogo}>
               <Image source={require("../../images/logo/logo1.png")} />
-              <Text style={styles.uppertxt}>{t("elsalam")}</Text>
+              <Text style={styles.uppertxt}>{name}</Text>
             </View>
           </ImageBackground>
         </View>
