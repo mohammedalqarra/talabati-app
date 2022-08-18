@@ -32,7 +32,7 @@ const Home = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
   const IsGuest = useSelector((state) => state.auth.IsGuest);
   const dimensions = useWindowDimensions();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [FlatListData0, setFlatListData0] = useState([]);
   const [FlatListData1, setFlatListData1] = useState([]);
   const [FlatListData2, setFlatListData2] = useState([]);
@@ -164,9 +164,9 @@ const Home = ({ navigation }) => {
           setFlatListData1(res.data.data);
         }
       })
-      .then(() => {
-        console.log("flatlist 1 is ", FlatListData0);
-      })
+      // .then(() => {
+      //   console.log("flatlist 1 is ", FlatListData0);
+      // })
       .catch((err) => {
         setError(err.response.data.message);
       });
@@ -182,9 +182,9 @@ const Home = ({ navigation }) => {
           setFlatListData2(res.data.data);
         }
       })
-      .then(() => {
-        console.log("flatlist 2 is ", FlatListData0);
-      })
+      // .then(() => {
+      //   console.log("flatlist 2 is ", FlatListData0);
+      // })
       .catch((err) => {
         setError(err.response.data.message);
       });
@@ -275,8 +275,8 @@ const Home = ({ navigation }) => {
                   >
                     <Image
                       source={{ uri: item.avatar }}
-                      alt="image"
-                      style={{ marginLeft: 50 }}
+                      alt={item.name}
+                      style={{ marginLeft: 50, height: 150 }}
                     />
                     <Center
                       backgroundColor={"rgba(0,0,0,0.5)"}
@@ -301,9 +301,16 @@ const Home = ({ navigation }) => {
                           </Text>
                         </View>
                         <View style={styles.FlatListContainerUnder2}>
-                          <Text style={styles.txt} color={"#FFFFFF"}>
-                            {item.name}
-                          </Text>
+                          {i18n.language === "ar" && (
+                            <Text color={"#FFFFFF"} style={styles.txt}>
+                              {item.name_ar}
+                            </Text>
+                          )}
+                          {i18n.language === "en" && (
+                            <Text color={"#FFFFFF"} style={styles.txt}>
+                              {item.name_en}
+                            </Text>
+                          )}
                           {/* <Text style={styles.txt} color={"#FFFFFF"}>
                             {item.distance} {t("km")}
                           </Text> */}
@@ -346,7 +353,7 @@ const Home = ({ navigation }) => {
                   >
                     <Image
                       source={{ uri: item.avatar }}
-                      alt="image"
+                      alt={item.name}
                       style={{ marginLeft: 20, height: 110, marginTop: 5 }}
                     />
                     <View style={styles.line}></View>
@@ -362,7 +369,12 @@ const Home = ({ navigation }) => {
                       justifyItems={"center"}
                     >
                       <View style={styles.FlatListContainerUnder3}>
-                        <Text style={styles.txt}>{item.title}</Text>
+                        {i18n.language === "ar" && (
+                          <Text style={styles.txt1}>{item.name_ar}</Text>
+                        )}
+                        {i18n.language === "en" && (
+                          <Text style={styles.txt1}>{item.name_en}</Text>
+                        )}
                       </View>
                     </Center>
                   </Box>
