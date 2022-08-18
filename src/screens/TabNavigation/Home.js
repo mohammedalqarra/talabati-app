@@ -6,17 +6,16 @@ import {
   useWindowDimensions,
   FlatList,
   ScrollView,
-  Dimensions,
   ActivityIndicator,
 } from "react-native";
 
 import { Text, Pressable, Box, Center } from "native-base";
-import Logo1 from "../../images/logo/logo1.png";
-import Logo2 from "../../images/logo/logo2.png";
-import Logo3 from "../../images/logo/logo3.png";
-import Logo4 from "../../images/logo/logo4.png";
-import Logo5 from "../../images/logo/logo5.png";
-import Logo6 from "../../images/logo/logo6.png";
+// import Logo1 from "../../images/logo/logo1.png";
+// import Logo2 from "../../images/logo/logo2.png";
+// import Logo3 from "../../images/logo/logo3.png";
+// import Logo4 from "../../images/logo/logo4.png";
+// import Logo5 from "../../images/logo/logo5.png";
+// import Logo6 from "../../images/logo/logo6.png";
 
 import { useTranslation } from "react-i18next";
 import {

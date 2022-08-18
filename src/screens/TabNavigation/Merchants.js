@@ -248,6 +248,9 @@ const Merchants = ({ navigation }) => {
                     navigation.navigate("ShopDetail", {
                       avatar: item.avatar,
                       name: item.name,
+                      mobile: item.mobile,
+                      email: item.email,
+                      id: item.id,
                     })
                   }
                 >

@@ -12,7 +12,7 @@ import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 const ShopDetail = ({ route, navigation }) => {
-  const { avatar, name } = route.params;
+  const { avatar, name, mobile, email, id } = route.params;
   const [showModal, setShowModal] = useState(false);
   const [defaultRating, setDefaultRating] = useState(1);
   const [maxRating, setMaxRating] = useState([1, 2, 3, 4, 5]);
@@ -141,7 +141,7 @@ const ShopDetail = ({ route, navigation }) => {
             <View style={styles.upperlogo}>
               <Image
                 source={{ uri: avatar }}
-                style={{ height: 70, width: 70 }}
+                style={{ height: 80, width: 80 }}
               />
               <Text style={styles.uppertxt}>{name}</Text>
             </View>
@@ -254,7 +254,21 @@ const ShopDetail = ({ route, navigation }) => {
           backgroundColor={"white"}
         />
         <Button
-          onPress={() => navigation.navigate("ContinueShop")}
+          onPress={() =>
+            navigation.navigate("ContinueShop", {
+              region: {
+                name,
+                mobile,
+                email,
+                id,
+                latitude: 24.7136,
+                longitude: 46.6753,
+                latitudeDelta: 0.005,
+                longitudeDelta: 0.005,
+              },
+              textAreaValue,
+            })
+          }
           style={styles.firstBut}
           size="sm"
           width={"75%"}
