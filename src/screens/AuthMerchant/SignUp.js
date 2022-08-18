@@ -86,10 +86,11 @@ const SignUp = ({ navigation }) => {
     });
     try {
       const response = await fetch(uri);
+      console.log(response);
       setAvatarphoto(response.url);
-      const avatarblob = await response.blob().then(() => {
-        formData.append("avatarBlob", avatarblob, "avatarBlob");
-      });
+      const avatarblob = await response.blob();
+      console.log(avatarblob);
+      formData.append("avatarBlob", response.url);
     } catch (error) {
       console.log("ERR: " + error.message);
     }

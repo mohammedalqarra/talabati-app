@@ -19,7 +19,11 @@ import Logo5 from "../../images/logo/logo5.png";
 import Logo6 from "../../images/logo/logo6.png";
 
 import { useTranslation } from "react-i18next";
-import { Api_url, guest_orders_api } from "../../utilites/ApiConstants";
+import {
+  Api_url,
+  guest_orders_api,
+  guest_get_merchant,
+} from "../../utilites/ApiConstants";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -30,6 +34,8 @@ const Home = ({ navigation }) => {
   const dimensions = useWindowDimensions();
   const { t } = useTranslation();
   const [FlatListData0, setFlatListData0] = useState([]);
+  const [FlatListData1, setFlatListData1] = useState([]);
+  const [FlatListData2, setFlatListData2] = useState([]);
   // ! start Dummy Data just for testing
   // const [FlatListData0, setFlatListData0] = useState([
   //   {
@@ -42,129 +48,153 @@ const Home = ({ navigation }) => {
   //   },
   // ]);
 
-  const [FlatListData1, setFlatListData1] = useState([
-    {
-      id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
-      title: "سوبر ماركت زلفه",
-      distance: "1.23",
-      icon: Logo1,
-      photo: Logo1,
-      star: "4.8",
-    },
-    {
-      id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63",
-      title: "Second Item",
-      distance: "1.23",
-      icon: Logo2,
-      photo: Logo2,
-      star: "3.2",
-    },
-    {
-      id: "58694a0f-3da1-471f-bd96-145571e29d72",
-      title: "Third Item",
-      distance: "1.23",
-      icon: Logo3,
-      photo: Logo3,
-      star: "2.7",
-    },
-    {
-      id: "58694a0f-3da1-471f-bd96-14545431e29d72",
-      title: "forth Item",
-      distance: "1.62",
-      icon: Logo4,
-      photo: Logo4,
-      star: "4.5",
-    },
-    {
-      id: "58694a0f-3da1-471f-bd96-1451123e29d72",
-      title: "fifth Item",
-      distance: "2.10",
-      icon: Logo5,
-      photo: Logo5,
-      star: "6.3",
-    },
-    {
-      id: "58694a0f-3da1-471f-bd96-145adase29d72",
-      title: "sixth Item",
-      distance: "1.96",
-      icon: Logo6,
-      photo: Logo6,
-      star: "5.2",
-    },
-  ]);
+  // const [FlatListData1, setFlatListData1] = useState([
+  //   {
+  //     id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
+  //     title: "سوبر ماركت زلفه",
+  //     distance: "1.23",
+  //     icon: Logo1,
+  //     photo: Logo1,
+  //     star: "4.8",
+  //   },
+  //   {
+  //     id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63",
+  //     title: "Second Item",
+  //     distance: "1.23",
+  //     icon: Logo2,
+  //     photo: Logo2,
+  //     star: "3.2",
+  //   },
+  //   {
+  //     id: "58694a0f-3da1-471f-bd96-145571e29d72",
+  //     title: "Third Item",
+  //     distance: "1.23",
+  //     icon: Logo3,
+  //     photo: Logo3,
+  //     star: "2.7",
+  //   },
+  //   {
+  //     id: "58694a0f-3da1-471f-bd96-14545431e29d72",
+  //     title: "forth Item",
+  //     distance: "1.62",
+  //     icon: Logo4,
+  //     photo: Logo4,
+  //     star: "4.5",
+  //   },
+  //   {
+  //     id: "58694a0f-3da1-471f-bd96-1451123e29d72",
+  //     title: "fifth Item",
+  //     distance: "2.10",
+  //     icon: Logo5,
+  //     photo: Logo5,
+  //     star: "6.3",
+  //   },
+  //   {
+  //     id: "58694a0f-3da1-471f-bd96-145adase29d72",
+  //     title: "sixth Item",
+  //     distance: "1.96",
+  //     icon: Logo6,
+  //     photo: Logo6,
+  //     star: "5.2",
+  //   },
+  // ]);
 
-  const [FlatListData2, setFlatListData2] = useState([
-    {
-      id: "213123123123",
-      title: "سوبر ماركت زلفه",
-      photo: Logo1,
-    },
-    {
-      id: "432453242344",
-      title: "Second Item",
-      photo: Logo2,
-    },
-    {
-      id: "4324234234",
-      title: "Third Item",
-      photo: Logo3,
-    },
-    {
-      id: "654645543534",
-      title: "forth Item",
-      photo: Logo4,
-    },
-    {
-      id: "54353467y",
-      title: "fifth Item",
-      photo: Logo5,
-    },
-    {
-      id: "4325266",
-      title: "sixth Item",
-      photo: Logo6,
-    },
-  ]);
+  // const [FlatListData2, setFlatListData2] = useState([
+  //   {
+  //     id: "213123123123",
+  //     title: "سوبر ماركت زلفه",
+  //     photo: Logo1,
+  //   },
+  //   {
+  //     id: "432453242344",
+  //     title: "Second Item",
+  //     photo: Logo2,
+  //   },
+  //   {
+  //     id: "4324234234",
+  //     title: "Third Item",
+  //     photo: Logo3,
+  //   },
+  //   {
+  //     id: "654645543534",
+  //     title: "forth Item",
+  //     photo: Logo4,
+  //   },
+  //   {
+  //     id: "54353467y",
+  //     title: "fifth Item",
+  //     photo: Logo5,
+  //   },
+  //   {
+  //     id: "4325266",
+  //     title: "sixth Item",
+  //     photo: Logo6,
+  //   },
+  // ]);
   //! end of dummy Data
 
   const RefresingData = async () => {
     setLoading(true);
-    if (IsGuest) {
-      const url = Api_url + guest_orders_api;
-      axios
-        .get(url)
-        .then((res) => {
-          if (res && res.status == 200) {
-            setLoading(false);
-            console.log(res.data.data);
-            setFlatListData0(res.data.data);
-          }
-        })
-        .then(() => {
-          console.log("flatlist is ", FlatListData0);
-        })
-        .catch((err) => {
-          setError(err.response.data.message);
+    const url = Api_url + guest_orders_api;
+    axios
+      .get(url)
+      .then((res) => {
+        if (res && res.status == 200) {
           setLoading(false);
-        });
-    } else {
-      setFlatListData0([
-        {
-          id: "bd7acbrewea-c1b1-461231c2-aed5-3ad53abb28ba",
-          avatar: "https://dev.talbati.com/storage/media/1/1.png",
-        },
-        {
-          id: "bd7acbrew44ea-c1b1-461231c2-aed5-3ad53abb28ba",
-          avatar: "https://dev.talbati.com/storage/media/2/2.png",
-        },
-      ]);
-      setLoading(false);
-    }
+          console.log(res.data.data);
+          setFlatListData0(res.data.data);
+        }
+      })
+      .then(() => {
+        console.log("flatlist is ", FlatListData0);
+      })
+      .catch((err) => {
+        setError(err.response.data.message);
+        setLoading(false);
+      });
+  };
+
+  const getFamousMerchant = async (num) => {
+    const url = Api_url + guest_get_merchant + `?itemsPerPage=${num}`;
+    axios
+      .get(url)
+      .then((res) => {
+        if (res && res.status == 200) {
+          console.log(res.data.data);
+          setFlatListData1(res.data.data);
+        }
+      })
+      .then(() => {
+        console.log("flatlist 1 is ", FlatListData0);
+      })
+      .catch((err) => {
+        setError(err.response.data.message);
+      });
+  };
+
+  const getAllMerchant = async (num) => {
+    const url = Api_url + guest_get_merchant + `?itemsPerPage=${num}`;
+    axios
+      .get(url)
+      .then((res) => {
+        if (res && res.status == 200) {
+          console.log(res.data.data);
+          setFlatListData2(res.data.data);
+        }
+      })
+      .then(() => {
+        console.log("flatlist 2 is ", FlatListData0);
+      })
+      .catch((err) => {
+        setError(err.response.data.message);
+      });
   };
 
   useEffect(() => {
     navigation.addListener("focus", () => {
       RefresingData();
+      getFamousMerchant(4);
+      getAllMerchant(6);
     });
   }, []);
 
@@ -231,7 +261,7 @@ const Home = ({ navigation }) => {
             renderItem={({ item }) => (
               <Pressable
                 marginHorizontal={10}
-                onPress={() => console.warn(`you clicked num ${item.title}`)}
+                onPress={() => console.warn(`you clicked num ${item.name}`)}
               >
                 <Box alignItems="center">
                   <Box
@@ -244,7 +274,7 @@ const Home = ({ navigation }) => {
                     height={160}
                   >
                     <Image
-                      source={item.photo}
+                      source={{ uri: item.avatar }}
                       alt="image"
                       style={{ marginLeft: 50 }}
                     />
@@ -262,21 +292,21 @@ const Home = ({ navigation }) => {
                     >
                       <View style={styles.FlatListContainerUnder}>
                         <View style={styles.FlatListContainerUnder1}>
-                          <Image
+                          {/* <Image
                             style={styles.star}
                             source={require("../../images/star.png")}
-                          />
+                          /> */}
                           <Text style={styles.txt} color={"#FFFFFF"}>
-                            {item.star}
+                            {item.name}
                           </Text>
                         </View>
                         <View style={styles.FlatListContainerUnder2}>
                           <Text style={styles.txt} color={"#FFFFFF"}>
-                            {item.title}
+                            {item.name}
                           </Text>
-                          <Text style={styles.txt} color={"#FFFFFF"}>
+                          {/* <Text style={styles.txt} color={"#FFFFFF"}>
                             {item.distance} {t("km")}
-                          </Text>
+                          </Text> */}
                         </View>
                       </View>
                     </Center>
@@ -315,7 +345,7 @@ const Home = ({ navigation }) => {
                     height={160}
                   >
                     <Image
-                      source={item.photo}
+                      source={{ uri: item.avatar }}
                       alt="image"
                       style={{ marginLeft: 20, height: 110, marginTop: 5 }}
                     />
