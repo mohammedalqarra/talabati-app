@@ -130,7 +130,7 @@ const ShopDetail = ({ route, navigation }) => {
               <View>
                 <Pressable onPress={() => navigation.goBack()}>
                   <Image
-                    source={{ uri: avatar }}
+                    source={require("../../images/left-arrow2.png")}
                     width={25}
                     height={25}
                     padding={8}
@@ -139,7 +139,10 @@ const ShopDetail = ({ route, navigation }) => {
               </View>
             </View>
             <View style={styles.upperlogo}>
-              <Image source={require("../../images/logo/logo1.png")} />
+              <Image
+                source={{ uri: avatar }}
+                style={{ height: 70, width: 70 }}
+              />
               <Text style={styles.uppertxt}>{name}</Text>
             </View>
           </ImageBackground>

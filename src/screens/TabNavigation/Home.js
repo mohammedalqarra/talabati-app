@@ -370,10 +370,10 @@ const Home = ({ navigation }) => {
                     >
                       <View style={styles.FlatListContainerUnder3}>
                         {i18n.language === "ar" && (
-                          <Text style={styles.txt1}>{item.name_ar}</Text>
+                          <Text style={styles.txt}>{item.name_ar}</Text>
                         )}
                         {i18n.language === "en" && (
-                          <Text style={styles.txt1}>{item.name_en}</Text>
+                          <Text style={styles.txt}>{item.name_en}</Text>
                         )}
                       </View>
                     </Center>
