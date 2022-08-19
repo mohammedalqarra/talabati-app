@@ -14,8 +14,7 @@ import { handlelogOut } from "../../features/auth/authSlice";
 import axios from "axios";
 import { check_token, Api_url } from "../../utilites/ApiConstants";
 import { storeData, RemoveData } from "../../features/dataSlice";
-import { Modal } from "native-base";
-import { Button } from "native-base";
+import { Modal, Button } from "native-base";
 
 const MyAccount = ({ navigation }) => {
   const IsGuest = useSelector((state) => state.auth.IsGuest);
