@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -9,13 +9,40 @@ import {
 } from "react-native";
 import { Button, Modal } from "native-base";
 import { useTranslation } from "react-i18next";
-import axios from "axios";
-import { Api_url, get_my_orders } from "../../utilites/ApiConstants";
-import { useDispatch, useSelector } from "react-redux";
+// import axios from "axios";
+// import { Api_url, get_my_orders } from "../../utilites/ApiConstants";
+// import { useDispatch, useSelector } from "react-redux";
 
-const KeepShop = ({ navigation }) => {
+const KeepShop = ({ route, navigation }) => {
+  const { data } = route.params;
   const [showModal, setShowModal] = useState(false);
+  const [showModal1, setShowModal1] = useState(false);
+
   const { t } = useTranslation();
+  // const token = useSelector((state) => state.auth.data.token);
+
+  // useEffect(() => {
+  //   getData();
+  // }, []);
+
+  // const getData = () => {
+  //   const url = Api_url + get_my_orders;
+  //   const config = {
+  //     headers: { Authorization: `Bearer ${token}` },
+  //   };
+  //   setShowModal1(true);
+  //   axios
+  //     .get(url, config)
+  //     .then((res) => {
+  //       if (res && res.status == 200) {
+  //         setShowModal1(false);
+  //         console.log(res.data[res.length]);
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       setShowModal1(false);
+  //     });
+  // };
 
   return (
     <ScrollView style={styles.container}>
@@ -39,6 +66,17 @@ const KeepShop = ({ navigation }) => {
         </Modal.Content>
       </Modal>
       {/* end of modal */}
+      {/* start of Loading modal */}
+      <Modal isOpen={showModal1}>
+        <Modal.Content maxWidth="400px">
+          <Modal.Body>
+            <View style={styles.centerizedCol}>
+              <ActivityIndicator size="large" color="#0000ff" />
+            </View>
+          </Modal.Body>
+        </Modal.Content>
+      </Modal>
+      {/* end of Loading modal */}
       <View style={styles.card}>
         <View style={styles.Header}>
           <Text
@@ -59,11 +97,11 @@ const KeepShop = ({ navigation }) => {
         <View style={styles.line}></View>
         <View style={styles.CardPart}>
           <Text style={{ marginRight: 15, fontFamily: "Tajawal_400Regular" }}>
-            8 بيض
+            {data.data.order_details}
           </Text>
           <Text style={styles.dot}>{"\u2022"}</Text>
         </View>
-        <View style={styles.CardPart}>
+        {/* <View style={styles.CardPart}>
           <Text style={{ marginRight: 15, fontFamily: "Tajawal_400Regular" }}>
             2 لبن
           </Text>
@@ -80,7 +118,7 @@ const KeepShop = ({ navigation }) => {
             1 مربي
           </Text>
           <Text style={styles.dot}>{"\u2022"}</Text>
-        </View>
+        </View> */}
       </View>
       {/* the second */}
       <View style={styles.card}>
@@ -109,7 +147,7 @@ const KeepShop = ({ navigation }) => {
                 fontFamily: "Tajawal_400Regular",
               }}
             >
-              295 {t("rial")}
+              {data.data.value} {t("rial")}
             </Text>
             <Text
               style={{
@@ -129,7 +167,7 @@ const KeepShop = ({ navigation }) => {
                 fontFamily: "Tajawal_400Regular",
               }}
             >
-              35 {t("rial")}
+              {data.data.value} {t("rial")}
             </Text>
             <Text
               style={{
@@ -138,7 +176,7 @@ const KeepShop = ({ navigation }) => {
                 fontFamily: "Tajawal_400Regular",
               }}
             >
-              {t("deleverycost")}
+              {t("paid")}
             </Text>
           </View>
           <View style={styles.smallcard2}>
@@ -149,7 +187,7 @@ const KeepShop = ({ navigation }) => {
                 fontFamily: "Tajawal_400Regular",
               }}
             >
-              320 {t("rial")}
+              {data.data.value} {t("rial")}
             </Text>
             <Text
               style={{

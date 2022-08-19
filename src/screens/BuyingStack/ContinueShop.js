@@ -81,15 +81,6 @@ const ContinueShop = ({ route, navigation }) => {
       const provider_id = region.id;
       const longitude = region.longitude;
       const order_details = textAreaValue;
-      console.log("name", name);
-      console.log("mobile", mobile);
-      console.log("email", email);
-      console.log("phone", phone);
-      console.log("id", id);
-      console.log("latitude", latitude);
-      console.log("longitude", longitude);
-      console.log("address", address);
-      console.log("textAreaValue", textAreaValue);
 
       setShowModal(true);
       axios
@@ -113,7 +104,9 @@ const ContinueShop = ({ route, navigation }) => {
             setShowModal(false);
             console.log(res.data);
             const data = res.data;
-            navigation.navigate("KeepShop");
+            navigation.navigate("KeepShop", {
+              data,
+            });
           }
         })
         .catch((err) => {
