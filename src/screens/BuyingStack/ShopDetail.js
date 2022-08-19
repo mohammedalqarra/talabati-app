@@ -10,9 +10,15 @@ import {
 import { TextArea, Button, Modal } from "native-base";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useDispatch } from "react-redux";
 
 const ShopDetail = ({ route, navigation }) => {
+  const dispatch = useDispatch();
   const { avatar, name, mobile, email, id } = route.params;
+  const namee = name;
+  const mobilee = mobile;
+  const emaile = email;
+  const ide = id;
   const [showModal, setShowModal] = useState(false);
   const [defaultRating, setDefaultRating] = useState(1);
   const [maxRating, setMaxRating] = useState([1, 2, 3, 4, 5]);
@@ -50,6 +56,13 @@ const ShopDetail = ({ route, navigation }) => {
   const [textAreaValue, setTextAreaValue] = useState("");
   const demoValueControlledTextArea = (e) => {
     setTextAreaValue(e.currentTarget.value);
+  };
+  const v = () => {
+    console.log("name", name);
+    console.log("mobile", mobile);
+    console.log("email", email);
+
+    console.log("id", id);
   };
   return (
     <View style={styles.container}>
@@ -257,10 +270,10 @@ const ShopDetail = ({ route, navigation }) => {
           onPress={() =>
             navigation.navigate("ContinueShop", {
               region: {
-                name,
-                mobile,
-                email,
-                id,
+                name: namee,
+                mobile: mobilee,
+                email: emaile,
+                id: ide,
                 latitude: 24.7136,
                 longitude: 46.6753,
                 latitudeDelta: 0.005,
