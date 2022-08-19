@@ -1,6 +1,13 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, Image, Pressable } from "react-native";
-import { Button, Input, Modal } from "native-base";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  Pressable,
+  ActivityIndicator,
+} from "react-native";
+import { Button, Input, Modal, TextArea } from "native-base";
 import { useTranslation } from "react-i18next";
 import { Api_url, create_order } from "../../utilites/ApiConstants";
 import axios from "axios";
@@ -13,48 +20,20 @@ const ContinueShop = ({ route, navigation }) => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [address, setAddress] = useState("");
+  const [showModal, setShowModal] = useState(false);
+
+  // const show = () => {
+  //   console.log("name", region.name);
+  //   console.log("mobile", region.mobile);
+  //   console.log("email", region.email);
+  //   // console.log("phone", phone);
+  //   console.log("region", region);
+  //   console.log("id", region.id);
+  //   console.log("textAreaValue", textAreaValue);
+  // };
+
   const { t } = useTranslation();
   const IsGuest = useSelector((state) => state.auth.IsGuest);
-  const phone = useSelector((state) => state.auth.data.mobile);
-  const handleChange = (text) => setAddress(text);
-
-  const NewOrder = () => {
-    const url = Api_url + create_order;
-    const config = {
-      headers: { Authorization: `Bearer ${token}` },
-    };
-    const formData = new FormData();
-    formData.append("name", name);
-    formData.append("mobile", mobile);
-    formData.append("email", email);
-    formData.append("phone", phone);
-    formData.append("provider_id", id);
-    formData.append("latitude", region.latitude);
-    formData.append("longitude", region.longitude);
-    formData.append("address", address);
-    formData.append("order_details", textAreaValue);
-
-    setShowModal(true);
-    axios
-      .post(
-        url,
-        {
-          username,
-          name_ar,
-          name_en,
-        },
-        config
-      )
-      .then((res) => {
-        if (res && res.status == 200) {
-          setShowModal(false);
-        }
-      })
-      .catch((err) => {
-        setError(err.response.data.message);
-        setShowModal(false);
-      });
-  };
 
   const RenderGuestItems = () => {
     return (
@@ -84,25 +63,63 @@ const ContinueShop = ({ route, navigation }) => {
     );
   };
 
-  const RenderItems = () => {
+  const RenderItems = ({ region, textAreaValue }) => {
     const token = useSelector((state) => state.auth.data.token);
+    const phone = useSelector((state) => state.auth.data.data.mobile);
+    const demoValueControlledTextArea = (e) => {
+      setAddress(e.currentTarget.value);
+    };
     const makeRequest = () => {
-      const formData = new FormData();
-      formData.append("name", name);
-      formData.append("mobile", mobile);
-      formData.append("email", email);
-      formData.append("phone", phone);
-      formData.append("provider_id", id);
-      formData.append("latitude", region.latitude);
-      formData.append("longitude", region.longitude);
-      formData.append("address", address);
-      formData.append("order_details", textAreaValue);
+      const url = Api_url + create_order;
+      const config = {
+        headers: { Authorization: `Bearer ${token}` },
+      };
+      const name = region.name;
+      const mobile = region.mobile;
+      const email = region.email;
+      const latitude = region.latitude;
+      const provider_id = region.id;
+      const longitude = region.longitude;
+      const order_details = textAreaValue;
+      console.log("name", name);
+      console.log("mobile", mobile);
+      console.log("email", email);
+      console.log("phone", phone);
+      console.log("id", id);
+      console.log("latitude", latitude);
+      console.log("longitude", longitude);
+      console.log("address", address);
+      console.log("textAreaValue", textAreaValue);
 
-      console.log(formData);
-      // console.log("region", region);
-      // console.log("textAreaValue", textAreaValue);
-      // console.log("address", address);
-      // console.log("token", token);
+      setShowModal(true);
+      axios
+        .post(
+          url,
+          {
+            name,
+            mobile,
+            email,
+            phone,
+            provider_id,
+            latitude,
+            longitude,
+            address,
+            order_details,
+          },
+          config
+        )
+        .then((res) => {
+          if (res && res.status == 200) {
+            setShowModal(false);
+            console.log(res.data);
+            const data = res.data;
+            navigation.navigate("KeepShop");
+          }
+        })
+        .catch((err) => {
+          setError(err.response.data.message);
+          setShowModal(false);
+        });
     };
 
     return (
@@ -112,6 +129,36 @@ const ContinueShop = ({ route, navigation }) => {
             marginTop: 70,
           }}
         >
+          {/* start of modal */}
+          <Modal isOpen={showModal}>
+            <Modal.Content maxWidth="400px">
+              <Modal.Body>
+                <View style={styles.centerizedCol}>
+                  <ActivityIndicator size="large" color="#0000ff" />
+                </View>
+              </Modal.Body>
+            </Modal.Content>
+          </Modal>
+          {/* end of modal */}
+          <View>
+            <View>
+              {error && (
+                <View style={styles.errmessage}>
+                  <Text style={styles.errmessagetxt}>{error}</Text>
+                </View>
+              )}
+            </View>
+            <View>
+              {error === undefined && (
+                <View style={styles.errmessage}>
+                  <Text style={styles.errmessagetxt}>
+                    {" "}
+                    Check Your Connection and retry to log in{" "}
+                  </Text>
+                </View>
+              )}
+            </View>
+          </View>
           <View>
             {/* header */}
             <View>
@@ -136,30 +183,42 @@ const ContinueShop = ({ route, navigation }) => {
             >
               {t("delevrydata")}
             </Text>
+            {/* <TextArea
+              value={address}
+              onChange={demoValueControlledTextArea}
+              w="75%"
+              maxW="400"
+              h={10}
+              borderRadius={15}
+              marginTop={5}
+              placeholderTextColor={"#E6E6E6"}
+              style={styles.txtfamily}
+              backgroundColor={"white"}
+              placeholder={t("develeryadress")}
+            /> */}
             <Input
               w={{
                 base: "75%",
                 md: "25%",
               }}
               value={address}
-              onChangeText={handleChange}
-              InputLeftElement={
-                <Pressable onPress={() => setShowModal(true)}>
-                  <Image
-                    source={require("../../images/down-filled-triangular-arrow.png")}
-                  />
-                </Pressable>
-              }
-              InputRightElement={
-                <Pressable>
-                  <Image
-                    source={require("../../images/Icon material-location-on.png")}
-                  />
-                </Pressable>
-              }
+              onChangeText={(text) => setAddress(text)}
+              // InputLeftElement={
+              //   <Pressable onPress={() => setShowModal(true)}>
+              //     <Image
+              //       source={require("../../images/down-filled-triangular-arrow.png")}
+              //     />
+              //   </Pressable>
+              // }
+              // InputRightElement={
+              //   <Pressable>
+              //     <Image
+              //       source={require("../../images/Icon material-location-on.png")}
+              //     />
+              //   </Pressable>
+              // }
               placeholder={t("develeryadress")}
             />
-            {/* {<Text>{address}</Text>} */}
             <Button
               onPress={() => navigation.navigate("GetLocation")}
               style={styles.firstBut}
@@ -182,7 +241,7 @@ const ContinueShop = ({ route, navigation }) => {
             </Button>
           </View>
           <Button
-            onPressOut={() => makeRequest()}
+            onPress={() => makeRequest()}
             // onPress={() => navigation.navigate("KeepShop")}
             style={styles.firstBut}
             size="sm"
@@ -200,7 +259,18 @@ const ContinueShop = ({ route, navigation }) => {
   };
   return (
     <View style={styles.container}>
-      {IsGuest == true ? <RenderGuestItems /> : <RenderItems />}
+      {IsGuest == true ? (
+        <RenderGuestItems />
+      ) : (
+        <RenderItems
+          name={name}
+          region={region}
+          textAreaValue={textAreaValue}
+          mobile={mobile}
+          email={email}
+          id={id}
+        />
+      )}
     </View>
   );
 };
@@ -251,6 +321,22 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "white",
     fontFamily: "Tajawal_500Medium",
+  },
+  centerizedCol: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  errmessage: {
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 10,
+  },
+  errmessagetxt: {
+    fontSize: 14,
+    fontFamily: "Tajawal_500Medium",
+    color: "red",
   },
 });
 

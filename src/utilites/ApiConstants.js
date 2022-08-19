@@ -7,6 +7,7 @@ export const change_password_api = "User/update-password";
 export const notifications = "Notification";
 export const update_account = "User/update-account";
 export const create_order = "Sales/Order/Create";
+export const get_my_orders = "Sales/Order/MyOrders";
 // In Guest
 export const guest_categories_api = "Static/Category";
 export const guest_orders_api = "Static/Offer";
