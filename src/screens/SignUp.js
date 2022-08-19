@@ -242,7 +242,7 @@ const SignUp = ({ navigation }) => {
                 value={values.password_confirmation}
                 onChangeText={handleChange("password_confirmation")}
               />
-              <View
+              {/* <View
                 style={{
                   flexDirection: "row",
                   justifyContent: "space-around",
@@ -324,7 +324,7 @@ const SignUp = ({ navigation }) => {
                     />
                   </View>
                 </Pressable>
-              </View>
+              </View> */}
             </Stack>
             <View style={styles.clickContainer}>
               <Pressable onPress={() => navigation.navigate("ForgetPassword")}>
