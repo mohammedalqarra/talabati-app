@@ -142,7 +142,7 @@
   "confirmpassword":"confirmpassword",
   "signupsucess":"Signed Up successfully",
   "passwordchange":"Password has been Updated",
-  "organizationname":"Organization Name"
-
+  "organizationname":"Organization Name",
+  "nothing":"No notification"
 }
 

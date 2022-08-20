@@ -188,7 +188,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   phoneNumberInput: {
-    height: 50,
+    height: 60,
     marginVertical: 10,
   },
   phoneNumberInputtxt: {

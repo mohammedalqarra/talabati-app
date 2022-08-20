@@ -1,35 +1,91 @@
-import React, { useState } from "react";
-import { View, Text, StyleSheet, FlatList, Image } from "react-native";
+import React, { useState, useEffect } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  Image,
+  ActivityIndicator,
+} from "react-native";
 import { useTranslation } from "react-i18next";
-
-const OrdersDetails = ({ navigation }) => {
+import { Modal } from "native-base";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import { Api_url, get_certain_order } from "../../../../utilites/ApiConstants";
+const OrdersDetails = ({ route, navigation }) => {
   const { t } = useTranslation();
+  const { id } = route.params;
+  const [showModal, setShowModal] = useState(false);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const token = useSelector((state) => state.auth.data.token);
+  const [FlatListData, setFlatListData] = useState([]);
 
-  const [FlatListData, setFlatListData] = useState([
-    {
-      id: "bd7acbea-46c2-aed5-3ad53abb28ba",
-      name: "بيض",
-      quantity: "8",
-    },
-    {
-      id: "3ac68afc-c605-48d3-fbd91aa97f63",
-      name: "لبن",
-      quantity: "2",
-    },
-    {
-      id: "58694a0f-3da1-bd96-145571e29d72",
-      name: "بيبسي",
-      quantity: "4",
-    },
-    {
-      id: "58694a0f-3da1-471f-bd96-1454529d72",
-      name: "مربي",
-      quantity: "1",
-    },
-  ]);
+  useEffect(() => {
+    navigation.addListener("focus", () => {
+      getData();
+    });
+  });
+
+  const getData = () => {
+    const url = Api_url + get_certain_order + `${id}`;
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
+    setShowModal(true);
+    axios
+      .get(url, config)
+      .then((res) => {
+        if (res && res.status == 200) {
+          setShowModal(false);
+          console.log(res.data.data);
+          setFlatListData(res.data.data);
+        }
+      })
+      .catch((err) => {
+        setShowModal(false);
+      });
+  };
+
+  //! dummy data for testing
+
+  // const [FlatListData, setFlatListData] = useState([
+  //   {
+  //     id: "bd7acbea-46c2-aed5-3ad53abb28ba",
+  //     name: "بيض",
+  //     quantity: "8",
+  //   },
+  //   {
+  //     id: "3ac68afc-c605-48d3-fbd91aa97f63",
+  //     name: "لبن",
+  //     quantity: "2",
+  //   },
+  //   {
+  //     id: "58694a0f-3da1-bd96-145571e29d72",
+  //     name: "بيبسي",
+  //     quantity: "4",
+  //   },
+  //   {
+  //     id: "58694a0f-3da1-471f-bd96-1454529d72",
+  //     name: "مربي",
+  //     quantity: "1",
+  //   },
+  // ]);
+  //! end of dummy data for testing
 
   return (
     <View style={styles.container}>
+      {/* start of Loading modal */}
+      <Modal isOpen={showModal}>
+        <Modal.Content maxWidth="400px">
+          <Modal.Body>
+            <View style={styles.centerizedCol}>
+              <ActivityIndicator size="large" color="#0000ff" />
+            </View>
+          </Modal.Body>
+        </Modal.Content>
+      </Modal>
+      {/* end of Loading modal */}
       <View style={styles.container1}>
         {/* the first card */}
         <View style={styles.card}>
@@ -59,7 +115,7 @@ const OrdersDetails = ({ navigation }) => {
                   fontFamily: "Tajawal_400Regular",
                 }}
               >
-                احمد محمد
+                {FlatListData.name}
               </Text>
               <View style={styles.smallhead}>
                 <Text
@@ -85,7 +141,7 @@ const OrdersDetails = ({ navigation }) => {
                   fontFamily: "Tajawal_500Medium",
                 }}
               >
-                شقة 2/ طريق نجم الدين
+                {FlatListData.address}
               </Text>
               <View style={styles.smallhead}>
                 <Text
@@ -111,7 +167,7 @@ const OrdersDetails = ({ navigation }) => {
                   fontFamily: "Tajawal_500Medium",
                 }}
               >
-                01555560534
+                {FlatListData.mobile}
               </Text>
               <View style={styles.smallhead}>
                 <Text
@@ -131,36 +187,40 @@ const OrdersDetails = ({ navigation }) => {
             </View>
             <View style={styles.line}></View>
             <View style={styles.smallcard2}>
-              <View style={styles.smallhead}>
-                <Text
-                  style={{
-                    fontFamily: "Tajawal_500Medium",
-                    fontSize: 14,
-                    color: "#74DA7F",
-                  }}
-                >
-                  {t("deleveried")}
-                </Text>
-                <Image
-                  source={require("../../../../images/check.png")}
-                  style={{ marginLeft: 5 }}
-                />
-              </View>
-              <View style={styles.smallhead}>
-                <Text
-                  style={{
-                    color: "#555555",
-                    fontSize: 14,
-                    fontFamily: "Tajawal_500Medium",
-                  }}
-                >
-                  حاله الطلب
-                </Text>
-                <Image
-                  source={require("../../../../images/mapmarket.png")}
-                  style={{ marginLeft: 5 }}
-                />
-              </View>
+              {FlatListData.order_status_id === 1 && (
+                <>
+                  <View style={styles.smallhead}>
+                    <Text
+                      style={{
+                        fontFamily: "Tajawal_500Medium",
+                        fontSize: 14,
+                        color: "#74DA7F",
+                      }}
+                    >
+                      {t("deleveried")}
+                    </Text>
+                    <Image
+                      source={require("../../../../images/check.png")}
+                      style={{ marginLeft: 5 }}
+                    />
+                  </View>
+                  <View style={styles.smallhead}>
+                    <Text
+                      style={{
+                        color: "#555555",
+                        fontSize: 14,
+                        fontFamily: "Tajawal_500Medium",
+                      }}
+                    >
+                      حاله الطلب
+                    </Text>
+                    <Image
+                      source={require("../../../../images/mapmarket.png")}
+                      style={{ marginLeft: 5 }}
+                    />
+                  </View>
+                </>
+              )}
             </View>
           </View>
         </View>
@@ -183,21 +243,12 @@ const OrdersDetails = ({ navigation }) => {
             </Text>
           </View>
           <View style={styles.line}></View>
-          <FlatList
-            data={FlatListData}
-            renderItem={({ item }) => (
-              <View style={styles.CardPart}>
-                <Text
-                  style={{ marginRight: 15, fontFamily: "Tajawal_500Medium" }}
-                >
-                  {item.quantity}
-                  {item.name}
-                </Text>
-                <Text style={styles.dot}>{"\u2022"}</Text>
-              </View>
-            )}
-            keyExtractor={(item) => item.id}
-          />
+          <View style={styles.CardPart}>
+            <Text style={{ marginRight: 15, fontFamily: "Tajawal_500Medium" }}>
+              {FlatListData.order_details}
+            </Text>
+            <Text style={styles.dot}>{"\u2022"}</Text>
+          </View>
         </View>
         {/* the third card */}
         <View style={styles.card}>
@@ -227,7 +278,7 @@ const OrdersDetails = ({ navigation }) => {
                   fontFamily: "Tajawal_400Regular",
                 }}
               >
-                285 {t("rial")}
+                {FlatListData.value} {t("rial")}
               </Text>
               <View style={styles.smallhead}>
                 <Text
@@ -253,7 +304,7 @@ const OrdersDetails = ({ navigation }) => {
                   fontFamily: "Tajawal_500Medium",
                 }}
               >
-                35 {t("rial")}
+                {FlatListData.value} {t("rial")}
               </Text>
               <View style={styles.smallhead}>
                 <Text
@@ -279,7 +330,7 @@ const OrdersDetails = ({ navigation }) => {
                   fontFamily: "Tajawal_500Medium",
                 }}
               >
-                320 {t("rial")}
+                {FlatListData.value} {t("rial")}
               </Text>
               <View style={styles.smallhead}>
                 <Text

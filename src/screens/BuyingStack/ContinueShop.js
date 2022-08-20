@@ -22,15 +22,15 @@ const ContinueShop = ({ route, navigation }) => {
   const [address, setAddress] = useState("");
   const [showModal, setShowModal] = useState(false);
 
-  // const show = () => {
-  //   console.log("name", region.name);
-  //   console.log("mobile", region.mobile);
-  //   console.log("email", region.email);
-  //   // console.log("phone", phone);
-  //   console.log("region", region);
-  //   console.log("id", region.id);
-  //   console.log("textAreaValue", textAreaValue);
-  // };
+  const show = () => {
+    console.log("name", region.name);
+    console.log("mobile", region.mobile);
+    console.log("email", region.email);
+    // console.log("phone", phone);
+    console.log("region", region);
+    console.log("id", region.id);
+    console.log("textAreaValue", textAreaValue);
+  };
 
   const { t } = useTranslation();
   const IsGuest = useSelector((state) => state.auth.IsGuest);
@@ -82,6 +82,7 @@ const ContinueShop = ({ route, navigation }) => {
       const longitude = region.longitude;
       const order_details = textAreaValue;
 
+      console.log(order_details);
       setShowModal(true);
       axios
         .post(

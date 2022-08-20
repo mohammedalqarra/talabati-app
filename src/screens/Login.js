@@ -1,4 +1,3 @@
-//finished
 import { View, Text, Image, StyleSheet, ActivityIndicator } from "react-native";
 import React, { useState } from "react";
 import { Input, Stack, Button, Pressable, Heading } from "native-base";

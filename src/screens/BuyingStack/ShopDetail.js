@@ -22,6 +22,7 @@ const ShopDetail = ({ route, navigation }) => {
   const [showModal, setShowModal] = useState(false);
   const [defaultRating, setDefaultRating] = useState(1);
   const [maxRating, setMaxRating] = useState([1, 2, 3, 4, 5]);
+  const [textAreaValue, setTextAreaValue] = useState("");
   const StarImgFilled =
     "https://raw.githubusercontent.com/tranhonghan/images/main/star_filled.png";
   const StarImgCorner =
@@ -53,7 +54,6 @@ const ShopDetail = ({ route, navigation }) => {
     );
   };
   const { t } = useTranslation();
-  const [textAreaValue, setTextAreaValue] = useState("");
   const demoValueControlledTextArea = (e) => {
     setTextAreaValue(e.currentTarget.value);
   };
@@ -256,7 +256,7 @@ const ShopDetail = ({ route, navigation }) => {
       <View style={styles.lastsec}>
         <TextArea
           value={textAreaValue}
-          onChange={demoValueControlledTextArea}
+          onChangeText={(text) => setTextAreaValue(text)}
           w="90%"
           maxW="400"
           h={95}
