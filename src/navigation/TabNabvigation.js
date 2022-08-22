@@ -12,6 +12,10 @@ import OrdersNavigation from "../navigation/OrdersNavigation";
 // import Orders from '../screens/TabNavigation/Orders';
 import { useTranslation } from "react-i18next";
 import i18n from "../i18n";
+import Icon from "react-native-vector-icons/SimpleLineIcons";
+import Icon1 from "react-native-vector-icons/MaterialIcons";
+import Icon2 from "react-native-vector-icons/AntDesign";
+import Icon3 from "react-native-vector-icons/Ionicons";
 
 const Tab = createBottomTabNavigator();
 
@@ -24,74 +28,106 @@ export default function TabNavigation() {
       initialRouteName="Home"
       screenOptions={{
         tabBarActiveTintColor: "#E56B1F",
+        tabBarStyle: {
+          height: 55,
+        },
       }}
     >
       <Tab.Screen
+        name="MyAccount1"
+        component={AccountingNavigation}
         options={{
           headerStyle: {
-            height: 50,
+            height: 130,
+          },
+          headerTitleStyle: {
+            fontFamily: "Tajawal_500Medium",
+          },
+          tabBarLabelStyle: {
+            fontSize: 15,
+            fontFamily: "Tajawal_500Medium",
           },
           title: i18n.t("myaccount"),
           headerShown: false,
-          tabBarOptions: { showIcon: true },
-          tabBarIcon: (focused, tintColor) => (
-            <Image
-              style={{ width: 24, height: 24 }}
-              source={require("../images/avatar.png")}
+
+          tabBarIcon: ({ focused, tintColor }) => (
+            <Icon3
+              focused={focused}
+              name={"person-outline"}
+              tintColor={{ tintColor }}
+              color={focused ? "#E56B1F" : "black"}
+              size={24}
             />
           ),
-          tabBarLabelStyle: {
-            fontSize: 15,
-            fontFamily: "Tajawal_500Medium",
+          tabBarOptions: {
+            activeTintColor: "tomato",
+            inactiveTintColor: "gray",
           },
         }}
-        name="MyAccount1"
-        component={AccountingNavigation}
       />
       <Tab.Screen
+        name="Orders"
+        component={OrdersNavigation}
         options={{
           headerStyle: {
             height: 130,
+          },
+          headerTitleStyle: {
+            fontFamily: "Tajawal_500Medium",
+          },
+          tabBarLabelStyle: {
+            fontSize: 15,
+            fontFamily: "Tajawal_500Medium",
           },
           title: i18n.t("orders"),
           headerShown: false,
-          tabBarOptions: { showIcon: true },
-          tabBarIcon: (focused, tintColor) => (
-            <Image
-              style={{ width: 24, height: 24 }}
-              source={require("../images/checkout.png")}
+
+          tabBarIcon: ({ focused, tintColor }) => (
+            <Icon2
+              focused={focused}
+              name={"shoppingcart"}
+              tintColor={{ tintColor }}
+              color={focused ? "#E56B1F" : "black"}
+              size={24}
             />
           ),
-          tabBarLabelStyle: {
-            fontSize: 15,
-            fontFamily: "Tajawal_500Medium",
+          tabBarOptions: {
+            activeTintColor: "tomato",
+            inactiveTintColor: "gray",
           },
         }}
-        name="Orders"
-        component={OrdersNavigation}
       />
-
       <Tab.Screen
+        name="Merchants"
+        component={BuyingNavigation}
         options={{
           headerStyle: {
             height: 130,
           },
-          title: i18n.t("merchants"),
-          headerShown: false,
-          tabBarOptions: { showIcon: true },
-          tabBarIcon: (focused, tintColor) => (
-            <Image
-              style={{ width: 24, height: 24 }}
-              source={require("../images/shop.png")}
-            />
-          ),
+          headerTitleStyle: {
+            fontFamily: "Tajawal_500Medium",
+          },
           tabBarLabelStyle: {
             fontSize: 15,
             fontFamily: "Tajawal_500Medium",
           },
+          title: i18n.t("merchants"),
+          headerShown: false,
+
+          tabBarIcon: ({ focused, tintColor }) => (
+            <Icon1
+              focused={focused}
+              name={"storefront"}
+              tintColor={{ tintColor }}
+              color={focused ? "#E56B1F" : "black"}
+              size={24}
+            />
+          ),
+          tabBarOptions: {
+            activeTintColor: "tomato",
+            inactiveTintColor: "gray",
+          },
         }}
-        name="Merchants"
-        component={BuyingNavigation}
       />
       <Tab.Screen
         name="Home"
@@ -109,13 +145,19 @@ export default function TabNavigation() {
           },
           title: i18n.t("home"),
           headerTitle: () => <HomeHeader />,
-          tabBarOptions: { showIcon: true },
-          tabBarIcon: (focused, tintColor) => (
-            <Image
-              style={{ width: 24, height: 24 }}
-              source={require("../images/home.png")}
+          tabBarIcon: ({ focused, tintColor }) => (
+            <Icon
+              focused={focused}
+              name={"home"}
+              tintColor={{ tintColor }}
+              color={focused ? "#E56B1F" : "black"}
+              size={24}
             />
           ),
+          tabBarOptions: {
+            activeTintColor: "tomato",
+            inactiveTintColor: "gray",
+          },
         }}
       />
     </Tab.Navigator>

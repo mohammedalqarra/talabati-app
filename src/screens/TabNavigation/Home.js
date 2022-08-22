@@ -260,7 +260,7 @@ const Home = ({ navigation }) => {
             renderItem={({ item }) => (
               <Pressable
                 marginHorizontal={10}
-                onPress={() => console.warn(`you clicked num ${item.name}`)}
+                onPress={() => navigation.navigate("Merchants")}
               >
                 <Box alignItems="center">
                   <Box
@@ -275,7 +275,11 @@ const Home = ({ navigation }) => {
                     <Image
                       source={{ uri: item.avatar }}
                       alt={item.name}
-                      style={{ marginLeft: 50, height: 150 }}
+                      style={{
+                        height: 100,
+                        width: 110,
+                        marginLeft: 50,
+                      }}
                     />
                     <Center
                       backgroundColor={"rgba(0,0,0,0.5)"}
@@ -295,18 +299,18 @@ const Home = ({ navigation }) => {
                             style={styles.star}
                             source={require("../../images/star.png")}
                           /> */}
-                          <Text style={styles.txt} color={"#FFFFFF"}>
+                          <Text style={styles.txt3} color={"#FFFFFF"}>
                             {item.name}
                           </Text>
                         </View>
                         <View style={styles.FlatListContainerUnder2}>
                           {i18n.language === "ar" && (
-                            <Text color={"#FFFFFF"} style={styles.txt}>
+                            <Text color={"#FFFFFF"} style={styles.txt2}>
                               {item.name_ar}
                             </Text>
                           )}
                           {i18n.language === "en" && (
-                            <Text color={"#FFFFFF"} style={styles.txt}>
+                            <Text color={"#FFFFFF"} style={styles.txt2}>
                               {item.name_en}
                             </Text>
                           )}
@@ -338,7 +342,7 @@ const Home = ({ navigation }) => {
             renderItem={({ item }) => (
               <Pressable
                 marginHorizontal={10}
-                onPress={() => console.warn(`you clicked num ${item.title}`)}
+                onPress={() => navigation.navigate("Merchants")}
               >
                 <Box alignItems="center">
                   <Box
@@ -404,6 +408,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     height: 150,
   },
+
   bannerImg: {
     marginHorizontal: 35,
     width: 350,
@@ -432,7 +437,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     marginVertical: 20,
-    marginRight: 25,
+    marginRight: 10,
     alignItems: "center",
   },
   star: {
@@ -458,6 +463,14 @@ const styles = StyleSheet.create({
   },
   txt: {
     fontFamily: "Tajawal_500Medium",
+  },
+  txt2: {
+    fontFamily: "Tajawal_500Medium",
+    marginRight: 60,
+  },
+  txt3: {
+    fontFamily: "Tajawal_500Medium",
+    marginLeft: 20,
   },
   centerizedCol: {
     display: "flex",
