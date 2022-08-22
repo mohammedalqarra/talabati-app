@@ -9,6 +9,7 @@ import {
 import React, { useState } from "react";
 import { Input, Stack, Button } from "native-base";
 import { useTranslation } from "react-i18next";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 const EditingAccount = ({ navigation }) => {
   const [country, setCountry] = useState("");
@@ -19,7 +20,7 @@ const EditingAccount = ({ navigation }) => {
 
   const { height } = useWindowDimensions();
   return (
-    <ScrollView>
+    <KeyboardAwareScrollView>
       <View style={styles.container}>
         <View style={{ marginTop: 20, flex: 1 }}>
           <Stack space={4} w="100%" alignItems="center">
@@ -118,7 +119,7 @@ const EditingAccount = ({ navigation }) => {
           </Button>
         </View>
       </View>
-    </ScrollView>
+    </KeyboardAwareScrollView>
   );
 };
 const styles = StyleSheet.create({

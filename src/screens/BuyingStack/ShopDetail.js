@@ -11,6 +11,7 @@ import { TextArea, Button, Modal } from "native-base";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 const ShopDetail = ({ route, navigation }) => {
   const dispatch = useDispatch();
@@ -65,7 +66,7 @@ const ShopDetail = ({ route, navigation }) => {
     console.log("id", id);
   };
   return (
-    <View style={styles.container}>
+    <KeyboardAwareScrollView style={styles.container}>
       {/* start of modal */}
       <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
         <Modal.Content maxWidth="400px">
@@ -293,7 +294,7 @@ const ShopDetail = ({ route, navigation }) => {
           {t("confirmbuy")}
         </Button>
       </View>
-    </View>
+    </KeyboardAwareScrollView>
   );
 };
 const styles = StyleSheet.create({

@@ -15,6 +15,7 @@ import {
   Api_url,
   change_password_api,
 } from "../../../../utilites/ApiConstants";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import axios from "axios";
 import { Modal } from "native-base";
 const ChangePassword = ({ navigation }) => {
@@ -58,7 +59,7 @@ const ChangePassword = ({ navigation }) => {
   };
 
   return (
-    <ScrollView>
+    <KeyboardAwareScrollView>
       <Formik
         initialValues={{ newpassword: "", confirmNewPassword: "" }}
         onSubmit={async (values) =>
@@ -160,7 +161,7 @@ const ChangePassword = ({ navigation }) => {
           </View>
         )}
       </Formik>
-    </ScrollView>
+    </KeyboardAwareScrollView>
   );
 };
 const styles = StyleSheet.create({

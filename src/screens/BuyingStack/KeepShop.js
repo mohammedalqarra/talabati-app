@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { Button, Modal } from "native-base";
 import { useTranslation } from "react-i18next";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 const KeepShop = ({ route, navigation }) => {
   const { data } = route.params;
@@ -18,7 +19,7 @@ const KeepShop = ({ route, navigation }) => {
   const { t } = useTranslation();
 
   return (
-    <ScrollView style={styles.container}>
+    <KeyboardAwareScrollView style={styles.container}>
       {/* start of modal */}
       <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
         <Modal.Content maxWidth="400px">
@@ -207,7 +208,7 @@ const KeepShop = ({ route, navigation }) => {
       >
         {t("cancell")}
       </Button>
-    </ScrollView>
+    </KeyboardAwareScrollView>
   );
 };
 const styles = StyleSheet.create({

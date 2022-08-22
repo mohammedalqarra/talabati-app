@@ -13,6 +13,7 @@ import { Api_url, create_order } from "../../utilites/ApiConstants";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { handlelogOut } from "../../features/auth/authSlice";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 const ContinueShop = ({ route, navigation }) => {
   const { region, textAreaValue, name, mobile, email, id } = route.params;
@@ -118,7 +119,7 @@ const ContinueShop = ({ route, navigation }) => {
 
     return (
       <>
-        <View
+        <KeyboardAwareScrollView
           style={{
             marginTop: 70,
           }}
@@ -247,7 +248,7 @@ const ContinueShop = ({ route, navigation }) => {
           >
             <Text style={styles.txt}>{t("sendrequest")}</Text>
           </Button>
-        </View>
+        </KeyboardAwareScrollView>
       </>
     );
   };

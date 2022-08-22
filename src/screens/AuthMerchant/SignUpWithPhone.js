@@ -8,13 +8,14 @@ import {
 import React from "react";
 import { Input, Avatar, Stack, Button, Pressable, Heading } from "native-base";
 import { useTranslation } from "react-i18next";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 const SignUpWithPhone = ({ navigation }) => {
   const { t } = useTranslation();
 
   const { height } = useWindowDimensions();
   return (
-    <View style={styles.container}>
+    <KeyboardAwareScrollView style={styles.container}>
       <Image
         source={require("../../images/logo.png")}
         style={styles.logo}
@@ -122,7 +123,7 @@ const SignUpWithPhone = ({ navigation }) => {
           {t("ignore")}
         </Button>
       </View>
-    </View>
+    </KeyboardAwareScrollView>
   );
 };
 const styles = StyleSheet.create({

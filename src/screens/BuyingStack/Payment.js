@@ -2,6 +2,7 @@ import { StyleSheet, Text, View, Image } from "react-native";
 import React, { useState } from "react";
 import { Modal, Button } from "native-base";
 import { useTranslation } from "react-i18next";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 import PaymentTopNavigation from "../../navigation/PaymentTopNavigation";
 const Payment = () => {
@@ -9,7 +10,7 @@ const Payment = () => {
   const { t } = useTranslation();
 
   return (
-    <View style={styles.container}>
+    <KeyboardAwareScrollView style={styles.container}>
       {/* start of modal */}
       <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
         <Modal.Content maxWidth="400px">
@@ -101,7 +102,7 @@ const Payment = () => {
       >
         {t("confirm")}
       </Button>
-    </View>
+    </KeyboardAwareScrollView>
   );
 };
 

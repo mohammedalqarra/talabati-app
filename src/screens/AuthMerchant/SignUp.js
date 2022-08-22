@@ -18,6 +18,7 @@ import axios from "axios";
 import { Formik } from "formik";
 import { Modal } from "native-base";
 // import RNFetchBlob from "rn-fetch-blob";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 const SignUp = ({ navigation }) => {
   const [username, setUsername] = useState("");
@@ -216,7 +217,7 @@ const SignUp = ({ navigation }) => {
       });
   };
   return (
-    <ScrollView>
+    <KeyboardAwareScrollView>
       <View style={styles.container}>
         <Image
           source={require("../../images/logo.png")}
@@ -281,6 +282,7 @@ const SignUp = ({ navigation }) => {
               {t("newaccount1")}
             </Heading>
           </View>
+
           <Stack space={4} w="100%" alignItems="center">
             <Pressable onPress={() => pickAvatar()}>
               <Avatar
@@ -359,7 +361,6 @@ const SignUp = ({ navigation }) => {
               value={password}
               onChangeText={(text) => setPassword(text)}
             />
-
             <Input
               w={{
                 base: "75%",
@@ -392,89 +393,6 @@ const SignUp = ({ navigation }) => {
               onChangeText={(text) => setOrganizationName(text)}
             />
 
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-around",
-              }}
-            >
-              <Pressable
-                style={
-                  gender === "female" && {
-                    borderColor: "#E56B1F",
-                    borderWidth: 1,
-                  }
-                }
-                onPress={() => setGender("female")}
-              >
-                <View
-                  style={{
-                    flexDirection: "row",
-                    width: 150,
-                    height: 30,
-                    justifyContent: "flex-end",
-                  }}
-                >
-                  <Text
-                    style={{
-                      marginTop: 5,
-                      fontFamily: "Tajawal_500Medium",
-                      fontSize: 14,
-                    }}
-                  >
-                    {t("female")}
-                  </Text>
-                  <Image
-                    source={require("../../images/Icononic-ios-woman.png")}
-                    style={{
-                      height: 25,
-                      marginTop: 5,
-                      marginRight: 15,
-                      marginLeft: 15,
-                      width: 10,
-                    }}
-                  />
-                </View>
-              </Pressable>
-              <Pressable
-                style={
-                  gender === "male" && {
-                    borderColor: "#E56B1F",
-                    borderWidth: 1,
-                  }
-                }
-                onPress={() => setGender("male")}
-              >
-                <View
-                  style={{
-                    flexDirection: "row",
-                    width: 150,
-                    height: 30,
-                    justifyContent: "flex-end",
-                  }}
-                >
-                  <Text
-                    style={{
-                      marginTop: 5,
-                      fontFamily: "Tajawal_500Medium",
-                      fontSize: 14,
-                    }}
-                  >
-                    {t("male")}
-                  </Text>
-                  <Image
-                    source={require("../../images/Icononic-ios-woman.png")}
-                    style={{
-                      height: 25,
-                      marginTop: 5,
-                      marginRight: 15,
-                      marginLeft: 15,
-                      width: 10,
-                    }}
-                  />
-                </View>
-              </Pressable>
-            </View>
             <View style={styles.smallcontainer}>
               <View style={styles.txtaround}>
                 <Pressable onPress={() => pickStore()}>
@@ -483,17 +401,24 @@ const SignUp = ({ navigation }) => {
               </View>
               <Text style={styles.txt}>{t("merchantlogoo")}</Text>
             </View>
-            {storephoto && (
-              <Image
-                source={{ uri: storephoto }}
-                style={{
-                  height: 150,
-                  width: 300,
-                  borderWidth: 1,
-                  borderColor: "#E56B1F",
-                }}
-              />
-            )}
+            <View>
+              {storephoto !== "" ? (
+                <View>
+                  <Image
+                    source={{ uri: storephoto }}
+                    style={{
+                      height: 150,
+                      width: 300,
+                      borderWidth: 1,
+                      borderColor: "#E56B1F",
+                    }}
+                  />
+                </View>
+              ) : (
+                <View></View>
+              )}
+            </View>
+
             <View style={styles.smallcontainer}>
               <View style={styles.txtaround2}>
                 <Pressable onPress={() => pickCommercial()}>
@@ -502,17 +427,23 @@ const SignUp = ({ navigation }) => {
               </View>
               <Text style={styles.txt}>{t("picoflicencemerchant")}</Text>
             </View>
-            {commercialphoto && (
-              <Image
-                source={{ uri: commercialphoto }}
-                style={{
-                  height: 150,
-                  width: 300,
-                  borderWidth: 1,
-                  borderColor: "#E56B1F",
-                }}
-              />
-            )}
+            <View>
+              {commercialphoto !== "" ? (
+                <View>
+                  <Image
+                    source={{ uri: commercialphoto }}
+                    style={{
+                      height: 150,
+                      width: 300,
+                      borderWidth: 1,
+                      borderColor: "#E56B1F",
+                    }}
+                  />
+                </View>
+              ) : (
+                <View></View>
+              )}
+            </View>
           </Stack>
 
           <Button
@@ -533,7 +464,7 @@ const SignUp = ({ navigation }) => {
           </View>
         </View>
       </View>
-    </ScrollView>
+    </KeyboardAwareScrollView>
   );
 };
 const styles = StyleSheet.create({
