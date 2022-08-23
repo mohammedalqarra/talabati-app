@@ -1,13 +1,37 @@
 import { View, Text, Image, StyleSheet } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, Heading } from "native-base";
 import { useTranslation } from "react-i18next";
-
+// to get data from firebase
+import { firebase } from "../firebase";
 const WelcomeScreen = ({ navigation }) => {
+  // to get data from firebase
+  const [data, setData] = useState([]);
   const { t } = useTranslation();
-
+  const dataRef = firebase.firestore().collection("messages");
+  useEffect(async () => {
+    dataRef.onSnapshot((querySnapshot) => {
+      const sdata = [];
+      querySnapshot.forEach((doc) => {
+        const { title, data } = doc.data();
+        sdata.push({
+          id: doc.id,
+          title,
+          data,
+        });
+      });
+      setData(sdata);
+    });
+  }, []);
+  // finish firebase
   return (
     <View style={styles.container}>
+      {/* <View>
+        <Text>
+          {data.title}
+          {data.data}
+        </Text>
+      </View> */}
       <View
         style={{
           alignItems: "center",

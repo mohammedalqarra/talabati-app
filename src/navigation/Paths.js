@@ -37,6 +37,37 @@ const Renderpages = () => {
   );
 };
 
+// const Renderpages2 = () => {
+//   const IsGuest = useSelector((state) => state.auth.IsGuest);
+
+//   return (
+//     <>
+//       {IsGuest ? (
+//         <Stack.Navigator screenOptions={{ headerShown: false }}>
+//           <Stack.Screen name="home" component={TabNavigation} />
+//         </Stack.Navigator>
+//       ) : (
+//         <Stack.Navigator
+//           initialRouteName="WelcomeScreen"
+//           screenOptions={{ headerShown: false }}
+//         >
+//           <Stack.Screen name="IntroScreen" component={IntroScreen} />
+//           <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} />
+//           <Stack.Screen name="Login" component={Login} />
+//           <Stack.Screen name="SignUp" component={SignUp} />
+//           <Stack.Screen name="SignUpWithPhone" component={SignUpWithPhone} />
+//           <Stack.Screen name="VerfiyNumber" component={VerfiyNumber} />
+//           <Stack.Screen name="ForgetPassword" component={ForgetPassword} />
+//           <Stack.Screen
+//             name="MerchantAuth"
+//             component={MerchantAuthNavigation}
+//           />
+//         </Stack.Navigator>
+//       )}
+//     </>
+//   );
+// };
+
 const Renderpages2 = () => {
   const IsGuest = useSelector((state) => state.auth.IsGuest);
 
@@ -67,6 +98,7 @@ const Renderpages2 = () => {
     </>
   );
 };
+
 function Paths() {
   const IsLogged = useSelector((state) => state.auth.IsLogged);
 
