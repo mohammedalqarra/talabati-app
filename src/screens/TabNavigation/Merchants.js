@@ -23,28 +23,33 @@ import {
   Divider,
   Modal,
 } from "native-base";
-// dummy images
-import SmallLogo1 from "../../images/smallLogo/1.png";
-import SmallLogo2 from "../../images/smallLogo/2.png";
-import SmallLogo3 from "../../images/smallLogo/3.png";
-import SmallLogo4 from "../../images/smallLogo/4.png";
-import SmallLogo5 from "../../images/smallLogo/5.png";
-import SmallLogo6 from "../../images/smallLogo/6.png";
+// // dummy images
+// import SmallLogo1 from "../../images/smallLogo/1.png";
+// import SmallLogo2 from "../../images/smallLogo/2.png";
+// import SmallLogo3 from "../../images/smallLogo/3.png";
+// import SmallLogo4 from "../../images/smallLogo/4.png";
+// import SmallLogo5 from "../../images/smallLogo/5.png";
+// import SmallLogo6 from "../../images/smallLogo/6.png";
 
-import Logo1 from "../../images/logo/logo1.png";
-import Logo2 from "../../images/logo/logo2.png";
-import Logo3 from "../../images/logo/logo3.png";
-import Logo4 from "../../images/logo/logo4.png";
-import Logo5 from "../../images/logo/logo5.png";
-import Logo6 from "../../images/logo/logo6.png";
+// import Logo1 from "../../images/logo/logo1.png";
+// import Logo2 from "../../images/logo/logo2.png";
+// import Logo3 from "../../images/logo/logo3.png";
+// import Logo4 from "../../images/logo/logo4.png";
+// import Logo5 from "../../images/logo/logo5.png";
+// import Logo6 from "../../images/logo/logo6.png";
 import { useTranslation } from "react-i18next";
-import { Api_url, guest_categories_api } from "../../utilites/ApiConstants";
+import {
+  Api_url,
+  guest_categories_api,
+  guest_get_merchant,
+} from "../../utilites/ApiConstants";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 
 const Merchants = ({ navigation }) => {
   const { t, i18n } = useTranslation();
   const [FlatListData1, setFlatListData1] = useState([]);
+  const [FlatListData2, setFlatListData2] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const IsGuest = useSelector((state) => state.auth.IsGuest);
@@ -82,108 +87,83 @@ const Merchants = ({ navigation }) => {
   //     },
   //   ]);
 
-  const [FlatListData2, setFlatListData2] = useState([
-    {
-      id: "213123123123",
-      title: "سوبر ماركت زلفه",
-      photo: Logo1,
-    },
-    {
-      id: "432453242344",
-      title: "سوبر ماركت مشهور",
-      photo: Logo2,
-    },
-    {
-      id: "4324234234",
-      title: "سوبر ماركت مشهور",
-      photo: Logo3,
-    },
-    {
-      id: "654645543534",
-      title: "سوبر ماركت مشهور",
-      photo: Logo4,
-    },
-    {
-      id: "54353467y",
-      title: "سوبر ماركت مشهور",
-      photo: Logo5,
-    },
-    {
-      id: "4325266",
-      title: "سوبر ماركت مشهور",
-      photo: Logo6,
-    },
-  ]);
+  // const [FlatListData2, setFlatListData2] = useState([
+  //   {
+  //     id: "213123123123",
+  //     title: "سوبر ماركت زلفه",
+  //     photo: Logo1,
+  //   },
+  //   {
+  //     id: "432453242344",
+  //     title: "سوبر ماركت مشهور",
+  //     photo: Logo2,
+  //   },
+  //   {
+  //     id: "4324234234",
+  //     title: "سوبر ماركت مشهور",
+  //     photo: Logo3,
+  //   },
+  //   {
+  //     id: "654645543534",
+  //     title: "سوبر ماركت مشهور",
+  //     photo: Logo4,
+  //   },
+  //   {
+  //     id: "54353467y",
+  //     title: "سوبر ماركت مشهور",
+  //     photo: Logo5,
+  //   },
+  //   {
+  //     id: "4325266",
+  //     title: "سوبر ماركت مشهور",
+  //     photo: Logo6,
+  //   },
+  // ]);
   //! end of Dummy Data
 
   const RefresingData = async () => {
     setLoading(true);
-    if (IsGuest) {
-      const url = Api_url + guest_categories_api;
-      console.log(url);
-      axios
-        .get(url)
-        .then((res) => {
-          if (res && res.status == 200) {
-            setLoading(false);
-            console.log(res.data.data);
-            setFlatListData1(res.data.data);
-          }
-        })
-        .then(() => {
-          console.log("flatlist is ", FlatListData1);
-        })
-        .catch((err) => {
-          setError(err.response.data.message);
+    const url = Api_url + guest_categories_api;
+    axios
+      .get(url)
+      .then((res) => {
+        if (res && res.status == 200) {
           setLoading(false);
-        });
-    } else {
-      setFlatListData1([
-        {
-          id: "bd7acbea-c1b1-461231c2-aed5-3ad53abb28ba",
-          name_ar: "بقاله",
-          name_en: "store",
-          avatar: SmallLogo1,
-        },
-        {
-          id: "3ac68afc-c605-48d3-a3124f8-fbd91aa97f63",
-          name_ar: "صيدليات",
-          name_en: "pharmacy",
-          avatar: SmallLogo2,
-        },
-        {
-          id: "58694a0f-3da1-471f-bd496-145571e29d72",
-          name_ar: "مطاعم",
-          name_en: "resturant",
-          avatar: SmallLogo3,
-        },
-        {
-          id: "58694a0f-3da1-471f-bd596-14545431e29d72",
-          name_ar: "مشروبات",
-          name_en: "drinks",
-          avatar: SmallLogo4,
-        },
-        {
-          id: "58694a0f-3da1-2471f-bd96-1451123e29d72",
-          name_ar: "حلويات",
-          name_en: "deserts",
-          avatar: SmallLogo5,
-        },
-        {
-          id: "58694a0f-3da1-471f-bd96-145ada66se29d72",
-          name_ar: "تمور",
-          name_en: "tomor",
-          avatar: SmallLogo6,
-        },
-      ]);
-      setLoading(false);
-    }
+          console.log(res.data.data);
+          setFlatListData1(res.data.data);
+        }
+      })
+      // .then(() => {
+      //   console.log("flatlist is ", FlatListData1);
+      // })
+      .catch((err) => {
+        setError(err.response.data.message);
+        setLoading(false);
+      });
+  };
+
+  const getAllMerchant = async (num) => {
+    const url = Api_url + guest_get_merchant + `?itemsPerPage=${num}`;
+    axios
+      .get(url)
+      .then((res) => {
+        if (res && res.status == 200) {
+          console.log(res.data.data);
+          setFlatListData2(res.data.data);
+        }
+      })
+      // .then(() => {
+      //   console.log("flatlist 2 is ", FlatListData0);
+      // })
+      .catch((err) => {
+        setError(err.response.data.message);
+      });
   };
 
   useEffect(() => {
     navigation.addListener("focus", () => {
       RefresingData();
-      // console.log(i18n.language);
+      getAllMerchant(8);
     });
   }, []);
 
@@ -195,7 +175,7 @@ const Merchants = ({ navigation }) => {
           <ActivityIndicator />
         </View>
       ) : (
-        <View>
+        <ScrollView>
           <View>
             <View>
               <View>
@@ -223,10 +203,7 @@ const Merchants = ({ navigation }) => {
               keyExtractor={(item) => item.id}
               data={FlatListData1}
               renderItem={({ item }) => (
-                <Pressable
-                  marginHorizontal={10}
-                  // onPress={() => console.warn(`you clicked num ${item.name}`)}
-                >
+                <Pressable marginHorizontal={10}>
                   <Box>
                     <Box width={75} height={75} alignItems="center">
                       <Image
@@ -266,7 +243,17 @@ const Merchants = ({ navigation }) => {
                 marginBottom: 90,
               }}
               renderItem={({ item }) => (
-                <Pressable onPress={() => navigation.navigate("ShopDetail")}>
+                <Pressable
+                  onPress={() =>
+                    navigation.navigate("ShopDetail", {
+                      avatar: item.avatar,
+                      name: item.name,
+                      mobile: item.mobile,
+                      email: item.email,
+                      id: item.id,
+                    })
+                  }
+                >
                   <Box
                     padding={8}
                     backgroundColor={"#FFFFFF"}
@@ -274,15 +261,23 @@ const Merchants = ({ navigation }) => {
                     width={185}
                     height={240}
                   >
-                    <Image source={item.photo} />
+                    <Image
+                      source={{ uri: item.avatar }}
+                      style={{ height: 100 }}
+                    />
                     <View style={styles.line}></View>
-                    <Text style={styles.txt}>{item.title}</Text>
+                    {i18n.language === "ar" && (
+                      <Text style={styles.txt}>{item.name_ar}</Text>
+                    )}
+                    {i18n.language === "en" && (
+                      <Text style={styles.txt}>{item.name_en}</Text>
+                    )}
                   </Box>
                 </Pressable>
               )}
             />
           </View>
-        </View>
+        </ScrollView>
       )}
     </View>
   );

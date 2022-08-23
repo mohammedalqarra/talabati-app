@@ -10,11 +10,20 @@ import {
 import { TextArea, Button, Modal } from "native-base";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useDispatch } from "react-redux";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
-const ShopDetail = ({ navigation }) => {
+const ShopDetail = ({ route, navigation }) => {
+  const dispatch = useDispatch();
+  const { avatar, name, mobile, email, id } = route.params;
+  const namee = name;
+  const mobilee = mobile;
+  const emaile = email;
+  const ide = id;
   const [showModal, setShowModal] = useState(false);
   const [defaultRating, setDefaultRating] = useState(1);
   const [maxRating, setMaxRating] = useState([1, 2, 3, 4, 5]);
+  const [textAreaValue, setTextAreaValue] = useState("");
   const StarImgFilled =
     "https://raw.githubusercontent.com/tranhonghan/images/main/star_filled.png";
   const StarImgCorner =
@@ -46,12 +55,18 @@ const ShopDetail = ({ navigation }) => {
     );
   };
   const { t } = useTranslation();
-  const [textAreaValue, setTextAreaValue] = useState("");
   const demoValueControlledTextArea = (e) => {
     setTextAreaValue(e.currentTarget.value);
   };
+  const v = () => {
+    console.log("name", name);
+    console.log("mobile", mobile);
+    console.log("email", email);
+
+    console.log("id", id);
+  };
   return (
-    <View style={styles.container}>
+    <KeyboardAwareScrollView style={styles.container}>
       {/* start of modal */}
       <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
         <Modal.Content maxWidth="400px">
@@ -138,8 +153,11 @@ const ShopDetail = ({ navigation }) => {
               </View>
             </View>
             <View style={styles.upperlogo}>
-              <Image source={require("../../images/logo/logo1.png")} />
-              <Text style={styles.uppertxt}>{t("elsalam")}</Text>
+              <Image
+                source={{ uri: avatar }}
+                style={{ height: 80, width: 80 }}
+              />
+              <Text style={styles.uppertxt}>{name}</Text>
             </View>
           </ImageBackground>
         </View>
@@ -239,7 +257,7 @@ const ShopDetail = ({ navigation }) => {
       <View style={styles.lastsec}>
         <TextArea
           value={textAreaValue}
-          onChange={demoValueControlledTextArea}
+          onChangeText={(text) => setTextAreaValue(text)}
           w="90%"
           maxW="400"
           h={95}
@@ -250,7 +268,21 @@ const ShopDetail = ({ navigation }) => {
           backgroundColor={"white"}
         />
         <Button
-          onPress={() => navigation.navigate("ContinueShop")}
+          onPress={() =>
+            navigation.navigate("ContinueShop", {
+              region: {
+                name: namee,
+                mobile: mobilee,
+                email: emaile,
+                id: ide,
+                latitude: 24.7136,
+                longitude: 46.6753,
+                latitudeDelta: 0.005,
+                longitudeDelta: 0.005,
+              },
+              textAreaValue,
+            })
+          }
           style={styles.firstBut}
           size="sm"
           width={"75%"}
@@ -262,7 +294,7 @@ const ShopDetail = ({ navigation }) => {
           {t("confirmbuy")}
         </Button>
       </View>
-    </View>
+    </KeyboardAwareScrollView>
   );
 };
 const styles = StyleSheet.create({

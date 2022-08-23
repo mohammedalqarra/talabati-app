@@ -1,14 +1,14 @@
-import { View, Image, StyleSheet } from "react-native";
+import { View, Image, StyleSheet, Text } from "react-native";
 import React from "react";
-import { Input, Stack, Heading } from "native-base";
+import { Input, Stack } from "native-base";
 import { useTranslation } from "react-i18next";
 const HomeHeader = ({ title }) => {
   const { t } = useTranslation();
 
   return (
     <View style={styles.header}>
-      <Heading style={styles.heading}>{t("home")}</Heading>
-      <Stack w="170%" alignItems="center">
+      <Text style={styles.heading}>{t("home")}</Text>
+      <Stack w="180%" alignItems="center">
         <Input
           w={{
             base: "80%",
@@ -34,13 +34,14 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
-    marginLeft: "35%",
+    marginLeft: "36%",
     backgroundColor: "#FFFFFF",
   },
   heading: {
     textAlign: "center",
     color: "#E56B1F",
     fontFamily: "Tajawal_700Bold",
+    fontSize: 22,
   },
 });
 export default HomeHeader;

@@ -1,36 +1,93 @@
-import React, { useState } from "react";
-import { View, Text, StyleSheet, FlatList, Image } from "react-native";
-import { Button } from "native-base";
+import React, { useState, useEffect } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  Image,
+  ActivityIndicator,
+} from "react-native";
+import { Button, Modal } from "native-base";
 import { useTranslation } from "react-i18next";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import { Api_url, get_certain_order } from "../../../../utilites/ApiConstants";
 
-const NewOrders = ({ navigation }) => {
+const NewOrders = ({ route, navigation }) => {
   const { t } = useTranslation();
+  const [showModal, setShowModal] = useState(false);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const token = useSelector((state) => state.auth.data.token);
+  const { id } = route.params;
+  const [data, setData] = useState([]);
 
-  const [FlatListData, setFlatListData] = useState([
-    {
-      id: "bd7acbea-46c2-aed5-3ad53abb28ba",
-      name: "بيض",
-      quantity: "8",
-    },
-    {
-      id: "3ac68afc-c605-48d3-fbd91aa97f63",
-      name: "لبن",
-      quantity: "2",
-    },
-    {
-      id: "58694a0f-3da1-bd96-145571e29d72",
-      name: "بيبسي",
-      quantity: "4",
-    },
-    {
-      id: "58694a0f-3da1-471f-bd96-1454529d72",
-      name: "مربي",
-      quantity: "1",
-    },
-  ]);
+  useEffect(() => {
+    navigation.addListener("focus", () => {
+      getData();
+    });
+  });
+
+  const getData = () => {
+    const url = Api_url + get_certain_order + `${id}`;
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
+    setShowModal(true);
+    axios
+      .get(url, config)
+      .then((res) => {
+        if (res && res.status == 200) {
+          setShowModal(false);
+          console.log(res.data.data);
+          setData(res.data.data);
+        }
+      })
+      .catch((err) => {
+        setShowModal(false);
+      });
+  };
+
+  //! dummy data for testing
+
+  // const [FlatListData, setFlatListData] = useState([
+  //   {
+  //     id: "bd7acbea-46c2-aed5-3ad53abb28ba",
+  //     name: "بيض",
+  //     quantity: "8",
+  //   },
+  //   {
+  //     id: "3ac68afc-c605-48d3-fbd91aa97f63",
+  //     name: "لبن",
+  //     quantity: "2",
+  //   },
+  //   {
+  //     id: "58694a0f-3da1-bd96-145571e29d72",
+  //     name: "بيبسي",
+  //     quantity: "4",
+  //   },
+  //   {
+  //     id: "58694a0f-3da1-471f-bd96-1454529d72",
+  //     name: "مربي",
+  //     quantity: "1",
+  //   },
+  // ]);
+
+  //! end of dummy data for testing
 
   return (
     <View style={styles.container}>
+      {/* start of Loading modal */}
+      <Modal isOpen={showModal}>
+        <Modal.Content maxWidth="400px">
+          <Modal.Body>
+            <View style={styles.centerizedCol}>
+              <ActivityIndicator size="large" color="#0000ff" />
+            </View>
+          </Modal.Body>
+        </Modal.Content>
+      </Modal>
+      {/* end of Loading modal */}
       <View style={styles.container1}>
         {/* the second */}
         <View style={styles.card}>
@@ -60,7 +117,7 @@ const NewOrders = ({ navigation }) => {
                   fontFamily: "Tajawal_400Regular",
                 }}
               >
-                احمد محمد
+                {data.name}
               </Text>
               <View style={styles.smallhead}>
                 <Text
@@ -70,7 +127,7 @@ const NewOrders = ({ navigation }) => {
                     fontFamily: "Tajawal_500Medium",
                   }}
                 >
-                  {t("theprice")}
+                  {t("name")}
                 </Text>
                 <Image
                   source={require("../../../../images/Iconawesome-user.png")}
@@ -86,7 +143,7 @@ const NewOrders = ({ navigation }) => {
                   fontFamily: "Tajawal_500Medium",
                 }}
               >
-                شقة 2/ طريق نجم الدين
+                {data.address}
               </Text>
               <View style={styles.smallhead}>
                 <Text
@@ -96,7 +153,7 @@ const NewOrders = ({ navigation }) => {
                     fontFamily: "Tajawal_500Medium",
                   }}
                 >
-                  {t("deleverycost")}
+                  {t("address")}
                 </Text>
                 <Image
                   source={require("../../../../images/Iconmaterial-locationCopy.png")}
@@ -112,7 +169,7 @@ const NewOrders = ({ navigation }) => {
                   fontFamily: "Tajawal_500Medium",
                 }}
               >
-                01555560534
+                {data.value}
               </Text>
               <View style={styles.smallhead}>
                 <Text
@@ -151,21 +208,12 @@ const NewOrders = ({ navigation }) => {
             </Text>
           </View>
           <View style={styles.line}></View>
-          <FlatList
-            data={FlatListData}
-            renderItem={({ item }) => (
-              <View style={styles.CardPart}>
-                <Text
-                  style={{ marginRight: 15, fontFamily: "Tajawal_500Medium" }}
-                >
-                  {item.quantity}
-                  {item.name}
-                </Text>
-                <Text style={styles.dot}>{"\u2022"}</Text>
-              </View>
-            )}
-            keyExtractor={(item) => item.id}
-          />
+          <View style={styles.CardPart}>
+            <Text style={{ marginRight: 15, fontFamily: "Tajawal_500Medium" }}>
+              {data.order_details}
+            </Text>
+            <Text style={styles.dot}>{"\u2022"}</Text>
+          </View>
         </View>
         <Button
           onPress={() => navigation.navigate("HomeConfirmOrdersMerchant")}

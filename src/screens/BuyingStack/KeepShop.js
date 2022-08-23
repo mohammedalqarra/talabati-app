@@ -1,14 +1,25 @@
-import React, { useState } from "react";
-import { View, Text, StyleSheet, Image, ScrollView } from "react-native";
+import React, { useState, useEffect } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  ScrollView,
+  ActivityIndicator,
+} from "react-native";
 import { Button, Modal } from "native-base";
 import { useTranslation } from "react-i18next";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
-const KeepShop = ({ navigation }) => {
+const KeepShop = ({ route, navigation }) => {
+  const { data } = route.params;
   const [showModal, setShowModal] = useState(false);
+  const [showModal1, setShowModal1] = useState(false);
+
   const { t } = useTranslation();
 
   return (
-    <ScrollView style={styles.container}>
+    <KeyboardAwareScrollView style={styles.container}>
       {/* start of modal */}
       <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
         <Modal.Content maxWidth="400px">
@@ -29,6 +40,7 @@ const KeepShop = ({ navigation }) => {
         </Modal.Content>
       </Modal>
       {/* end of modal */}
+
       <View style={styles.card}>
         <View style={styles.Header}>
           <Text
@@ -49,11 +61,11 @@ const KeepShop = ({ navigation }) => {
         <View style={styles.line}></View>
         <View style={styles.CardPart}>
           <Text style={{ marginRight: 15, fontFamily: "Tajawal_400Regular" }}>
-            8 بيض
+            {data.data.order_details}
           </Text>
           <Text style={styles.dot}>{"\u2022"}</Text>
         </View>
-        <View style={styles.CardPart}>
+        {/* <View style={styles.CardPart}>
           <Text style={{ marginRight: 15, fontFamily: "Tajawal_400Regular" }}>
             2 لبن
           </Text>
@@ -70,7 +82,7 @@ const KeepShop = ({ navigation }) => {
             1 مربي
           </Text>
           <Text style={styles.dot}>{"\u2022"}</Text>
-        </View>
+        </View> */}
       </View>
       {/* the second */}
       <View style={styles.card}>
@@ -99,7 +111,7 @@ const KeepShop = ({ navigation }) => {
                 fontFamily: "Tajawal_400Regular",
               }}
             >
-              295 {t("rial")}
+              {data.data.value} {t("rial")}
             </Text>
             <Text
               style={{
@@ -119,7 +131,7 @@ const KeepShop = ({ navigation }) => {
                 fontFamily: "Tajawal_400Regular",
               }}
             >
-              35 {t("rial")}
+              {data.data.value} {t("rial")}
             </Text>
             <Text
               style={{
@@ -128,7 +140,7 @@ const KeepShop = ({ navigation }) => {
                 fontFamily: "Tajawal_400Regular",
               }}
             >
-              {t("deleverycost")}
+              {t("paid")}
             </Text>
           </View>
           <View style={styles.smallcard2}>
@@ -139,7 +151,7 @@ const KeepShop = ({ navigation }) => {
                 fontFamily: "Tajawal_400Regular",
               }}
             >
-              320 {t("rial")}
+              {data.data.value} {t("rial")}
             </Text>
             <Text
               style={{
@@ -196,7 +208,7 @@ const KeepShop = ({ navigation }) => {
       >
         {t("cancell")}
       </Button>
-    </ScrollView>
+    </KeyboardAwareScrollView>
   );
 };
 const styles = StyleSheet.create({

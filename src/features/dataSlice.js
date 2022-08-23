@@ -1,7 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  data: [],
+  data: {},
+  name: "",
+  mobile: "",
+  email: "",
+  id: "",
 };
 
 export const dataSlice = createSlice({
@@ -15,9 +19,12 @@ export const dataSlice = createSlice({
     RemoveData: (state) => {
       state.date = null;
     },
+    Ordering: (state, action) => {
+      state.data = action.payload;
+    },
   },
 });
 
-export const { storeData, RemoveData } = dataSlice.actions;
+export const { storeData, RemoveData, Ordering } = dataSlice.actions;
 
 export default dataSlice.reducer;

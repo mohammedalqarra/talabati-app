@@ -9,6 +9,7 @@ import React, { useState } from "react";
 import { Input, Stack, Button, Pressable, Heading } from "native-base";
 // import OTPInputView from '@twotalltotems/react-native-otp-input';
 import { useTranslation } from "react-i18next";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 const VerfiyNumber = ({ navigation }) => {
   const { t } = useTranslation();
@@ -16,7 +17,7 @@ const VerfiyNumber = ({ navigation }) => {
   const [number, setNumber] = useState("01555560534");
   // const {height} = useWindowDimensions();
   return (
-    <View style={styles.container}>
+    <KeyboardAwareScrollView style={styles.container}>
       <View
         style={{
           marginTop: 120,
@@ -61,7 +62,7 @@ const VerfiyNumber = ({ navigation }) => {
           {t("done")}
         </Button>
       </View>
-    </View>
+    </KeyboardAwareScrollView>
   );
 };
 const styles = StyleSheet.create({

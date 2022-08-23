@@ -1,52 +1,105 @@
-import React, { useState } from "react";
-import { View, StyleSheet, FlatList, Image } from "react-native";
-import { Text, Button, Box } from "native-base";
+import React, { useState, useEffect } from "react";
+import {
+  View,
+  StyleSheet,
+  FlatList,
+  Image,
+  ActivityIndicator,
+} from "react-native";
+import { Text, Button, Box, Modal } from "native-base";
 import { useTranslation } from "react-i18next";
+import axios from "axios";
+import { Api_url, get_my_orders } from "../../../utilites/ApiConstants";
+import { useDispatch, useSelector } from "react-redux";
 
 const Home = ({ navigation }) => {
   const { t } = useTranslation();
+  const token = useSelector((state) => state.auth.data.token);
+  const [FlatListData, setFlatListData] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const getData = () => {
+    const url = Api_url + get_my_orders;
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
+    setShowModal(true);
+    axios
+      .get(url, config)
+      .then((res) => {
+        if (res && res.status == 200) {
+          setShowModal(false);
+          console.log(res.data.data);
+          setFlatListData(res.data.data);
+        }
+      })
+      .catch((err) => {
+        setShowModal(false);
+      });
+  };
 
-  const [FlatListData, setFlatListData] = useState([
-    {
-      id: "bd7acbea-c1b1-461231f33dsfci2-aed5-3ad53abb28ba",
-      status: "new",
-      payerName: "احمد محمد",
-      price: 320,
-    },
-    {
-      id: "3ac68afc-c605-48d3-a31ds5ds24f8-fbd91aa97f63",
-      status: "new",
-      payerName: "احمد محمد",
-      price: 320,
-    },
-    {
-      id: "58694a0f-3da1-4742341f-bd496-145571e279d72",
-      status: "new",
-      payerName: "احمد محمد",
-      price: 320,
-    },
-    {
-      id: "58666694a0f-3da1-471f-bd4596-14545431e29d72",
-      status: "new",
-      payerName: "احمد محمد",
-      price: 320,
-    },
-    {
-      id: "58694a20f-3da1-2471f-bd96-1451123e29d72",
-      status: "new",
-      payerName: "احمد محمد",
-      price: 320,
-    },
-    {
-      id: "58694a0f-3da1-477771f-bd396-145ada66se929d72",
-      status: "new",
-      payerName: "احمد محمد",
-      price: 320,
-    },
-  ]);
+  useEffect(() => {
+    navigation.addListener("focus", () => {
+      getData();
+    });
+  }, [navigation]);
+
+  //! dummy data for testing
+
+  // const [FlatListData, setFlatListData] = useState([
+  //   {
+  //     id: "bd7acbea-c1b1-461231f33dsfci2-aed5-3ad53abb28ba",
+  //     status: "new",
+  //     payerName: "احمد محمد",
+  //     price: 320,
+  //   },
+  //   {
+  //     id: "3ac68afc-c605-48d3-a31ds5ds24f8-fbd91aa97f63",
+  //     status: "new",
+  //     payerName: "احمد محمد",
+  //     price: 320,
+  //   },
+  //   {
+  //     id: "58694a0f-3da1-4742341f-bd496-145571e279d72",
+  //     status: "new",
+  //     payerName: "احمد محمد",
+  //     price: 320,
+  //   },
+  //   {
+  //     id: "58666694a0f-3da1-471f-bd4596-14545431e29d72",
+  //     status: "new",
+  //     payerName: "احمد محمد",
+  //     price: 320,
+  //   },
+  //   {
+  //     id: "58694a20f-3da1-2471f-bd96-1451123e29d72",
+  //     status: "new",
+  //     payerName: "احمد محمد",
+  //     price: 320,
+  //   },
+  //   {
+  //     id: "58694a0f-3da1-477771f-bd396-145ada66se929d72",
+  //     status: "new",
+  //     payerName: "احمد محمد",
+  //     price: 320,
+  //   },
+  // ]);
+  //! end of dummy data for testing
 
   return (
     <View style={styles.container}>
+      {/* start of Loading modal */}
+      <Modal isOpen={showModal}>
+        <Modal.Content maxWidth="400px">
+          <Modal.Body>
+            <View style={styles.centerizedCol}>
+              <ActivityIndicator size="large" color="#0000ff" />
+            </View>
+          </Modal.Body>
+        </Modal.Content>
+      </Modal>
+      {/* end of Loading modal */}
       <FlatList
         style={styles.container}
         data={FlatListData}
@@ -67,7 +120,7 @@ const Home = ({ navigation }) => {
               <View style={styles.secrow}>
                 <View>
                   {/* if new */}
-                  {item.status === "new" && (
+                  {item.order_status_id === 1 && (
                     <View style={styles.firsthead}>
                       <Text
                         style={{
@@ -87,7 +140,7 @@ const Home = ({ navigation }) => {
                 </View>
                 <View style={styles.line}></View>
                 <View style={styles.rowhead}>
-                  <Text style={styles.txt}>{item.payerName}</Text>
+                  <Text style={styles.txt}>{item.name}</Text>
                   <View style={styles.rowhead}>
                     <Text style={styles.txt3}>{t("merchantname")}</Text>
                     <Image
@@ -97,7 +150,7 @@ const Home = ({ navigation }) => {
                 </View>
                 <View style={styles.rowhead}>
                   <Text style={styles.txt}>
-                    {item.price} {t("rial")}
+                    {item.value} {t("rial")}
                   </Text>
                   <View style={styles.rowhead}>
                     <Text style={styles.txt3}>{t("price")}</Text>
@@ -114,7 +167,11 @@ const Home = ({ navigation }) => {
             </View>
             <View style={styles.btncontainer}>
               <Button
-                onPress={() => navigation.navigate("HomeNewOrdersMerchant")}
+                onPress={() =>
+                  navigation.navigate("HomeNewOrdersMerchant", {
+                    id: item.id,
+                  })
+                }
                 style={styles.firstBut}
                 size="sm"
                 width={"100%"}
@@ -220,6 +277,22 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "#555555",
     marginRight: 5,
+  },
+  centerizedCol: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  errmessage: {
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 10,
+  },
+  errmessagetxt: {
+    fontSize: 14,
+    fontFamily: "Tajawal_500Medium",
+    color: "red",
   },
 });
 

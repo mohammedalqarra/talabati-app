@@ -1,35 +1,90 @@
-import React, { useState } from "react";
-import { View, Text, StyleSheet, FlatList, Image } from "react-native";
+import React, { useState, useEffect } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  Image,
+  ActivityIndicator,
+} from "react-native";
 import { useTranslation } from "react-i18next";
-
-const OrdersDetails = ({ navigation }) => {
+import { Modal } from "native-base";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import { Api_url, get_certain_order } from "../../../utilites/ApiConstants";
+const OrdersDetails = ({ route, navigation }) => {
+  const [showModal, setShowModal] = useState(false);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const token = useSelector((state) => state.auth.data.token);
+  const { id } = route.params;
   const { t } = useTranslation();
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    navigation.addListener("focus", () => {
+      getData();
+    });
+  });
 
-  const [FlatListData, setFlatListData] = useState([
-    {
-      id: "bd7acbea-46c2-aed5-3ad53abb28ba",
-      name: "بيض",
-      quantity: "8",
-    },
-    {
-      id: "3ac68afc-c605-48d3-fbd91aa97f63",
-      name: "لبن",
-      quantity: "2",
-    },
-    {
-      id: "58694a0f-3da1-bd96-145571e29d72",
-      name: "بيبسي",
-      quantity: "4",
-    },
-    {
-      id: "58694a0f-3da1-471f-bd96-1454529d72",
-      name: "مربي",
-      quantity: "1",
-    },
-  ]);
+  const getData = () => {
+    const url = Api_url + get_certain_order + `${id}`;
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
+    setShowModal(true);
+    axios
+      .get(url, config)
+      .then((res) => {
+        if (res && res.status == 200) {
+          setShowModal(false);
+          console.log(res.data.data);
+          setData(res.data.data);
+        }
+      })
+      .catch((err) => {
+        setShowModal(false);
+      });
+  };
+
+  //! dummy data for testing
+
+  // const [FlatListData, setFlatListData] = useState([
+  //   {
+  //     id: "bd7acbea-46c2-aed5-3ad53abb28ba",
+  //     name: "بيض",
+  //     quantity: "8",
+  //   },
+  //   {
+  //     id: "3ac68afc-c605-48d3-fbd91aa97f63",
+  //     name: "لبن",
+  //     quantity: "2",
+  //   },
+  //   {
+  //     id: "58694a0f-3da1-bd96-145571e29d72",
+  //     name: "بيبسي",
+  //     quantity: "4",
+  //   },
+  //   {
+  //     id: "58694a0f-3da1-471f-bd96-1454529d72",
+  //     name: "مربي",
+  //     quantity: "1",
+  //   },
+  // ]);
+  //! end of dummy data for testing
 
   return (
     <View style={styles.container}>
+      {/* start of Loading modal */}
+      <Modal isOpen={showModal}>
+        <Modal.Content maxWidth="400px">
+          <Modal.Body>
+            <View style={styles.centerizedCol}>
+              <ActivityIndicator size="large" color="#0000ff" />
+            </View>
+          </Modal.Body>
+        </Modal.Content>
+      </Modal>
+      {/* end of Loading modal */}
       <View style={styles.firstone}>
         <Text
           style={{
@@ -38,7 +93,7 @@ const OrdersDetails = ({ navigation }) => {
             marginRight: 10,
           }}
         >
-          {t("elsalam")}
+          {data.name}
         </Text>
         <Image
           source={require("../../../images/shop22.png")}
@@ -66,21 +121,12 @@ const OrdersDetails = ({ navigation }) => {
           </Text>
         </View>
         <View style={styles.line}></View>
-        <FlatList
-          data={FlatListData}
-          renderItem={({ item }) => (
-            <View style={styles.CardPart}>
-              <Text
-                style={{ marginRight: 15, fontFamily: "Tajawal_400Regular" }}
-              >
-                {item.quantity}
-                {item.name}
-              </Text>
-              <Text style={styles.dot}>{"\u2022"}</Text>
-            </View>
-          )}
-          keyExtractor={(item) => item.id}
-        />
+        <View style={styles.CardPart}>
+          <Text style={{ marginRight: 15, fontFamily: "Tajawal_400Regular" }}>
+            {data.order_details}
+          </Text>
+          <Text style={styles.dot}>{"\u2022"}</Text>
+        </View>
       </View>
       {/* the second */}
       <View style={styles.card}>
@@ -109,7 +155,7 @@ const OrdersDetails = ({ navigation }) => {
                 fontFamily: "Tajawal_400Regular",
               }}
             >
-              295 {t("rial")}
+              {data.value} {t("rial")}
             </Text>
             <Text
               style={{
@@ -129,7 +175,7 @@ const OrdersDetails = ({ navigation }) => {
                 fontFamily: "Tajawal_400Regular",
               }}
             >
-              35 {t("rial")}
+              {data.value} {t("rial")}
             </Text>
             <Text
               style={{
@@ -149,7 +195,7 @@ const OrdersDetails = ({ navigation }) => {
                 fontFamily: "Tajawal_400Regular",
               }}
             >
-              320 {t("rial")}
+              {data.value} {t("rial")}
             </Text>
             <Text
               style={{
@@ -239,6 +285,22 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     marginHorizontal: 15,
     marginVertical: 5,
+  },
+  centerizedCol: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  errmessage: {
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 10,
+  },
+  errmessagetxt: {
+    fontSize: 14,
+    fontFamily: "Tajawal_500Medium",
+    color: "red",
   },
 });
 

@@ -1,23 +1,32 @@
 import { StyleSheet, Text, View, SafeAreaView, Dimensions } from "react-native";
-import React from "react";
-import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
+import React, { useState } from "react";
+import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import { Button, Input, Radio } from "native-base";
 import { useTranslation } from "react-i18next";
 
 const GetLocation = ({ navigation }) => {
+  const [region, setRegion] = useState({
+    latitude: 24.7136,
+    longitude: 46.6753,
+    latitudeDelta: 0.005,
+    longitudeDelta: 0.005,
+  });
   const { t } = useTranslation();
   return (
     <SafeAreaView>
       <View>
         <MapView
           style={styles.map}
-          region={{
+          initialRegion={{
             latitude: 24.7136,
             longitude: 46.6753,
             latitudeDelta: 0.005,
             longitudeDelta: 0.005,
           }}
-        />
+          onRegionChangeComplete={(region) => setRegion(region)}
+        >
+          <Marker coordinate={region} />
+        </MapView>
       </View>
       <View style={styles.lastview}>
         <View>
@@ -45,7 +54,11 @@ const GetLocation = ({ navigation }) => {
           </View>
         </View>
         <Button
-          onPress={() => navigation.goBack()}
+          onPress={() =>
+            navigation.navigate("ContinueShop", {
+              region,
+            })
+          }
           style={styles.firstBut}
           size="sm"
           width={"85%"}
