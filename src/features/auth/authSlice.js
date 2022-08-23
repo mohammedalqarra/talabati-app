@@ -3,7 +3,7 @@ import { storeData } from "../dataSlice";
 
 const initialState = {
   data: [],
-  IsGuest: false,
+  IsGuest: true,
   IsLogged: false,
   IsMerchant: false,
   IsUser: false,

@@ -23,7 +23,7 @@ import AppLoading from "expo-app-loading";
 import * as Font from "expo-font";
 import { store } from "./src/features/store";
 import { Provider } from "react-redux";
-
+import "./src/firebase";
 import {
   useFonts,
   Tajawal_200ExtraLight,
