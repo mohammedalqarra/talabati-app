@@ -22,6 +22,7 @@ const ContinueShop = ({ route, navigation }) => {
   const [loading, setLoading] = useState(false);
   const [address, setAddress] = useState("");
   const [showModal, setShowModal] = useState(false);
+  const [showModal2, setShowModal2] = useState(false);
 
   const show = () => {
     console.log("name", region.name);
@@ -104,11 +105,8 @@ const ContinueShop = ({ route, navigation }) => {
         .then((res) => {
           if (res && res.status == 200) {
             setShowModal(false);
-            console.log(res.data);
-            const data = res.data;
-            navigation.navigate("KeepShop", {
-              data,
-            });
+            setShowModal2(true);
+            navigation.navigate("home");
           }
         })
         .catch((err) => {
@@ -135,6 +133,27 @@ const ContinueShop = ({ route, navigation }) => {
             </Modal.Content>
           </Modal>
           {/* end of modal */}
+          {/* start of modal2 */}
+          <Modal isOpen={showModal2}>
+            <Modal.Content maxWidth="400px">
+              <Modal.Body>
+                <View style={styles.centerizedCol}>
+                  <Image source={require("../../images/thumbs-up.png")} />
+                  <Text
+                    style={{
+                      marginTop: 13,
+                      fontSize: 16,
+                      color: "#EF1D1D",
+                      fontFamily: "Tajawal_500Medium",
+                    }}
+                  >
+                    {t("orderconfirmed")}
+                  </Text>
+                </View>
+              </Modal.Body>
+            </Modal.Content>
+          </Modal>
+          {/* end of modal2 */}
           <View>
             <View>
               {error && (

@@ -216,7 +216,11 @@ const NewOrders = ({ route, navigation }) => {
           </View>
         </View>
         <Button
-          onPress={() => navigation.navigate("HomeConfirmOrdersMerchant")}
+          onPress={() =>
+            navigation.navigate("HomeConfirmOrdersMerchant", {
+              id,
+            })
+          }
           style={styles.firstBut}
           size="sm"
           width={"85%"}
@@ -227,7 +231,7 @@ const NewOrders = ({ route, navigation }) => {
           borderRadius={10}
           _text={{ fontSize: 14, fontFamily: "Tajawal_500Medium" }}
         >
-          تاكيد
+          {t("confirm")}
         </Button>
         <Button
           onPress={() => navigation.goBack()}
@@ -247,7 +251,7 @@ const NewOrders = ({ route, navigation }) => {
             fontFamily: "Tajawal_500Medium",
           }}
         >
-          الغاء
+          {t("cancel")}
         </Button>
       </View>
     </View>

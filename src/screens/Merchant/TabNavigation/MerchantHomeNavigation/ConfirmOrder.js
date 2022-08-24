@@ -1,10 +1,18 @@
 import { StyleSheet, Text, View, Image, Pressable } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { TextArea, Button, Modal, Input } from "native-base";
 import { useTranslation } from "react-i18next";
+import axios from "axios";
+import { Api_url, get_certain_order } from "../../../../utilites/ApiConstants";
+import { useDispatch, useSelector } from "react-redux";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
-const ConfirmOrder = ({ navigation }) => {
+const ConfirmOrder = ({ route, navigation }) => {
+  const { id } = route.params;
   const { t } = useTranslation();
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const token = useSelector((state) => state.auth.data.token);
   const [showModal, setShowModal] = useState(false);
   const [showModal1, setShowModal1] = useState(false);
   const [textAreaValue, setTextAreaValue] = useState("ملاحظات");
@@ -16,8 +24,71 @@ const ConfirmOrder = ({ navigation }) => {
     setTextAreaValue1(e.currentTarget.value);
   };
 
+  const acceptData = () => {
+    const url = Api_url + get_certain_order + `${id}` + "/Accept";
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
+    axios
+      .post(
+        url,
+        {
+          textAreaValue,
+          textAreaValue1,
+        },
+        config
+      )
+      .then((res) => {
+        if (res && res.status == 200) {
+          setShowModal(true);
+          console.log(res.data.data);
+        }
+      })
+      .catch((err) => {
+        setError(err.response.data.message);
+      });
+  };
+
+  const cancelData = () => {
+    const url = Api_url + get_certain_order + `${id}` + "/Cancel";
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
+    axios
+      .post(url, config)
+      .then((res) => {
+        if (res && res.status == 200) {
+          setShowModal1(false);
+          console.log(res.data.data);
+        }
+      })
+      .catch((err) => {
+        setError(err.response.data.message);
+      });
+  };
+
   return (
-    <View style={styles.container}>
+    <KeyboardAwareScrollView style={styles.container}>
+      {/* error */}
+      <View>
+        <View>
+          {error && (
+            <View style={styles.errmessage}>
+              <Text style={styles.errmessagetxt}>{error}</Text>
+            </View>
+          )}
+        </View>
+        <View>
+          {error === undefined && (
+            <View style={styles.errmessage}>
+              <Text style={styles.errmessagetxt}>
+                {" "}
+                Check Your Connection and retry to log in{" "}
+              </Text>
+            </View>
+          )}
+        </View>
+      </View>
       {/* start of modal */}
       {/* modal number 1 */}
       <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
@@ -71,7 +142,7 @@ const ConfirmOrder = ({ navigation }) => {
               />
               <Button
                 onPress={() => {
-                  setShowModal1(false);
+                  cancelData();
                 }}
                 style={styles.firstBut}
                 size="sm"
@@ -177,7 +248,7 @@ const ConfirmOrder = ({ navigation }) => {
       ></View>
       <Button
         onPress={() => {
-          setShowModal(true);
+          acceptData();
         }}
         style={styles.firstBut}
         size="sm"
@@ -206,7 +277,7 @@ const ConfirmOrder = ({ navigation }) => {
       >
         <Text style={styles.txt1}>{t("canceling")}</Text>
       </Button>
-    </View>
+    </KeyboardAwareScrollView>
   );
 };
 const styles = StyleSheet.create({
@@ -260,6 +331,22 @@ const styles = StyleSheet.create({
   txtfamily: {
     fontSize: 14,
     fontFamily: "Tajawal_500Medium",
+  },
+  centerizedCol: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  errmessage: {
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 10,
+  },
+  errmessagetxt: {
+    fontSize: 14,
+    fontFamily: "Tajawal_500Medium",
+    color: "red",
   },
 });
 

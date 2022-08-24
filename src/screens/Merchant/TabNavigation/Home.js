@@ -100,105 +100,111 @@ const Home = ({ navigation }) => {
         </Modal.Content>
       </Modal>
       {/* end of Loading modal */}
-      <FlatList
-        style={styles.container}
-        data={FlatListData}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <Box
-            padding={5}
-            backgroundColor={"#FFFFFF"}
-            margin={2}
-            width={"90%"}
-            marginLeft={6}
-            height={163}
-            borderRadius={15}
-            elevation={7}
-            shadowColor={"#52006A"}
-          >
-            <View style={styles.mainrow}>
-              <View style={styles.secrow}>
-                <View>
-                  {/* if new */}
-                  {item.order_status_id === 1 && (
-                    <View style={styles.firsthead}>
-                      <Text
-                        style={{
-                          color: "#74DA7F",
-                          fontFamily: "Tajawal_500Medium",
-                          fontSize: 16,
-                        }}
-                      >
-                        {t("new")}
-                      </Text>
+      {FlatListData.length === 0 ? (
+        <View>
+          <Text>No Data</Text>
+        </View>
+      ) : (
+        <FlatList
+          style={styles.container}
+          data={FlatListData}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => (
+            <Box
+              padding={5}
+              backgroundColor={"#FFFFFF"}
+              margin={2}
+              width={"90%"}
+              marginLeft={6}
+              height={163}
+              borderRadius={15}
+              elevation={7}
+              shadowColor={"#52006A"}
+            >
+              <View style={styles.mainrow}>
+                <View style={styles.secrow}>
+                  <View>
+                    {/* if new */}
+                    {item.order_status_id === 1 && (
+                      <View style={styles.firsthead}>
+                        <Text
+                          style={{
+                            color: "#74DA7F",
+                            fontFamily: "Tajawal_500Medium",
+                            fontSize: 16,
+                          }}
+                        >
+                          {t("new")}
+                        </Text>
+                        <Image
+                          source={require("../../../images/new.png")}
+                          style={styles.firstheadimg}
+                        />
+                      </View>
+                    )}
+                  </View>
+                  <View style={styles.line}></View>
+                  <View style={styles.rowhead}>
+                    <Text style={styles.txt}>{item.name}</Text>
+                    <View style={styles.rowhead}>
+                      <Text style={styles.txt3}>{t("merchantname")}</Text>
                       <Image
-                        source={require("../../../images/new.png")}
-                        style={styles.firstheadimg}
+                        source={require("../../../images/Iconawesome-user.png")}
                       />
                     </View>
-                  )}
-                </View>
-                <View style={styles.line}></View>
-                <View style={styles.rowhead}>
-                  <Text style={styles.txt}>{item.name}</Text>
+                  </View>
                   <View style={styles.rowhead}>
-                    <Text style={styles.txt3}>{t("merchantname")}</Text>
-                    <Image
-                      source={require("../../../images/Iconawesome-user.png")}
-                    />
+                    <Text style={styles.txt}>
+                      {item.value} {t("rial")}
+                    </Text>
+                    <View style={styles.rowhead}>
+                      <Text style={styles.txt3}>{t("price")}</Text>
+                      <Image
+                        source={require("../../../images/Iconawesome-money-bill.png")}
+                        style={{ marginTop: 5 }}
+                      />
+                    </View>
                   </View>
                 </View>
-                <View style={styles.rowhead}>
-                  <Text style={styles.txt}>
-                    {item.value} {t("rial")}
-                  </Text>
-                  <View style={styles.rowhead}>
-                    <Text style={styles.txt3}>{t("price")}</Text>
-                    <Image
-                      source={require("../../../images/Iconawesome-money-bill.png")}
-                      style={{ marginTop: 5 }}
-                    />
-                  </View>
+                <View style={styles.rightImg}>
+                  <Image source={require("../../../images/logo/logo4.png")} />
                 </View>
               </View>
-              <View style={styles.rightImg}>
-                <Image source={require("../../../images/logo/logo4.png")} />
+              <View style={styles.btncontainer}>
+                <Button
+                  onPress={() =>
+                    navigation.navigate("HomeNewOrdersMerchant", {
+                      id: item.id,
+                    })
+                  }
+                  style={styles.firstBut}
+                  size="sm"
+                  width={"100%"}
+                  height={10}
+                  leftIcon={
+                    <Image
+                      source={require("../../../images/down-filled-triangular-arrow-black.png")}
+                    />
+                  }
+                  marginVertical={5}
+                  backgroundColor={"#0000000A"}
+                  borderRadius={10}
+                  borderColor={"#F3F3F3"}
+                  fontFamily={"Tajawal_400Regular"}
+                  borderWidth={1}
+                  _text={{
+                    fontSize: 14,
+                    color: "#555555",
+                    fontFamily: "Tajawal_400Regular",
+                  }}
+                >
+                  {t("orderdetails")}
+                </Button>
               </View>
-            </View>
-            <View style={styles.btncontainer}>
-              <Button
-                onPress={() =>
-                  navigation.navigate("HomeNewOrdersMerchant", {
-                    id: item.id,
-                  })
-                }
-                style={styles.firstBut}
-                size="sm"
-                width={"100%"}
-                height={10}
-                leftIcon={
-                  <Image
-                    source={require("../../../images/down-filled-triangular-arrow-black.png")}
-                  />
-                }
-                marginVertical={5}
-                backgroundColor={"#0000000A"}
-                borderRadius={10}
-                borderColor={"#F3F3F3"}
-                fontFamily={"Tajawal_400Regular"}
-                borderWidth={1}
-                _text={{
-                  fontSize: 14,
-                  color: "#555555",
-                  fontFamily: "Tajawal_400Regular",
-                }}
-              >
-                {t("orderdetails")}
-              </Button>
-            </View>
-          </Box>
-        )}
-      />
+            </Box>
+          )}
+        />
+      )}
     </View>
   );
 };

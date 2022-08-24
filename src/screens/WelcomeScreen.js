@@ -3,35 +3,73 @@ import React, { useState, useEffect } from "react";
 import { Button, Heading } from "native-base";
 import { useTranslation } from "react-i18next";
 // to get data from firebase
-import { firebase } from "../firebase";
+import { database } from "../firebase";
+import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 const WelcomeScreen = ({ navigation }) => {
-  // to get data from firebase
   const [data, setData] = useState([]);
   const { t } = useTranslation();
-  const dataRef = firebase.firestore().collection("messages");
-  useEffect(async () => {
-    dataRef.onSnapshot((querySnapshot) => {
-      const sdata = [];
-      querySnapshot.forEach((doc) => {
-        const { title, data } = doc.data();
-        sdata.push({
-          id: doc.id,
-          title,
-          data,
-        });
-      });
-      setData(sdata);
+  // start firebase
+  // const onSend = async () => {
+  //   await addDoc(collection(database, "messages"), newItem);
+  // };
+
+  const fetchdata = async () => {
+    const response = database.collection("messages");
+    const data = await response.get();
+    data.docs.forEach((item) => {
+      setData([...data, item.data()]);
     });
+    console.log(data);
+  };
+  useEffect(() => {
+    // fetchdata();
   }, []);
-  // finish firebase
+
+  // useEffect(() => {
+  //   const collectionRef = collection(database, "messages");
+  //   const q = query(collectionRef, orderBy("createdAt"));
+  //   const unsuscribe = onSnapshot(q, (qureysnapshot) => {
+  //     setData(
+  //       qureysnapshot.docs.map((doc) => ({
+  //         id: doc.id,
+  //         title: doc.data().title,
+  //         data: doc.data().data,
+  //       }))
+  //     );
+  //   });
+  //   console.log(data);
+  //   return unsuscribe;
+  // }, []);
+  // end firebase
+  // // to get data from firebase
+
+  // const dataRef = firebase.firestore().collection("messages");
+  // useEffect(async () => {
+  //   dataRef.onSnapshot((querySnapshot) => {
+  //     const sdata = [];
+  //     querySnapshot.forEach((doc) => {
+  //       const { title, data } = doc.data();
+  //       sdata.push({
+  //         id: doc.id,
+  //         title,
+  //         data,
+  //       });
+  //     });
+  //     setData(sdata);
+  //   });
+  // }, []);
+  // // finish firebase
   return (
     <View style={styles.container}>
-      {/* <View>
-        <Text>
-          {data.title}
-          {data.data}
-        </Text>
-      </View> */}
+      {/* {data &&
+        data.map((d) => {
+          return (
+            <View className="blog-container">
+              <Text>{d.title}</Text>
+              <Text>{d.body}</Text>
+            </View>
+          );
+        })} */}
       <View
         style={{
           alignItems: "center",

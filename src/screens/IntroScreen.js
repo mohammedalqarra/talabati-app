@@ -1,10 +1,27 @@
 import { View, Image, StyleSheet } from "react-native";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Heading, Center, Button } from "native-base";
 import { useTranslation } from "react-i18next";
+//////////////////////////////
+import { database } from "../firebase";
+import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 
 const IntroScreen = ({ navigation }) => {
   const { t } = useTranslation();
+
+  const [data, setData] = useState([]);
+
+  const fetchdata = async () => {
+    const response = database.collection("messages");
+    const data = await response.get();
+    data.docs.forEach((item) => {
+      setData([...data, item.data()]);
+    });
+    console.log(data);
+  };
+  useEffect(() => {
+    // fetchdata();
+  }, []);
 
   return (
     <View style={styles.container}>
