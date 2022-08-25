@@ -12,6 +12,10 @@ import MercantNotificationsNavigations from "./MerchantNotificationNavigation";
 import MerchantAccountNavigation from "./MerchantAccountNavigation";
 import { useTranslation } from "react-i18next";
 import i18n from "../i18n";
+import Icon from "react-native-vector-icons/SimpleLineIcons";
+import Icon1 from "react-native-vector-icons/AntDesign";
+import Icon2 from "react-native-vector-icons/AntDesign";
+import Icon3 from "react-native-vector-icons/Ionicons";
 
 const Tab = createBottomTabNavigator();
 
@@ -40,15 +44,17 @@ export default function MerchantTabNavigation() {
             fontSize: 15,
             fontFamily: "Tajawal_500Medium",
           },
-          tabBarIcon: (focused, tintColor) => (
-            <Image
-              style={{ width: 24, height: 24 }}
-              source={require("../images/checkout.png")}
+          tabBarIcon: ({ focused, tintColor }) => (
+            <Icon3
+              focused={focused}
+              name={"person-outline"}
+              tintColor={{ tintColor }}
+              color={focused ? "#E56B1F" : "black"}
+              size={24}
             />
           ),
         }}
       />
-
       <Tab.Screen
         name="notificationss"
         component={MercantNotificationsNavigations}
@@ -63,10 +69,13 @@ export default function MerchantTabNavigation() {
             fontSize: 15,
             fontFamily: "Tajawal_500Medium",
           },
-          tabBarIcon: (focused, tintColor) => (
-            <Image
-              style={{ width: 24, height: 24 }}
-              source={require("../images/checkout.png")}
+          tabBarIcon: ({ focused, tintColor }) => (
+            <Icon1
+              focused={focused}
+              name={"shoppingcart"}
+              tintColor={{ tintColor }}
+              color={focused ? "#E56B1F" : "black"}
+              size={24}
             />
           ),
         }}
@@ -86,10 +95,13 @@ export default function MerchantTabNavigation() {
             fontSize: 15,
             fontFamily: "Tajawal_500Medium",
           },
-          tabBarIcon: (focused, tintColor) => (
-            <Image
-              style={{ width: 24, height: 24 }}
-              source={require("../images/checkout.png")}
+          tabBarIcon: ({ focused, tintColor }) => (
+            <Icon2
+              focused={focused}
+              name={"shoppingcart"}
+              tintColor={{ tintColor }}
+              color={focused ? "#E56B1F" : "black"}
+              size={24}
             />
           ),
         }}
@@ -108,10 +120,13 @@ export default function MerchantTabNavigation() {
             fontSize: 15,
             fontFamily: "Tajawal_500Medium",
           },
-          tabBarIcon: (focused, tintColor) => (
-            <Image
-              style={{ width: 24, height: 24 }}
-              source={require("../images/home.png")}
+          tabBarIcon: ({ focused, tintColor }) => (
+            <Icon
+              focused={focused}
+              name={"home"}
+              tintColor={{ tintColor }}
+              color={focused ? "#E56B1F" : "black"}
+              size={24}
             />
           ),
         }}

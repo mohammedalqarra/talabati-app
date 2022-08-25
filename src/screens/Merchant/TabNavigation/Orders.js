@@ -104,6 +104,7 @@ const Orders = ({ navigation }) => {
         </Modal.Content>
       </Modal>
       {/* end of Loading modal */}
+
       <View
         style={{
           flexDirection: "row",

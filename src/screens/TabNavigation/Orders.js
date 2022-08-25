@@ -73,27 +73,19 @@ const Orders = ({ navigation }) => {
   const RenderGuestItems = () => {
     return (
       <>
-        {/* start of modal */}
-        <Modal isOpen={IsGuest}>
-          <Modal.Content maxWidth="400px">
-            <Modal.Body>
-              <View style={styles.centerizedCol}>
-                <Text>Please Log In </Text>
-                <Button
-                  onPress={() => dispatch(handlelogOut())}
-                  style={styles.firstBut}
-                  size="sm"
-                  backgroundColor={"#E56B1F"}
-                  marginTop={10}
-                  _text={{ fontSize: 14 }}
-                >
-                  {t("log")}
-                </Button>
-              </View>
-            </Modal.Body>
-          </Modal.Content>
-        </Modal>
-        {/* end of modal */}
+        <View style={styles.centerizedCol}>
+          <Text style={styles.errmessagetxt2}>Please Log In </Text>
+          <Button
+            onPress={() => dispatch(handlelogOut())}
+            style={styles.firstBut}
+            size="sm"
+            backgroundColor={"#E56B1F"}
+            marginTop={10}
+            _text={{ fontSize: 14 }}
+          >
+            {t("log")}
+          </Button>
+        </View>
       </>
     );
   };
@@ -356,6 +348,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
+    marginTop: 80,
   },
   errmessage: {
     alignItems: "center",
@@ -366,6 +359,11 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontFamily: "Tajawal_500Medium",
     color: "red",
+  },
+  errmessagetxt2: {
+    fontSize: 20,
+    fontFamily: "Tajawal_500Medium",
+    color: "#E56B1F",
   },
 });
 

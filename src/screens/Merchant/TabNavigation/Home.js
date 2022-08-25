@@ -101,8 +101,8 @@ const Home = ({ navigation }) => {
       </Modal>
       {/* end of Loading modal */}
       {FlatListData.length === 0 ? (
-        <View>
-          <Text>No Data</Text>
+        <View style={styles.centerizedCol}>
+          <Text style={styles.errmessagetxt2}>{t("nodata")}</Text>
         </View>
       ) : (
         <FlatList
@@ -299,6 +299,12 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontFamily: "Tajawal_500Medium",
     color: "red",
+  },
+  errmessagetxt2: {
+    marginTop: 50,
+    fontSize: 20,
+    fontFamily: "Tajawal_500Medium",
+    color: "#E56B1F",
   },
 });
 

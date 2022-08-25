@@ -143,6 +143,7 @@
   "signupsucess":"Signed Up successfully",
   "passwordchange":"Password has been Updated",
   "organizationname":"Organization Name",
-  "nothing":"No notification"
+  "nothing":"No notification",
+  "nodata":"No Data"
 }
 
