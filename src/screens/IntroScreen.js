@@ -1,30 +1,84 @@
-import { View, Image, StyleSheet } from "react-native";
+import {
+  View,
+  Image,
+  StyleSheet,
+  Keyboard,
+  FlatList,
+  Text,
+} from "react-native";
 import React, { useState, useEffect } from "react";
 import { Heading, Center, Button } from "native-base";
 import { useTranslation } from "react-i18next";
-//////////////////////////////
-import { database } from "../firebase";
-import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
+import { firebase } from "../firebase";
 
 const IntroScreen = ({ navigation }) => {
   const { t } = useTranslation();
-
   const [data, setData] = useState([]);
+  const dataRef = firebase.firestore().collection("messages");
 
-  const fetchdata = async () => {
-    const response = database.collection("messages");
-    const data = await response.get();
-    data.docs.forEach((item) => {
-      setData([...data, item.data()]);
-    });
-    console.log(data);
+  // to add data to firebase
+  const addField = () => {
+    if (data && data.length > 0) {
+      const timestamp = firebase.firestore.FieldValue.serverTimestamp();
+      const data = {
+        heading: data,
+        createdAt: timestamp,
+      };
+      dataRef
+        .add(add)
+        .then(() => {
+          setData("");
+          Keyboard.dismiss();
+        })
+        .catch((err) => {
+          alert(err);
+        });
+    }
   };
   useEffect(() => {
-    // fetchdata();
+    // to get data from firebase
+    var db = firebase.firestore();
+    dataRef.onSnapshot((querySnapshot) => {
+      const mydata = [];
+      querySnapshot.forEach((doc) => {
+        const { data, title } = doc.data();
+        mydata.push({
+          id: doc.id,
+          data,
+          title,
+        });
+        setData(mydata);
+      });
+    });
+    // var db = firebase.firestore();
+    // var docRef = db.collection("messages");
+    // const output = {};
+
+    // docRef
+    //   .limit(50)
+    //   .get()
+    //   .then((querySnapshot) => {
+    //     querySnapshot.docs.map(function (documentSnapshot) {
+    //       return (output[documentSnapshot.data] = documentSnapshot.data());
+    //     });
+    //     setData({ dataSource: Object.entries(output) });
+    //     console.log("datasource:", data);
+    //   });
   }, []);
 
   return (
     <View style={styles.container}>
+      <View>
+        <FlatList
+          data={data}
+          renderItem={({ item }) => (
+            <View>
+              <Text>{item.title}</Text>
+              <Text>{item.data}</Text>
+            </View>
+          )}
+        />
+      </View>
       <View
         style={{
           alignItems: "center",
