@@ -50,25 +50,12 @@ const IntroScreen = ({ navigation }) => {
         setData(mydata);
       });
     });
-    // var db = firebase.firestore();
-    // var docRef = db.collection("messages");
-    // const output = {};
-
-    // docRef
-    //   .limit(50)
-    //   .get()
-    //   .then((querySnapshot) => {
-    //     querySnapshot.docs.map(function (documentSnapshot) {
-    //       return (output[documentSnapshot.data] = documentSnapshot.data());
-    //     });
-    //     setData({ dataSource: Object.entries(output) });
-    //     console.log("datasource:", data);
-    //   });
   }, []);
 
   return (
     <View style={styles.container}>
-      <View>
+      {/* demo the data //!useless */}
+      {/* <View>
         <FlatList
           data={data}
           renderItem={({ item }) => (
@@ -78,7 +65,7 @@ const IntroScreen = ({ navigation }) => {
             </View>
           )}
         />
-      </View>
+      </View> */}
       <View
         style={{
           alignItems: "center",
