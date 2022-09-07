@@ -1,7 +1,7 @@
-import React from "react";
-import { StyleSheet, Text, View, Image } from "react-native";
-import { Input, Stack } from "native-base";
-import { useTranslation } from "react-i18next";
+import React from 'react'
+import { StyleSheet, Text, View, Image } from 'react-native'
+import { Input, Stack } from 'native-base'
+import { useTranslation } from 'react-i18next'
 
 const CardPayment = () => {
   const { t } = useTranslation();

@@ -1,0 +1,10 @@
+{
+  "CFBundleDisplayName": "Talbati",
+  "NSLocationAlwaysUsageDescription": "Allows app to access location always to track order with drivers with real time location",
+  "NSLocationWhenInUseUsageDescription": "Allows app to access location when in use to track order with drivers",
+  "NSLocationAlwaysAndWhenInUseUsageDescription": "Allows app to access location always to track order with drivers with real time location",
+  "NSCameraUsageDescription": "Allow the app to use the camera to take pictures and share them with users",
+  "NSPhotoLibraryAddUsageDescription": "Allow the app to use the photo library to share with users or save them",
+  "NSPhotoLibraryUsageDescription": "Allow the app to use the photo library to share with users",
+  "NSMicrophoneUsageDescription": "Allow the app to use the microphone to capture video to share with users"
+}

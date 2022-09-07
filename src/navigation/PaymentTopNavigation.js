@@ -1,11 +1,11 @@
-import React from "react";
-import { NavigationContainer } from "@react-navigation/native";
-import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import React from 'react'
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
 // the screens
-import CardPayment from "../screens/PaymentTopStack/CardPayment";
-import EPayment from "../screens/PaymentTopStack/EPayment";
-import { useTranslation } from "react-i18next";
-import i18n from "../i18n";
+import CardPayment from '../screens/PaymentTopStack/CardPayment'
+import EPayment from '../screens/PaymentTopStack/EPayment'
+import { useTranslation } from 'react-i18next'
+import i18n from '../i18n'
+
 const Tab = createMaterialTopTabNavigator();
 
 function PaymentTopNavigation() {

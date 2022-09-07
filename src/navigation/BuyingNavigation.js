@@ -1,16 +1,16 @@
-import React from "react";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import React from 'react'
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
 // importing the header
-import HomeHeader from "../screens/TabNavigation/HomeHeader";
 // the screens
-import merchants from "../screens/TabNavigation/Merchants";
-import ShopDetail from "../screens/BuyingStack/ShopDetail";
-import ContinueShop from "../screens/BuyingStack/ContinueShop";
-import KeepShop from "../screens/BuyingStack/KeepShop";
-import Payment from "../screens/BuyingStack/Payment";
-import GetLocation from "../screens/BuyingStack/GetLocation";
-import { useTranslation } from "react-i18next";
-import i18n from "../i18n";
+import merchants from '../screens/TabNavigation/Merchants'
+import ShopDetail from '../screens/BuyingStack/ShopDetail'
+import ContinueShop from '../screens/BuyingStack/ContinueShop'
+import KeepShop from '../screens/BuyingStack/KeepShop'
+import Payment from '../screens/BuyingStack/Payment'
+import GetLocation from '../screens/BuyingStack/GetLocation'
+import { useTranslation } from 'react-i18next'
+import i18n from '../i18n'
+
 const Stack = createNativeStackNavigator();
 
 function BuyingNavigation() {

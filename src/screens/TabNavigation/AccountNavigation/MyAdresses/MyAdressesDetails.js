@@ -1,7 +1,7 @@
-import React from "react";
-import { StyleSheet, View } from "react-native";
-import { TextArea, Button } from "native-base";
-import { useTranslation } from "react-i18next";
+import React from 'react'
+import { StyleSheet, View } from 'react-native'
+import { TextArea, Button } from 'native-base'
+import { useTranslation } from 'react-i18next'
 
 const MyAdressesDetails = ({ navigation }) => {
   const { t } = useTranslation();

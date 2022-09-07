@@ -1,9 +1,10 @@
-import i18n from "i18next";
-import { initReactI18next } from "react-i18next";
+import i18n from 'i18next'
+import { initReactI18next } from 'react-i18next'
 
-import ar from "./Lang/ArTranslation.json";
-import en from "./Lang/EnTranslation.json";
-import ur from "./Lang/ArdoTranslation.json";
+import ar from './Lang/ArTranslation.json'
+import en from './Lang/EnTranslation.json'
+import ur from './Lang/ArdoTranslation.json'
+
 const resources = {
   en: {
     translation: en,

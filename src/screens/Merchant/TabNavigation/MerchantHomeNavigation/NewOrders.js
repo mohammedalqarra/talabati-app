@@ -1,17 +1,10 @@
-import React, { useState, useEffect } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  FlatList,
-  Image,
-  ActivityIndicator,
-} from "react-native";
-import { Button, Modal } from "native-base";
-import { useTranslation } from "react-i18next";
-import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
-import { Api_url, get_certain_order } from "../../../../utilites/ApiConstants";
+import React, { useState, useEffect } from 'react'
+import { View, Text, StyleSheet, Image, ActivityIndicator } from 'react-native'
+import { Button, Modal } from 'native-base'
+import { useTranslation } from 'react-i18next'
+import { useSelector } from 'react-redux'
+import axios from 'axios'
+import { Api_url, get_certain_order } from '../../../../utilites/ApiConstants'
 
 const NewOrders = ({ route, navigation }) => {
   const { t } = useTranslation();
@@ -39,7 +32,7 @@ const NewOrders = ({ route, navigation }) => {
       .then((res) => {
         if (res && res.status == 200) {
           setShowModal(false);
-          console.log(res.data.data);
+          // console.log(res.data.data);
           setData(res.data.data);
         }
       })

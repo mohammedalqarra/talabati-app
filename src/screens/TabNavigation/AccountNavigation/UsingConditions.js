@@ -1,6 +1,6 @@
-import {StyleSheet, Text, ScrollView} from 'react-native';
-import React from 'react';
-import {useTranslation} from 'react-i18next';
+import { StyleSheet, Text, ScrollView } from 'react-native'
+import React from 'react'
+import { useTranslation } from 'react-i18next'
 
 const UsingConditions = () => {
   const {t} = useTranslation();

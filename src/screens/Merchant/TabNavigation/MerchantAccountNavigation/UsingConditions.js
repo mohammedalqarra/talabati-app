@@ -1,5 +1,5 @@
-import { StyleSheet, Text, ScrollView } from "react-native";
-import React from "react";
+import { StyleSheet, Text, ScrollView } from 'react-native'
+import React from 'react'
 
 const UsingConditions = () => {
   return (

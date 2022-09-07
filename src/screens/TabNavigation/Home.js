@@ -4,6 +4,7 @@ import {
   Image,
   StyleSheet,
   useWindowDimensions,
+  TouchableOpacity,
   FlatList,
   ScrollView,
   ActivityIndicator,
@@ -16,15 +17,10 @@ import { Text, Pressable, Box, Center } from "native-base";
 // import Logo4 from "../../images/logo/logo4.png";
 // import Logo5 from "../../images/logo/logo5.png";
 // import Logo6 from "../../images/logo/logo6.png";
-
 import { useTranslation } from "react-i18next";
-import {
-  Api_url,
-  guest_orders_api,
-  guest_get_merchant,
-} from "../../utilites/ApiConstants";
+import { Api_url, guest_orders_api, guest_get_merchant } from "../../utilites/ApiConstants";
 import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 const Home = ({ navigation }) => {
   const [error, setError] = useState(null);
@@ -140,12 +136,12 @@ const Home = ({ navigation }) => {
       .then((res) => {
         if (res && res.status == 200) {
           setLoading(false);
-          console.log(res.data.data);
+          // console.log(res.data.data);
           setFlatListData0(res.data.data);
         }
       })
       .then(() => {
-        console.log("flatlist is ", FlatListData0);
+        // console.log("flatlist is ", FlatListData0);
       })
       .catch((err) => {
         setError(err.response.data.message);
@@ -159,7 +155,7 @@ const Home = ({ navigation }) => {
       .get(url)
       .then((res) => {
         if (res && res.status == 200) {
-          console.log(res.data.data);
+          // console.log(res.data.data);
           setFlatListData1(res.data.data);
         }
       })
@@ -177,7 +173,7 @@ const Home = ({ navigation }) => {
       .get(url)
       .then((res) => {
         if (res && res.status == 200) {
-          console.log(res.data.data);
+          // console.log(res.data.data);
           setFlatListData2(res.data.data);
         }
       })
@@ -206,12 +202,7 @@ const Home = ({ navigation }) => {
       ) : (
         <View>
           <View style={styles.firstText}>
-            <Text
-              style={styles.txt}
-              color={"#555555"}
-              fontSize={15}
-              fontFamily={"Tajawal_500Medium"}
-            >
+            <Text style={styles.txt} color={"#555555"} fontSize={15} fontFamily={"Tajawal_500Medium"}>
               {t("Offers")}
             </Text>
           </View>
@@ -226,42 +217,25 @@ const Home = ({ navigation }) => {
               data={FlatListData0}
               renderItem={({ item }) => (
                 <View>
-                  <Image
-                    source={{ uri: item.avatar }}
-                    resizeMode={"contain"}
-                    style={styles.bannerImg}
-                  />
+                  <Image source={{ uri: item.avatar }} resizeMode={"contain"} style={styles.bannerImg} />
                 </View>
               )}
             />
           </View>
           <View style={styles.secondText}>
             <Pressable onPress={() => navigation.navigate("Merchants")}>
-              <Text
-                style={styles.txt}
-                color={"#555555"}
-                fontSize={15}
-                fontFamily={"Tajawal_500Medium"}
-              >
+              <Text style={styles.txt} color={"#555555"} fontSize={15} fontFamily={"Tajawal_500Medium"}>
                 {t("showAll")}
               </Text>
             </Pressable>
-            <Text
-              style={styles.txt}
-              color={"#555555"}
-              fontSize={15}
-              fontFamily={"Tajawal_500Medium"}
-            >
+            <Text style={styles.txt} color={"#555555"} fontSize={15} fontFamily={"Tajawal_500Medium"}>
               {t("famousMerchant")}
             </Text>
           </View>
           <FlatList
             data={FlatListData1}
             renderItem={({ item }) => (
-              <Pressable
-                marginHorizontal={10}
-                onPress={() => navigation.navigate("Merchants")}
-              >
+              <Pressable marginHorizontal={10} onPress={() => navigation.navigate("Merchants")}>
                 <Box alignItems="center">
                   <Box
                     width={210}
@@ -340,10 +314,7 @@ const Home = ({ navigation }) => {
           <FlatList
             data={FlatListData2}
             renderItem={({ item }) => (
-              <Pressable
-                marginHorizontal={10}
-                onPress={() => navigation.navigate("Merchants")}
-              >
+              <Pressable marginHorizontal={10} onPress={() => navigation.navigate("Merchants")}>
                 <Box alignItems="center">
                   <Box
                     width={150}
@@ -372,12 +343,8 @@ const Home = ({ navigation }) => {
                       justifyItems={"center"}
                     >
                       <View style={styles.FlatListContainerUnder3}>
-                        {i18n.language === "ar" && (
-                          <Text style={styles.txt}>{item.name_ar}</Text>
-                        )}
-                        {i18n.language === "en" && (
-                          <Text style={styles.txt}>{item.name_en}</Text>
-                        )}
+                        {i18n.language === "ar" && <Text style={styles.txt}>{item.name_ar}</Text>}
+                        {i18n.language === "en" && <Text style={styles.txt}>{item.name_en}</Text>}
                       </View>
                     </Center>
                   </Box>
@@ -387,6 +354,9 @@ const Home = ({ navigation }) => {
             keyExtractor={(item) => item.id}
             horizontal
           />
+          <TouchableOpacity style={styles.add}>
+            <Text style={styles.addt}>+</Text>
+          </TouchableOpacity>
         </View>
       )}
     </ScrollView>
@@ -487,6 +457,25 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontFamily: "Tajawal_500Medium",
     color: "red",
+  },
+  add: {
+    position: "absolute",
+    bottom: "5%",
+    right: "5%",
+    width: 60,
+    height: 60,
+    backgroundColor: "white",
+    display: "flex",
+    alignContent: "center",
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 55,
+    elevation: 20,
+    shadowColor: "#52006A",
+  },
+  addt: {
+    fontSize: 25,
+    color: "#E56B1F",
   },
 });
 

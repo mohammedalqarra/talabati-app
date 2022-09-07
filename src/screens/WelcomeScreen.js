@@ -1,10 +1,8 @@
-import { View, Text, Image, StyleSheet } from "react-native";
-import React, { useState, useEffect } from "react";
-import { Button, Heading } from "native-base";
-import { useTranslation } from "react-i18next";
+import { View, Text, Image, StyleSheet } from 'react-native'
+import React, { useState } from 'react'
+import { Button, Heading } from 'native-base'
+import { useTranslation } from 'react-i18next'
 // to get data from firebase
-import { database } from "../firebase";
-import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 const WelcomeScreen = ({ navigation }) => {
   const [data, setData] = useState([]);
   const { t } = useTranslation();

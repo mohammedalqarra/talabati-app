@@ -1,0 +1,10 @@
+{
+  "CFBundleDisplayName": "طلباتي",
+  "NSLocationAlwaysUsageDescription": "السماح للتطبيق بالوصول إلى الموقع دائمًا لتتبع الطلب مع السائقين",
+  "NSLocationWhenInUseUsageDescription": "السماح للتطبيق بالوصول إلى الموقع لمشاركة الموقع مع السائقين",
+  "NSLocationAlwaysAndWhenInUseUsageDescription": "السماح للتطبيق بالوصول إلى الموقع دائمًا لتتبع الطلب مع السائقين",
+  "NSCameraUsageDescription": "السماح للتطبيق باستخدام الكاميرا لالتقاط الصور ومشاركتها مع المستخدمين",
+  "NSPhotoLibraryAddUsageDescription": "السماح للتطبيق باستخدام مكتبة الصور لمشاركتها مع المستخدمين او حفظها",
+  "NSPhotoLibraryUsageDescription": "السماح للتطبيق باستخدام مكتبة الصور لمشاركتها مع المستخدمين",
+  "NSMicrophoneUsageDescription": "السماح للتطبيق باستخدام الميكروفون لالتقاط الفيديو لمشاركتها مع المستخدمين"
+}

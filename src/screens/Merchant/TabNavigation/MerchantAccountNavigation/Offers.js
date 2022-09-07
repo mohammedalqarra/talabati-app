@@ -1,5 +1,5 @@
-import { StyleSheet, Text, View, Image, ScrollView } from "react-native";
-import React from "react";
+import { StyleSheet, Text, View, Image, ScrollView } from 'react-native'
+import React from 'react'
 
 const Offers = () => {
   return (

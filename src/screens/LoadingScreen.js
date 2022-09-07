@@ -1,6 +1,6 @@
-import React from 'react';
-import {View, Image, Text, StyleSheet, ImageBackground} from 'react-native';
-import {Heading, Center, Button} from 'native-base';
+import React from 'react'
+import { Image, StyleSheet, ImageBackground } from 'react-native'
+import { Center } from 'native-base'
 
 const LoadingScreen = () => {
   return (

@@ -1,11 +1,11 @@
-import { StyleSheet, Text, View, Image, Pressable } from "react-native";
-import React, { useState, useEffect } from "react";
-import { TextArea, Button, Modal, Input } from "native-base";
-import { useTranslation } from "react-i18next";
-import axios from "axios";
-import { Api_url, get_certain_order } from "../../../../utilites/ApiConstants";
-import { useDispatch, useSelector } from "react-redux";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { StyleSheet, Text, View, Image, Pressable } from 'react-native'
+import React, { useState } from 'react'
+import { TextArea, Button, Modal, Input } from 'native-base'
+import { useTranslation } from 'react-i18next'
+import axios from 'axios'
+import { Api_url, get_certain_order } from '../../../../utilites/ApiConstants'
+import { useSelector } from 'react-redux'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 const ConfirmOrder = ({ route, navigation }) => {
   const { id } = route.params;
@@ -41,7 +41,7 @@ const ConfirmOrder = ({ route, navigation }) => {
       .then((res) => {
         if (res && res.status == 200) {
           setShowModal(true);
-          console.log(res.data.data);
+          // console.log(res.data.data);
         }
       })
       .catch((err) => {
@@ -59,7 +59,7 @@ const ConfirmOrder = ({ route, navigation }) => {
       .then((res) => {
         if (res && res.status == 200) {
           setShowModal1(false);
-          console.log(res.data.data);
+          // console.log(res.data.data);
         }
       })
       .catch((err) => {
@@ -331,12 +331,6 @@ const styles = StyleSheet.create({
   txtfamily: {
     fontSize: 14,
     fontFamily: "Tajawal_500Medium",
-  },
-  centerizedCol: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
   },
   errmessage: {
     alignItems: "center",

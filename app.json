@@ -1,41 +1,95 @@
 {
   "expo": {
-    "name": "talabati",
-    "slug": "talabati",
-    "version": "1.0.0",
+    "name": "talbati",
+    "description": "Talbati App",
+    "slug": "talbati",
+    "owner": "mythnooty",
+    "privacy": "hidden",
+    "version": "1.0.1",
     "orientation": "portrait",
+    "scheme": "talbati",
     "icon": "./assets/icon.png",
-    "plugins": [
-      [
-        "expo-image-picker",
-        {
-          "photosPermission": "The app accesses your photos to let you share them with your friends."
-        }
-      ]
-    ],
     "userInterfaceStyle": "light",
+    "backgroundColor": "#ffffff",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
     "updates": {
-      "fallbackToCacheTimeout": 0
+      "fallbackToCacheTimeout": 0,
+      "enabled": true,
+      "url": "https://u.expo.dev/b3c838d7-3165-4e78-ba6f-e148c3fc1ddb"
     },
     "assetBundlePatterns": [
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.myth.talbati",
+      "buildNumber": "1.0.1",
+      "googleServicesFile": "./GoogleService-Info.plist",
+      "requireFullScreen": true,
+      "infoPlist": {
+        "CFBundleAllowMixedLocalizations": true
+      },
+      "config": {
+        "googleMapsApiKey": "AIzaSyAV_V5w8WunfCT4pGaAWYKvVTLoi2VDfG0"
+      }
     },
     "android": {
+      "package": "com.myth.talbati",
+      "googleServicesFile": "./google-services.json",
+      "versionCode": 2,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyBvJrgCw9zdpUF5LLKz4oiJCLIjk6SLvQM"
+        }
+      },
+      "permissions": [
+        "MEDIA_LIBRARY",
+        "CAMERA",
+        "CAMERA_ROLL",
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION",
+        "READ_EXTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE",
+        "RECEIVE_BOOT_COMPLETED"
+      ]
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/favicon.png",
+      "config": {}
+    },
+    "locales": {
+      "ar": "./languages/arabic.json",
+      "en": "./languages/english.json"
+    },
+    "plugins": [
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/icon-512.png",
+          "color": "#ffffff",
+          "mode": "production"
+        }
+      ]
+    ],
+    "platforms": [
+      "ios",
+      "android"
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "b3c838d7-3165-4e78-ba6f-e148c3fc1ddb"
+      }
+    },
+    "runtimeVersion": {
+      "policy": "sdkVersion"
     }
   }
 }

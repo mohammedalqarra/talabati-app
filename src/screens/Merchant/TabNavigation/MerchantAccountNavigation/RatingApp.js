@@ -1,7 +1,7 @@
-import {StyleSheet, View, Image, TouchableOpacity} from 'react-native';
-import React, {useState} from 'react';
-import {Button} from 'native-base';
-import {useTranslation} from 'react-i18next';
+import { StyleSheet, View, Image, TouchableOpacity } from 'react-native'
+import React, { useState } from 'react'
+import { Button } from 'native-base'
+import { useTranslation } from 'react-i18next'
 
 const RatingApp = ({navigation}) => {
   const {t} = useTranslation();

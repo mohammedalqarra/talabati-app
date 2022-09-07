@@ -1,26 +1,10 @@
-import React, { useEffect, useState, useMemo } from "react";
-// import SplashScreen from 'react-native-splash-screen';
-import {
-  SafeAreaView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  View,
-  ActivityIndicator,
-} from "react-native";
+import React, { useState } from "react";
+import { StyleSheet } from "react-native";
 import { NativeBaseProvider } from "native-base";
-// navigation setup
-import { NavigationContainer } from "@react-navigation/native";
-// multi languages setup
-import { tranulate } from "react-i18next";
-import "./src/i18n";
-// the navigations
+import './src/i18n';
 import Paths from "./src/navigation/Paths";
-// the tab navigation
-import TabNavigation from "./src/navigation/TabNabvigation";
-import * as SplashScreen from "expo-splash-screen";
+import * as SplashScreen from 'expo-splash-screen';
 import AppLoading from "expo-app-loading";
-import * as Font from "expo-font";
 import { store } from "./src/features/store";
 import { Provider } from "react-redux";
 import "./src/firebase";
@@ -41,8 +25,7 @@ const App = () => {
   SplashScreen.preventAutoHideAsync();
 
   // for the font
-
-  let [fontsLoaded] = useFonts({
+  const [fontsLoaded] = useFonts({
     Tajawal_200ExtraLight,
     Tajawal_300Light,
     Tajawal_400Regular,
@@ -51,7 +34,11 @@ const App = () => {
     Tajawal_800ExtraBold,
     Tajawal_900Black,
   });
+
+  // if (fontsLoaded) {
+  // }
   if (!fontsLoaded) {
+    // return null;
     return <AppLoading />;
   }
 

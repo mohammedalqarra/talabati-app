@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import { View, Text, StyleSheet, FlatList, Image } from "react-native";
-import { Button } from "native-base";
-import { useTranslation } from "react-i18next";
+import React, { useState } from 'react'
+import { View, Text, StyleSheet, FlatList, Image } from 'react-native'
+import { Button } from 'native-base'
+import { useTranslation } from 'react-i18next'
 
 const NotificationDetails = ({ navigation }) => {
   const { t } = useTranslation();

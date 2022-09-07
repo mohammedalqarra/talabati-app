@@ -1,24 +1,12 @@
-import {
-  View,
-  Text,
-  Image,
-  StyleSheet,
-  useWindowDimensions,
-  ScrollView,
-  ActivityIndicator,
-  Platform,
-} from "react-native";
-import React, { useState } from "react";
-import { Input, Avatar, Stack, Button, Pressable, Heading } from "native-base";
-import { useTranslation } from "react-i18next";
-import * as ImagePicker from "expo-image-picker";
-import * as DocumentPicker from "expo-document-picker";
-import { signup_api, Api_url } from "../../utilites/ApiConstants";
-import axios from "axios";
-import { Formik } from "formik";
-import { Modal } from "native-base";
+import { View, Text, Image, StyleSheet, useWindowDimensions, ActivityIndicator } from 'react-native'
+import React, { useState } from 'react'
+import { Input, Avatar, Stack, Button, Pressable, Heading, Modal } from 'native-base'
+import { useTranslation } from 'react-i18next'
+import * as DocumentPicker from 'expo-document-picker'
+import { signup_api, Api_url } from '../../utilites/ApiConstants'
+import axios from 'axios'
 // import RNFetchBlob from "rn-fetch-blob";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 const SignUp = ({ navigation }) => {
   const [username, setUsername] = useState("");
@@ -87,13 +75,13 @@ const SignUp = ({ navigation }) => {
     });
     try {
       const response = await fetch(uri);
-      console.log(response);
+      // console.log(response);
       setAvatarphoto(response.url);
       const avatarblob = await response.blob();
-      console.log(avatarblob);
+      // console.log(avatarblob);
       formData.append("avatarBlob", response.url);
     } catch (error) {
-      console.log("ERR: " + error.message);
+      // console.log("ERR: " + error.message);
     }
   };
 
@@ -131,17 +119,17 @@ const SignUp = ({ navigation }) => {
     if (type === "cancel") {
       return;
     }
-    console.log("pickerResponse", uri);
+    // console.log("pickerResponse", uri);
 
     try {
       const fetchResponse = await fetch(uri);
-      console.log("fetchResponse", fetchResponse);
+      // console.log("fetchResponse", fetchResponse);
       const blob = await fetchResponse.blob();
       setBlobStorefront({ uri, name: "media", type: `image/${type}` });
       setStorephoto(fetchResponse.url);
-      console.log(blobavatar);
+      // console.log(blobavatar);
     } catch (error) {
-      console.log("ERR: " + error.message);
+      // console.log("ERR: " + error.message);
     }
   };
   // pickcommercial
@@ -154,17 +142,17 @@ const SignUp = ({ navigation }) => {
     if (type === "cancel") {
       return;
     }
-    console.log("pickerResponse", uri);
+    // console.log("pickerResponse", uri);
 
     try {
       const fetchResponse = await fetch(uri);
-      console.log("fetchResponse", fetchResponse);
+      // console.log("fetchResponse", fetchResponse);
       const blob = await fetchResponse.blob();
       setBlobCommercialLicense({ uri, name: "media", type: `image/${type}` });
       setCommercialphoto(fetchResponse.url);
-      console.log(blobavatar);
+      // console.log(blobavatar);
     } catch (error) {
-      console.log("ERR: " + error.message);
+      // console.log("ERR: " + error.message);
     }
   };
 
@@ -191,7 +179,7 @@ const SignUp = ({ navigation }) => {
     // // formData.append("commercialBlob", blobCommercialLicense, "commercialBlob");
     // formData.append("organization_name", organizationName);
     // formData.append("role_id", roleId);
-    console.log(formData);
+    // console.log(formData);
     setShowModal(true);
     axios
       .post(url, formData, {
@@ -203,17 +191,17 @@ const SignUp = ({ navigation }) => {
       .then((res) => {
         if (res && res.status == 200) {
           setSucessModal(true);
-          console.log(formData);
+          // console.log(formData);
           navigation.goBack();
           // navigation.navigate("VerfiyNumber");
           setShowModal(false);
-          console.log(res);
+          // console.log(res);
         }
       })
       .catch((err) => {
         setError(err.response.data.message);
         setShowModal(false);
-        console.log(res);
+        // console.log(res);
       });
   };
   return (

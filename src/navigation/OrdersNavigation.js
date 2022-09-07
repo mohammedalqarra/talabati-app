@@ -1,10 +1,11 @@
-import React from "react";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import React from 'react'
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
 // the screens
-import Orders from "../screens/TabNavigation/Orders";
-import OrderDetails from "../screens/TabNavigation/OrderNavigation/OrderDetails";
-import { useTranslation } from "react-i18next";
-import i18n from "../i18n";
+import Orders from '../screens/TabNavigation/Orders'
+import OrderDetails from '../screens/TabNavigation/OrderNavigation/OrderDetails'
+import { useTranslation } from 'react-i18next'
+import i18n from '../i18n'
+
 const Stack = createNativeStackNavigator();
 
 function BuyingNavigation() {

@@ -1,23 +1,16 @@
 //finished
-import {
-  View,
-  Text,
-  Image,
-  StyleSheet,
-  useWindowDimensions,
-  ActivityIndicator,
-} from "react-native";
+import { View, Text, Image, StyleSheet, useWindowDimensions, ActivityIndicator, TouchableOpacity } from "react-native";
 import React, { useState } from "react";
-import { Input, Stack, Button, Pressable, Heading } from "native-base";
+import { Input, Stack, Button, Pressable, Heading, Modal } from "native-base";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import { handlelogInMerchant } from "../../features/auth/authSlice";
 import { Formik } from "formik";
 import { login_api, Api_url } from "../../utilites/ApiConstants";
 import axios from "axios";
-import { Modal } from "native-base";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-
+import Icon from "react-native-vector-icons/AntDesign";
+import Icon1 from "react-native-vector-icons/AntDesign";
 const Login = ({ navigation }) => {
   const dispatch = useDispatch();
 
@@ -52,15 +45,13 @@ const Login = ({ navigation }) => {
     <KeyboardAwareScrollView style={styles.container}>
       <Formik
         initialValues={{ username: "", password: "" }}
-        onSubmit={async (values) =>
-          await HandleUserLogin(values.username, values.password)
-        }
+        onSubmit={async (values) => await HandleUserLogin(values.username, values.password)}
       >
         {({ handleChange, handleBlur, handleSubmit, values }) => (
           <View>
             <View
               style={{
-                marginTop: 120,
+                marginTop: 20,
                 alignItems: "center",
               }}
             >
@@ -75,17 +66,10 @@ const Login = ({ navigation }) => {
                 </Modal.Content>
               </Modal>
               {/* end of modal */}
-              <Image
-                source={require("../../images/logo.png")}
-                style={styles.logo}
-                resizeMode={"contain"}
-              />
+              <Image source={require("../../images/logo.png")} style={styles.logo} resizeMode={"contain"} />
               <View>
                 <View style={styles.headerContainer}>
-                  <Heading
-                    style={styles.heading}
-                    fontFamily={"Tajawal_400Regular"}
-                  >
+                  <Heading style={styles.heading} fontFamily={"Tajawal_400Regular"}>
                     {t("login")}
                   </Heading>
                 </View>
@@ -100,10 +84,7 @@ const Login = ({ navigation }) => {
                   <View>
                     {error === undefined && (
                       <View style={styles.errmessage}>
-                        <Text style={styles.errmessagetxt}>
-                          {" "}
-                          Check Your Connection and retry to log in{" "}
-                        </Text>
+                        <Text style={styles.errmessagetxt}> Check Your Connection and retry to log in </Text>
                       </View>
                     )}
                   </View>
@@ -115,31 +96,33 @@ const Login = ({ navigation }) => {
                       md: "25%",
                     }}
                     fontFamily={"Tajawal_500Medium"}
-                    variant="underlined"
+                    // variant="underlined"
                     placeholder={t("username")}
                     value={values.username}
                     onChangeText={handleChange("username")}
+                    backgroundColor={"#FBF9F9"}
+                    focusOutlineColor={"#FBF9F9"}
                   />
                   <Input
                     w={{
                       base: "75%",
                       md: "25%",
                     }}
-                    variant="underlined"
+                    // variant="underlined"
                     type={"password"}
                     fontFamily={"Tajawal_500Medium"}
                     placeholder={t("password")}
                     value={values.password}
                     onChangeText={handleChange("password")}
+                    backgroundColor={"#FBF9F9"}
+                    focusOutlineColor={"#FBF9F9"}
                   />
                 </Stack>
                 <View style={styles.clickContainer}>
                   <Pressable onPress={() => navigation.navigate("SignUps")}>
                     <Text style={styles.click1}>{t("newaccount")}</Text>
                   </Pressable>
-                  <Pressable
-                    onPress={() => navigation.navigate("ForgetPasswords")}
-                  >
+                  <Pressable onPress={() => navigation.navigate("ForgetPasswords")}>
                     <Text style={styles.click2}>{t("forgetpassword")}</Text>
                   </Pressable>
                 </View>
@@ -168,6 +151,15 @@ const Login = ({ navigation }) => {
           </View>
         )}
       </Formik>
+      <View style={styles.logos}>
+        <TouchableOpacity style={styles.singleIcon}>
+          {/* <Icon1 name={"google"} color={"black"} size={25} /> */}
+          <Image source={require("../../images/google.png")} width={25} />
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.singleIcon}>
+          <Icon name={"apple1"} color={"black"} size={25} />
+        </TouchableOpacity>
+      </View>
     </KeyboardAwareScrollView>
   );
 };
@@ -227,6 +219,25 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontFamily: "Tajawal_500Medium",
     color: "red",
+  },
+  logos: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginHorizontal: 110,
+    marginTop: 30,
+  },
+  singleIcon: {
+    backgroundColor: "white",
+    height: 45,
+    width: 45,
+    justifyContent: "center",
+    alignItems: "center",
+    display: "flex",
+    borderRadius: 25,
+    elevation: 5,
+    shadowColor: "#52006A",
   },
 });
 

@@ -1,20 +1,20 @@
 // In App.js in a new project
 
-import React from "react";
-import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import React from 'react'
+import { NavigationContainer } from '@react-navigation/native'
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
 // the screens
-import IntroScreen from "../screens/IntroScreen";
-import WelcomeScreen from "../screens/WelcomeScreen";
-import Login from "../screens/Login";
-import SignUp from "../screens/SignUp";
-import SignUpWithPhone from "../screens/SignUpWithPhone";
-import VerfiyNumber from "../screens/VerfiyNumber";
-import ForgetPassword from "../screens/ForgetPassword";
-import MerchantAuthNavigation from "../navigation/MerchantAuthNavigation";
-import TabNavigation from "./TabNabvigation";
-import MerchantTabNavigation from "./MerchantTabNavigator";
-import { useSelector } from "react-redux";
+import IntroScreen from '../screens/IntroScreen'
+import WelcomeScreen from '../screens/WelcomeScreen'
+import Login from '../screens/Login'
+import SignUp from '../screens/SignUp'
+import SignUpWithPhone from '../screens/SignUpWithPhone'
+import VerfiyNumber from '../screens/VerfiyNumber'
+import ForgetPassword from '../screens/ForgetPassword'
+import MerchantAuthNavigation from '../navigation/MerchantAuthNavigation'
+import TabNavigation from './TabNabvigation'
+import MerchantTabNavigation from './MerchantTabNavigator'
+import { useSelector } from 'react-redux'
 
 const Stack = createNativeStackNavigator();
 

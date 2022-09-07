@@ -1,23 +1,15 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  FlatList,
-  Image,
-  Pressable,
-  ActivityIndicator,
-} from "react-native";
+import { StyleSheet, Text, View, FlatList, Image, Pressable, ActivityIndicator } from "react-native";
 import React, { useState, useEffect } from "react";
 import { Modal } from "native-base";
 import axios from "axios";
 import { Api_url, get_notification } from "../../../utilites/ApiConstants";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 
 const Notifications = ({ navigation }) => {
   const token = useSelector((state) => state.auth.data.token);
   const { t } = useTranslation();
-  const [FlatListData, setFlatListData] = useState([]);
+  const [FlatListData, setFlatListData] = useState({});
   const [showModal, setShowModal] = useState(false);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -93,7 +85,7 @@ const Notifications = ({ navigation }) => {
       .then((res) => {
         if (res && res.status == 200) {
           setShowModal(false);
-          console.log(res.data.data);
+          // console.log(res.data.data);
           setFlatListData(res.data.data);
         }
       })
@@ -130,9 +122,7 @@ const Notifications = ({ navigation }) => {
           height={100}
           data={FlatListData}
           renderItem={({ item }) => (
-            <Pressable
-              onPress={() => navigation.navigate("MerchantNotificationDetails")}
-            >
+            <Pressable onPress={() => navigation.navigate("MerchantNotificationDetails")}>
               <Text
                 style={{
                   fontFamily: "Tajawal_400Regular",

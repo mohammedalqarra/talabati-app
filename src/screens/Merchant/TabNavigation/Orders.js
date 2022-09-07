@@ -1,16 +1,10 @@
-import React, { useState, useEffect } from "react";
-import {
-  View,
-  StyleSheet,
-  FlatList,
-  Image,
-  ActivityIndicator,
-} from "react-native";
-import { Text, Button, Pressable, Box, Modal } from "native-base";
-import { useTranslation } from "react-i18next";
-import axios from "axios";
-import { Api_url, get_my_orders } from "../../../utilites/ApiConstants";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState, useEffect } from 'react'
+import { View, StyleSheet, FlatList, Image, ActivityIndicator } from 'react-native'
+import { Text, Button, Pressable, Box, Modal } from 'native-base'
+import { useTranslation } from 'react-i18next'
+import axios from 'axios'
+import { Api_url, get_my_orders } from '../../../utilites/ApiConstants'
+import { useSelector } from 'react-redux'
 
 const Orders = ({ navigation }) => {
   const { t } = useTranslation();
@@ -78,7 +72,7 @@ const Orders = ({ navigation }) => {
       .then((res) => {
         if (res && res.status == 200) {
           setShowModal(false);
-          console.log(res.data.data);
+          // console.log(res.data.data);
           setFlatListData(res.data.data);
         }
       })

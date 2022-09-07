@@ -1,13 +1,13 @@
 // In App.js in a new project
 
-import React from "react";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import React from 'react'
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
 // the screens
-import Home from "../screens/Merchant/TabNavigation/Home";
-import NewOrders from "../screens/Merchant/TabNavigation/MerchantHomeNavigation/NewOrders";
-import ConfirmOrder from "../screens/Merchant/TabNavigation/MerchantHomeNavigation/ConfirmOrder";
-import { useTranslation } from "react-i18next";
-import i18n from "../i18n";
+import Home from '../screens/Merchant/TabNavigation/Home'
+import NewOrders from '../screens/Merchant/TabNavigation/MerchantHomeNavigation/NewOrders'
+import ConfirmOrder from '../screens/Merchant/TabNavigation/MerchantHomeNavigation/ConfirmOrder'
+import { useTranslation } from 'react-i18next'
+import i18n from '../i18n'
 
 const Stack = createNativeStackNavigator();
 

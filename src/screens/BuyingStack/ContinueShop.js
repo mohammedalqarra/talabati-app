@@ -1,13 +1,6 @@
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  Pressable,
-  ActivityIndicator,
-} from "react-native";
-import { Button, Input, Modal, TextArea } from "native-base";
+import { View, Text, StyleSheet, Image, ActivityIndicator } from "react-native";
+import { Button, Input, Modal } from "native-base";
 import { useTranslation } from "react-i18next";
 import { Api_url, create_order } from "../../utilites/ApiConstants";
 import axios from "axios";
@@ -25,13 +18,13 @@ const ContinueShop = ({ route, navigation }) => {
   const [showModal2, setShowModal2] = useState(false);
 
   const show = () => {
-    console.log("name", region.name);
-    console.log("mobile", region.mobile);
-    console.log("email", region.email);
+    // console.log("name", region.name);
+    // console.log("mobile", region.mobile);
+    // console.log("email", region.email);
     // console.log("phone", phone);
-    console.log("region", region);
-    console.log("id", region.id);
-    console.log("textAreaValue", textAreaValue);
+    // console.log("region", region);
+    // console.log("id", region.id);
+    // console.log("textAreaValue", textAreaValue);
   };
 
   const { t } = useTranslation();
@@ -84,7 +77,7 @@ const ContinueShop = ({ route, navigation }) => {
       const longitude = region.longitude;
       const order_details = textAreaValue;
 
-      console.log(order_details);
+      // console.log(order_details);
       setShowModal(true);
       axios
         .post(
@@ -119,7 +112,7 @@ const ContinueShop = ({ route, navigation }) => {
       <>
         <KeyboardAwareScrollView
           style={{
-            marginTop: 70,
+            marginTop: 20,
           }}
         >
           {/* start of modal */}
@@ -165,10 +158,7 @@ const ContinueShop = ({ route, navigation }) => {
             <View>
               {error === undefined && (
                 <View style={styles.errmessage}>
-                  <Text style={styles.errmessagetxt}>
-                    {" "}
-                    Check Your Connection and retry to log in{" "}
-                  </Text>
+                  <Text style={styles.errmessagetxt}> Check Your Connection and retry to log in </Text>
                 </View>
               )}
             </View>
@@ -177,12 +167,7 @@ const ContinueShop = ({ route, navigation }) => {
             {/* header */}
             <View>
               <View style={styles.upperlogo}>
-                <Image
-                  source={require("../../images/continue.png")}
-                  width={120}
-                  height={150}
-                  resizeMode="contain"
-                />
+                <Image source={require("../../images/continue.png")} width={120} height={150} resizeMode="contain" />
               </View>
             </View>
           </View>
@@ -246,11 +231,7 @@ const ContinueShop = ({ route, navigation }) => {
             >
               <View style={styles.centerized}>
                 <Image source={require("../../images/mapmarket.png")} />
-                <Text
-                  style={{ marginLeft: 10, fontFamily: "Tajawal_500Medium" }}
-                >
-                  {t("adressonmap")}
-                </Text>
+                <Text style={{ marginLeft: 10, fontFamily: "Tajawal_500Medium" }}>{t("adressonmap")}</Text>
               </View>
             </Button>
           </View>
@@ -276,14 +257,7 @@ const ContinueShop = ({ route, navigation }) => {
       {IsGuest == true ? (
         <RenderGuestItems />
       ) : (
-        <RenderItems
-          name={name}
-          region={region}
-          textAreaValue={textAreaValue}
-          mobile={mobile}
-          email={email}
-          id={id}
-        />
+        <RenderItems name={name} region={region} textAreaValue={textAreaValue} mobile={mobile} email={email} id={id} />
       )}
     </View>
   );
@@ -335,12 +309,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "white",
     fontFamily: "Tajawal_500Medium",
-  },
-  centerizedCol: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
   },
   errmessage: {
     alignItems: "center",

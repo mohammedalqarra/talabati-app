@@ -1,12 +1,5 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  FlatList,
-  Image,
-  Pressable,
-} from "react-native";
-import React, { useState } from "react";
+import { StyleSheet, Text, View, FlatList, Image, Pressable } from 'react-native'
+import React, { useState } from 'react'
 
 const MyAdresses = ({ navigation }) => {
   const [FlatListData, setFlatListData] = useState([

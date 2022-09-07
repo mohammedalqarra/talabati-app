@@ -3,26 +3,13 @@ import {
   View,
   Image,
   StyleSheet,
+  TouchableOpacity,
   useWindowDimensions,
   FlatList,
   ScrollView,
   ActivityIndicator,
 } from "react-native";
-import {
-  Text,
-  Input,
-  Icon,
-  Stack,
-  Button,
-  Pressable,
-  Heading,
-  VStack,
-  Box,
-  AspectRatio,
-  Center,
-  Divider,
-  Modal,
-} from "native-base";
+import { Text, Pressable, Box, Center } from "native-base";
 // // dummy images
 // import SmallLogo1 from "../../images/smallLogo/1.png";
 // import SmallLogo2 from "../../images/smallLogo/2.png";
@@ -30,7 +17,6 @@ import {
 // import SmallLogo4 from "../../images/smallLogo/4.png";
 // import SmallLogo5 from "../../images/smallLogo/5.png";
 // import SmallLogo6 from "../../images/smallLogo/6.png";
-
 // import Logo1 from "../../images/logo/logo1.png";
 // import Logo2 from "../../images/logo/logo2.png";
 // import Logo3 from "../../images/logo/logo3.png";
@@ -38,12 +24,8 @@ import {
 // import Logo5 from "../../images/logo/logo5.png";
 // import Logo6 from "../../images/logo/logo6.png";
 import { useTranslation } from "react-i18next";
-import {
-  Api_url,
-  guest_categories_api,
-  guest_get_merchant,
-} from "../../utilites/ApiConstants";
-import { useDispatch, useSelector } from "react-redux";
+import { Api_url, guest_categories_api, guest_get_merchant } from "../../utilites/ApiConstants";
+import { useSelector } from "react-redux";
 import axios from "axios";
 
 const Merchants = ({ navigation }) => {
@@ -129,7 +111,7 @@ const Merchants = ({ navigation }) => {
       .then((res) => {
         if (res && res.status == 200) {
           setLoading(false);
-          console.log(res.data.data);
+          // console.log(res.data.data);
           setFlatListData1(res.data.data);
         }
       })
@@ -148,7 +130,7 @@ const Merchants = ({ navigation }) => {
       .get(url)
       .then((res) => {
         if (res && res.status == 200) {
-          console.log(res.data.data);
+          // console.log(res.data.data);
           setFlatListData2(res.data.data);
         }
       })
@@ -188,10 +170,7 @@ const Merchants = ({ navigation }) => {
               <View>
                 {error === undefined && (
                   <View style={styles.errmessage}>
-                    <Text style={styles.errmessagetxt}>
-                      {" "}
-                      Check Your Connection and Refresh Your App{" "}
-                    </Text>
+                    <Text style={styles.errmessagetxt}> Check Your Connection and Refresh Your App </Text>
                   </View>
                 )}
               </View>
@@ -206,21 +185,12 @@ const Merchants = ({ navigation }) => {
                 <Pressable marginHorizontal={10}>
                   <Box>
                     <Box width={75} height={75} alignItems="center">
-                      <Image
-                        style={styles.smalllogo}
-                        source={{ uri: item.avatar }}
-                        alt="image"
-                        resizeMode="contain"
-                      />
+                      <Image style={styles.smalllogo} source={{ uri: item.avatar }} alt="image" resizeMode="contain" />
 
                       <Center width={"100%"} height={"40%"}>
                         <View style={styles.FlatListContainerUnder3}>
-                          {i18n.language === "ar" && (
-                            <Text style={styles.txt1}>{item.name_ar}</Text>
-                          )}
-                          {i18n.language === "en" && (
-                            <Text style={styles.txt1}>{item.name_en}</Text>
-                          )}
+                          {i18n.language === "ar" && <Text style={styles.txt1}>{item.name_ar}</Text>}
+                          {i18n.language === "en" && <Text style={styles.txt1}>{item.name_en}</Text>}
                         </View>
                       </Center>
                     </Box>
@@ -254,29 +224,19 @@ const Merchants = ({ navigation }) => {
                     })
                   }
                 >
-                  <Box
-                    padding={8}
-                    backgroundColor={"#FFFFFF"}
-                    margin={2}
-                    width={185}
-                    height={240}
-                  >
-                    <Image
-                      source={{ uri: item.avatar }}
-                      style={{ height: 100 }}
-                    />
+                  <Box padding={8} backgroundColor={"#FFFFFF"} margin={2} width={185} height={240}>
+                    <Image source={{ uri: item.avatar }} style={{ height: 100 }} />
                     <View style={styles.line}></View>
-                    {i18n.language === "ar" && (
-                      <Text style={styles.txt}>{item.name_ar}</Text>
-                    )}
-                    {i18n.language === "en" && (
-                      <Text style={styles.txt}>{item.name_en}</Text>
-                    )}
+                    {i18n.language === "ar" && <Text style={styles.txt}>{item.name_ar}</Text>}
+                    {i18n.language === "en" && <Text style={styles.txt}>{item.name_en}</Text>}
                   </Box>
                 </Pressable>
               )}
             />
           </View>
+          <TouchableOpacity style={styles.add}>
+            <Text style={styles.addt}>+</Text>
+          </TouchableOpacity>
         </ScrollView>
       )}
     </View>
@@ -333,6 +293,25 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontFamily: "Tajawal_500Medium",
     color: "red",
+  },
+  add: {
+    position: "absolute",
+    bottom: "5%",
+    right: "5%",
+    width: 60,
+    height: 60,
+    backgroundColor: "white",
+    display: "flex",
+    alignContent: "center",
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 55,
+    elevation: 20,
+    shadowColor: "#52006A",
+  },
+  addt: {
+    fontSize: 25,
+    color: "#E56B1F",
   },
 });
 

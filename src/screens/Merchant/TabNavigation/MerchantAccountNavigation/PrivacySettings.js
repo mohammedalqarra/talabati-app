@@ -1,5 +1,5 @@
-import { StyleSheet, Text, ScrollView } from "react-native";
-import React, { useState } from "react";
+import { StyleSheet, Text, ScrollView } from 'react-native'
+import React from 'react'
 
 const PrivacySettings = () => {
   return (

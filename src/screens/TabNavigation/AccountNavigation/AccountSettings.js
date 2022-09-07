@@ -1,13 +1,12 @@
-import { StyleSheet, View, Text, ActivityIndicator } from "react-native";
-import React, { useState } from "react";
-import PhoneInput from "react-native-phone-number-input";
-import { Input, Button } from "native-base";
-import { useTranslation } from "react-i18next";
-import { useDispatch, useSelector } from "react-redux";
-import { Formik } from "formik";
-import { Api_url, update_account } from "../../../utilites/ApiConstants";
-import axios from "axios";
-import { Modal } from "native-base";
+import { StyleSheet, View, Text, ActivityIndicator } from 'react-native'
+import React, { useState } from 'react'
+import PhoneInput from 'react-native-phone-number-input'
+import { Input, Button, Modal } from 'native-base'
+import { useTranslation } from 'react-i18next'
+import { useSelector } from 'react-redux'
+import { Formik } from 'formik'
+import { Api_url, update_account } from '../../../utilites/ApiConstants'
+import axios from 'axios'
 
 const AccountSettings = ({ route, navigation }) => {
   const token = useSelector((state) => state.auth.data.token);

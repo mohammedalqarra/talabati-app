@@ -1,15 +1,8 @@
-import {
-  View,
-  Text,
-  Image,
-  StyleSheet,
-  useWindowDimensions,
-  ScrollView,
-} from "react-native";
-import React, { useState } from "react";
-import { Input, Stack, Button } from "native-base";
-import { useTranslation } from "react-i18next";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { View, Text, Image, StyleSheet, useWindowDimensions } from 'react-native'
+import React, { useState } from 'react'
+import { Input, Stack, Button } from 'native-base'
+import { useTranslation } from 'react-i18next'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 const EditingAccount = ({ navigation }) => {
   const [country, setCountry] = useState("");

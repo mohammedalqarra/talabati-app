@@ -1,15 +1,8 @@
-import {
-  View,
-  Image,
-  StyleSheet,
-  Keyboard,
-  FlatList,
-  Text,
-} from "react-native";
-import React, { useState, useEffect } from "react";
-import { Heading, Center, Button } from "native-base";
-import { useTranslation } from "react-i18next";
-import { firebase } from "../firebase";
+import { View, Image, StyleSheet, Keyboard } from 'react-native'
+import React, { useState, useEffect } from 'react'
+import { Heading, Center, Button } from 'native-base'
+import { useTranslation } from 'react-i18next'
+import { firebase } from '../firebase'
 
 const IntroScreen = ({ navigation }) => {
   const { t } = useTranslation();

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "850331880983",
+    "project_id": "talbati-app",
+    "storage_bucket": "talbati-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:850331880983:android:6294b765e8b98b428c1652",
+        "android_client_info": {
+          "package_name": "com.myth.talbati"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "850331880983-nqlcpubv11gp6bqfvc846bbp1qfgu4n9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBvJrgCw9zdpUF5LLKz4oiJCLIjk6SLvQM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "850331880983-nqlcpubv11gp6bqfvc846bbp1qfgu4n9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,23 +1,13 @@
-import {
-  View,
-  StyleSheet,
-  useWindowDimensions,
-  ScrollView,
-  ActivityIndicator,
-  Text,
-} from "react-native";
-import React, { useState } from "react";
-import { Input, Stack, Button } from "native-base";
-import { useTranslation } from "react-i18next";
-import { useDispatch, useSelector } from "react-redux";
-import { Formik } from "formik";
-import {
-  Api_url,
-  change_password_api,
-} from "../../../../utilites/ApiConstants";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import axios from "axios";
-import { Modal } from "native-base";
+import { View, StyleSheet, useWindowDimensions, ActivityIndicator, Text } from 'react-native'
+import React, { useState } from 'react'
+import { Input, Stack, Button, Modal } from 'native-base'
+import { useTranslation } from 'react-i18next'
+import { useSelector } from 'react-redux'
+import { Formik } from 'formik'
+import { Api_url, change_password_api } from '../../../../utilites/ApiConstants'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import axios from 'axios'
+
 const ChangePassword = ({ navigation }) => {
   const token = useSelector((state) => state.auth.data.token);
   const [country, setCountry] = useState("");

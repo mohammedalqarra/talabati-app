@@ -1,14 +1,8 @@
-import {
-  View,
-  Text,
-  Image,
-  StyleSheet,
-  useWindowDimensions,
-} from "react-native";
-import React from "react";
-import { Input, Avatar, Stack, Button, Pressable, Heading } from "native-base";
-import { useTranslation } from "react-i18next";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { View, Text, Image, StyleSheet, useWindowDimensions } from 'react-native'
+import React from 'react'
+import { Input, Avatar, Stack, Button, Pressable, Heading } from 'native-base'
+import { useTranslation } from 'react-i18next'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 const SignUpWithPhone = ({ navigation }) => {
   const { t } = useTranslation();

@@ -1,18 +1,10 @@
-import {
-  View,
-  Text,
-  Image,
-  StyleSheet,
-  ActivityIndicator,
-  KeyboardAvoidingView,
-} from "react-native";
+import { View, Text, Image, StyleSheet, ActivityIndicator } from "react-native";
 import React, { useState } from "react";
-import { Input, Avatar, Stack, Button, Pressable, Heading } from "native-base";
+import { Input, Avatar, Stack, Button, Pressable, Heading, Modal } from "native-base";
 import { useTranslation } from "react-i18next";
 import { signup_api, Api_url } from "../utilites/ApiConstants";
 import axios from "axios";
 import { Formik } from "formik";
-import { Modal } from "native-base";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 const SignUp = ({ navigation }) => {
@@ -22,15 +14,7 @@ const SignUp = ({ navigation }) => {
   const [showModal, setShowModal] = useState(false);
   const [sucessModal, setSucessModal] = useState(false);
 
-  const HandleUserRegister = async (
-    username,
-    name,
-    mobile,
-    email,
-    password,
-    password_confirmation,
-    role_id
-  ) => {
+  const HandleUserRegister = async (username, name, mobile, email, password, password_confirmation, role_id) => {
     const url = Api_url + signup_api;
     setShowModal(true);
     axios
@@ -58,7 +42,7 @@ const SignUp = ({ navigation }) => {
   };
 
   return (
-    <KeyboardAwareScrollView style={styles.container}>
+    <KeyboardAwareScrollView>
       <Formik
         initialValues={{
           username: "",
@@ -82,12 +66,8 @@ const SignUp = ({ navigation }) => {
         }
       >
         {({ handleChange, handleBlur, handleSubmit, values }) => (
-          <View>
-            <Image
-              source={require("../images/logo.png")}
-              style={styles.logo}
-              resizeMode={"contain"}
-            />
+          <View style={styles.container}>
+            <Image source={require("../images/logo.png")} style={styles.logo} resizeMode={"contain"} />
             {/* start of modal */}
             <Modal isOpen={showModal}>
               <Modal.Content maxWidth="400px">
@@ -121,10 +101,7 @@ const SignUp = ({ navigation }) => {
             {/* end of modal */}
             <View>
               <View style={styles.headerContainer}>
-                <Heading
-                  style={styles.heading}
-                  fontFamily={"Tajawal_500Medium"}
-                >
+                <Heading style={styles.heading} fontFamily={"Tajawal_500Medium"}>
                   {t("newaccount1")}
                 </Heading>
               </View>
@@ -139,10 +116,7 @@ const SignUp = ({ navigation }) => {
                 <View>
                   {error === undefined && (
                     <View style={styles.errmessage}>
-                      <Text style={styles.errmessagetxt}>
-                        {" "}
-                        Check Your Connection and retry to log in{" "}
-                      </Text>
+                      <Text style={styles.errmessagetxt}> Check Your Connection and retry to log in </Text>
                     </View>
                   )}
                 </View>
@@ -339,9 +313,7 @@ const SignUp = ({ navigation }) => {
               </View> */}
               </Stack>
               <View style={styles.clickContainer}>
-                <Pressable
-                  onPress={() => navigation.navigate("ForgetPassword")}
-                >
+                <Pressable onPress={() => navigation.navigate("ForgetPassword")}>
                   <Text style={styles.click}> {t("loginnow")}</Text>
                 </Pressable>
                 <Text>{t("haveaccount")}</Text>

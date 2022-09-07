@@ -1,12 +1,5 @@
-import React, { useState, useEffect } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  ScrollView,
-  ActivityIndicator,
-} from "react-native";
+import React, { useState } from "react";
+import { View, Text, StyleSheet, Image } from "react-native";
 import { Button, Modal } from "native-base";
 import { useTranslation } from "react-i18next";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
@@ -60,9 +53,7 @@ const KeepShop = ({ route, navigation }) => {
         </View>
         <View style={styles.line}></View>
         <View style={styles.CardPart}>
-          <Text style={{ marginRight: 15, fontFamily: "Tajawal_400Regular" }}>
-            {data.data.order_details}
-          </Text>
+          <Text style={{ marginRight: 15, fontFamily: "Tajawal_400Regular" }}>{data.data.order_details}</Text>
           <Text style={styles.dot}>{"\u2022"}</Text>
         </View>
         {/* <View style={styles.CardPart}>
@@ -167,11 +158,7 @@ const KeepShop = ({ route, navigation }) => {
       </View>
       {/* last img */}
       <View style={styles.lastimg}>
-        <Image
-          source={require("../../images/ticket.png")}
-          height={30}
-          width={30}
-        />
+        <Image source={require("../../images/ticket.png")} height={30} width={30} />
       </View>
       <Button
         onPress={() => navigation.navigate("paymentStack")}

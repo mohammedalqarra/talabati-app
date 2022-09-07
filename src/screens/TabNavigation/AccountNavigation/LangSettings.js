@@ -1,7 +1,7 @@
-import { StyleSheet, Text, View, Image } from "react-native";
-import React, { useState } from "react";
-import { Pressable } from "native-base";
-import { useTranslation } from "react-i18next";
+import { StyleSheet, Text, View, Image } from 'react-native'
+import React, { useState } from 'react'
+import { Pressable } from 'native-base'
+import { useTranslation } from 'react-i18next'
 
 const LangSettings = () => {
   const { t, i18n } = useTranslation();

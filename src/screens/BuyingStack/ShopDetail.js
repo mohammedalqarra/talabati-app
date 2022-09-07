@@ -1,12 +1,4 @@
-import {
-  View,
-  Text,
-  ImageBackground,
-  StyleSheet,
-  Image,
-  Pressable,
-  TouchableOpacity,
-} from "react-native";
+import { View, Text, ImageBackground, StyleSheet, Image, Pressable, TouchableOpacity } from "react-native";
 import { TextArea, Button, Modal } from "native-base";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -24,10 +16,8 @@ const ShopDetail = ({ route, navigation }) => {
   const [defaultRating, setDefaultRating] = useState(1);
   const [maxRating, setMaxRating] = useState([1, 2, 3, 4, 5]);
   const [textAreaValue, setTextAreaValue] = useState("");
-  const StarImgFilled =
-    "https://raw.githubusercontent.com/tranhonghan/images/main/star_filled.png";
-  const StarImgCorner =
-    "https://raw.githubusercontent.com/tranhonghan/images/main/star_corner.png";
+  const StarImgFilled = "https://raw.githubusercontent.com/tranhonghan/images/main/star_filled.png";
+  const StarImgCorner = "https://raw.githubusercontent.com/tranhonghan/images/main/star_corner.png";
   const CustomRatingBar = () => {
     return (
       <View style={styles.CustomRatingBarStyle}>
@@ -42,11 +32,7 @@ const ShopDetail = ({ route, navigation }) => {
             >
               <Image
                 style={styles.starImgStyle}
-                source={
-                  item <= defaultRating
-                    ? { uri: StarImgFilled }
-                    : { uri: StarImgCorner }
-                }
+                source={item <= defaultRating ? { uri: StarImgFilled } : { uri: StarImgCorner }}
               />
             </TouchableOpacity>
           );
@@ -59,11 +45,11 @@ const ShopDetail = ({ route, navigation }) => {
     setTextAreaValue(e.currentTarget.value);
   };
   const v = () => {
-    console.log("name", name);
-    console.log("mobile", mobile);
-    console.log("email", email);
-
-    console.log("id", id);
+    // console.log("name", name);
+    // console.log("mobile", mobile);
+    // console.log("email", email);
+    //
+    // console.log("id", id);
   };
   return (
     <KeyboardAwareScrollView style={styles.container}>
@@ -125,48 +111,28 @@ const ShopDetail = ({ route, navigation }) => {
             marginTop: 30,
           }}
         >
-          <ImageBackground
-            source={require("../../images/1.jpg")}
-            height={"100%"}
-            width={"100%"}
-          >
+          <ImageBackground source={require("../../images/1.jpg")} height={"100%"} width={"100%"}>
             <View style={styles.icons}>
               <View>
                 <Pressable onPress={() => console.warn("share")}>
-                  <Image
-                    source={require("../../images/share.png")}
-                    width={30}
-                    height={30}
-                    padding={10}
-                  />
+                  <Image source={require("../../images/share.png")} width={30} height={30} padding={10} />
                 </Pressable>
               </View>
               <View>
                 <Pressable onPress={() => navigation.goBack()}>
-                  <Image
-                    source={require("../../images/left-arrow2.png")}
-                    width={25}
-                    height={25}
-                    padding={8}
-                  />
+                  <Image source={require("../../images/left-arrow2.png")} width={25} height={25} padding={8} />
                 </Pressable>
               </View>
             </View>
             <View style={styles.upperlogo}>
-              <Image
-                source={{ uri: avatar }}
-                style={{ height: 80, width: 80 }}
-              />
+              <Image source={{ uri: avatar }} style={{ height: 80, width: 80 }} />
               <Text style={styles.uppertxt}>{name}</Text>
             </View>
           </ImageBackground>
         </View>
       </View>
       <View>
-        <ImageBackground
-          style={styles.secontsection}
-          source={require("../../images/littleWallpaper.png")}
-        >
+        <ImageBackground style={styles.secontsection} source={require("../../images/littleWallpaper.png")}>
           <View
             style={{
               padding: 5,
@@ -177,10 +143,7 @@ const ShopDetail = ({ route, navigation }) => {
           >
             <View>
               <View style={styles.firsttxt}>
-                <Image
-                  source={require("../../images/star2.png")}
-                  style={{ marginTop: 3 }}
-                />
+                <Image source={require("../../images/star2.png")} style={{ marginTop: 3 }} />
                 <Pressable onPress={() => setShowModal(true)}>
                   <Text
                     style={{
@@ -195,10 +158,7 @@ const ShopDetail = ({ route, navigation }) => {
                 </Pressable>
               </View>
               <View style={styles.secondtxt}>
-                <Image
-                  source={require("../../images/star.png")}
-                  style={{ marginTop: 3 }}
-                />
+                <Image source={require("../../images/star.png")} style={{ marginTop: 3 }} />
                 <Text
                   style={{
                     fontSize: 16,
@@ -223,10 +183,7 @@ const ShopDetail = ({ route, navigation }) => {
                 >
                   {t("branchfar")}
                 </Text>
-                <Image
-                  source={require("../../images/direction.png")}
-                  style={{ marginTop: 3 }}
-                />
+                <Image source={require("../../images/direction.png")} style={{ marginTop: 3 }} />
               </View>
               <View style={styles.secondtxt}>
                 <Text
@@ -266,6 +223,7 @@ const ShopDetail = ({ route, navigation }) => {
           placeholderTextColor={"#E6E6E6"}
           style={styles.txtfamily}
           backgroundColor={"white"}
+          placeholder={"اكتب هنا تفاصيل طلبك ونرجو منك كتابة القيمة التقديرية للطلب حتي يتسني لنا خدمتك"}
         />
         <Button
           onPress={() =>
@@ -325,8 +283,10 @@ const styles = StyleSheet.create({
   secontsection: {
     marginVertical: 15,
     marginHorizontal: 15,
-    elevation: 20,
-    shadowColor: "#52006A",
+    shadowColor: "#333",
+    paddingHorizontal: 10,
+    borderWidth: 0.1,
+    borderRadius: 5,
   },
 
   firsttxt: {

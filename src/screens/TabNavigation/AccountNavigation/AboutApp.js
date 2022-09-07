@@ -1,7 +1,7 @@
-import { StyleSheet, Text, View, Image, ScrollView } from "react-native";
-import React from "react";
-import { Heading } from "native-base";
-import { useTranslation } from "react-i18next";
+import { StyleSheet, Text, View, Image, ScrollView } from 'react-native'
+import React from 'react'
+import { Heading } from 'native-base'
+import { useTranslation } from 'react-i18next'
 
 const AboutApp = () => {
   const { t } = useTranslation();

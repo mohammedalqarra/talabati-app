@@ -1,15 +1,9 @@
-import {
-  View,
-  Text,
-  Image,
-  StyleSheet,
-  useWindowDimensions,
-} from "react-native";
-import React, { useState } from "react";
-import { Input, Stack, Button, Pressable, Heading } from "native-base";
+import { View, Text, Image, StyleSheet } from 'react-native'
+import React, { useState } from 'react'
+import { Input, Stack, Button, Pressable, Heading } from 'native-base'
 // import OTPInputView from '@twotalltotems/react-native-otp-input';
-import { useTranslation } from "react-i18next";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { useTranslation } from 'react-i18next'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 const VerfiyNumber = ({ navigation }) => {
   const { t } = useTranslation();

@@ -1,17 +1,11 @@
-import React, { useState, useEffect } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  FlatList,
-  Image,
-  ActivityIndicator,
-} from "react-native";
-import { useTranslation } from "react-i18next";
-import { Modal } from "native-base";
-import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
-import { Api_url, get_certain_order } from "../../../../utilites/ApiConstants";
+import React, { useState, useEffect } from 'react'
+import { View, Text, StyleSheet, Image, ActivityIndicator } from 'react-native'
+import { useTranslation } from 'react-i18next'
+import { Modal } from 'native-base'
+import { useSelector } from 'react-redux'
+import axios from 'axios'
+import { Api_url, get_certain_order } from '../../../../utilites/ApiConstants'
+
 const OrdersDetails = ({ route, navigation }) => {
   const { t } = useTranslation();
   const { id } = route.params;
@@ -38,7 +32,7 @@ const OrdersDetails = ({ route, navigation }) => {
       .then((res) => {
         if (res && res.status == 200) {
           setShowModal(false);
-          console.log(res.data.data);
+          // console.log(res.data.data);
           setFlatListData(res.data.data);
         }
       })

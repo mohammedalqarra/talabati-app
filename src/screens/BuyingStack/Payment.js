@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 import PaymentTopNavigation from "../../navigation/PaymentTopNavigation";
+
 const Payment = () => {
   const [showModal, setShowModal] = useState(false);
   const { t } = useTranslation();
@@ -76,11 +77,7 @@ const Payment = () => {
                 style={{ marginBottom: 10 }}
               />
 
-              <Text
-                style={{ color: "#555555", fontFamily: "Tajawal_500Medium" }}
-              >
-                {t("epay")}
-              </Text>
+              <Text style={{ color: "#555555", fontFamily: "Tajawal_500Medium" }}>{t("epay")}</Text>
             </View>
           </View>
         </View>

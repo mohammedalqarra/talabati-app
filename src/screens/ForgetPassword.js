@@ -1,13 +1,12 @@
 //finished
-import { View, Image, StyleSheet, ActivityIndicator, Text } from "react-native";
-import React, { useState } from "react";
-import { Input, Stack, Button, Pressable, Heading } from "native-base";
-import { useTranslation } from "react-i18next";
-import { Formik } from "formik";
-import { Api_url, forget_pass_api } from "../utilites/ApiConstants";
-import axios from "axios";
-import { Modal } from "native-base";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { View, Image, StyleSheet, ActivityIndicator, Text } from 'react-native'
+import React, { useState } from 'react'
+import { Input, Stack, Button, Heading, Modal } from 'native-base'
+import { useTranslation } from 'react-i18next'
+import { Formik } from 'formik'
+import { Api_url, forget_pass_api } from '../utilites/ApiConstants'
+import axios from 'axios'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 const ForgetPassword = () => {
   const { t } = useTranslation();
@@ -23,14 +22,14 @@ const ForgetPassword = () => {
       })
       .then((res) => {
         if (res && res.status == 200) {
-          console.log(res.data);
+          // console.log(res.data);
           setShowModal(false);
           setShowSucessModal(true);
         }
       })
       .catch((err) => {
         setError(err.response.data.message);
-        console.log(err.response.data.message);
+        // console.log(err.response.data.message);
         setShowModal(false);
       });
   };

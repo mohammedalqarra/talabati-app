@@ -1,7 +1,8 @@
-import { View, Image, StyleSheet, Text } from "react-native";
-import React from "react";
-import { Input, Stack } from "native-base";
-import { useTranslation } from "react-i18next";
+import { View, Image, StyleSheet, Text } from 'react-native'
+import React from 'react'
+import { Input, Stack } from 'native-base'
+import { useTranslation } from 'react-i18next'
+
 const HomeHeader = ({ title }) => {
   const { t } = useTranslation();
 

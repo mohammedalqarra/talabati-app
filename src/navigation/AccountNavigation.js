@@ -1,23 +1,23 @@
 // In App.js in a new project
 
-import React from "react";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import React from 'react'
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
 // the screens
-import MyAccount from "../screens/TabNavigation/MyAccount";
-import AccountSettings from "../screens/TabNavigation/AccountNavigation/AccountSettings";
-import LangSettings from "../screens/TabNavigation/AccountNavigation/LangSettings";
-import ChangePassword from "../screens/Merchant/TabNavigation/MerchantAccountNavigation/ChangePassword";
-import UsingConditions from "../screens/TabNavigation/AccountNavigation/UsingConditions";
-import PrivacySettings from "../screens/TabNavigation/AccountNavigation/PrivacySettings";
-import AboutApp from "../screens/TabNavigation/AccountNavigation/AboutApp";
-import Notifications from "../screens/TabNavigation/AccountNavigation/Notifications";
+import MyAccount from '../screens/TabNavigation/MyAccount'
+import AccountSettings from '../screens/TabNavigation/AccountNavigation/AccountSettings'
+import LangSettings from '../screens/TabNavigation/AccountNavigation/LangSettings'
+import ChangePassword from '../screens/Merchant/TabNavigation/MerchantAccountNavigation/ChangePassword'
+import UsingConditions from '../screens/TabNavigation/AccountNavigation/UsingConditions'
+import PrivacySettings from '../screens/TabNavigation/AccountNavigation/PrivacySettings'
+import AboutApp from '../screens/TabNavigation/AccountNavigation/AboutApp'
+import Notifications from '../screens/TabNavigation/AccountNavigation/Notifications'
 // import MyAdresses from '../screens/TabNavigation/AccountNavigation/MyAdresses';
-import MyAdressesNavigations from "./MyAdressesNavigation";
-import RatingApp from "../screens/TabNavigation/AccountNavigation/RatingApp";
+import MyAdressesNavigations from './MyAdressesNavigation'
+import RatingApp from '../screens/TabNavigation/AccountNavigation/RatingApp'
+import { useTranslation } from 'react-i18next'
+import i18n from '../i18n'
 
 const Stack = createNativeStackNavigator();
-import { useTranslation } from "react-i18next";
-import i18n from "../i18n";
 
 function AccountNavigation() {
   const { t } = useTranslation();

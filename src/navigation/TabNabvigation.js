@@ -1,21 +1,20 @@
-import React from "react";
-import { Text, View, Image } from "react-native";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import React from 'react'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 // the screens
-import Home from "../screens/TabNavigation/Home";
-import HomeHeader from "../screens/TabNavigation/HomeHeader";
+import Home from '../screens/TabNavigation/Home'
+import HomeHeader from '../screens/TabNavigation/HomeHeader'
 // import Merchants from '../screens/TabNavigation/Merchants';
-import BuyingNavigation from "./BuyingNavigation";
-import AccountingNavigation from "./AccountNavigation";
+import BuyingNavigation from './BuyingNavigation'
+import AccountingNavigation from './AccountNavigation'
 // import MyAccount from '../screens/TabNavigation/MyAccount';
-import OrdersNavigation from "../navigation/OrdersNavigation";
+import OrdersNavigation from '../navigation/OrdersNavigation'
 // import Orders from '../screens/TabNavigation/Orders';
-import { useTranslation } from "react-i18next";
-import i18n from "../i18n";
-import Icon from "react-native-vector-icons/SimpleLineIcons";
-import Icon1 from "react-native-vector-icons/MaterialIcons";
-import Icon2 from "react-native-vector-icons/AntDesign";
-import Icon3 from "react-native-vector-icons/Ionicons";
+import { useTranslation } from 'react-i18next'
+import i18n from '../i18n'
+import Icon from 'react-native-vector-icons/SimpleLineIcons'
+import Icon1 from 'react-native-vector-icons/MaterialIcons'
+import Icon2 from 'react-native-vector-icons/AntDesign'
+import Icon3 from 'react-native-vector-icons/Ionicons'
 
 const Tab = createBottomTabNavigator();
 

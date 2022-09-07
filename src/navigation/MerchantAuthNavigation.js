@@ -1,14 +1,15 @@
 // In App.js in a new project
 
-import React from 'react';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import React from 'react'
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
 // the screens
-import Login from '../screens/AuthMerchant/Login';
-import SignUp from '../screens/AuthMerchant/SignUp';
-import SignUpWithPhone from '../screens/AuthMerchant/SignUpWithPhone';
-import VerfiyNumber from '../screens/AuthMerchant/VerfiyNumber';
-import ForgetPassword from '../screens/AuthMerchant/ForgetPassword';
-import MerchantTabNavigator from '../navigation/MerchantTabNavigator';
+import Login from '../screens/AuthMerchant/Login'
+import SignUp from '../screens/AuthMerchant/SignUp'
+import SignUpWithPhone from '../screens/AuthMerchant/SignUpWithPhone'
+import VerfiyNumber from '../screens/AuthMerchant/VerfiyNumber'
+import ForgetPassword from '../screens/AuthMerchant/ForgetPassword'
+import MerchantTabNavigator from '../navigation/MerchantTabNavigator'
+
 const Stack = createNativeStackNavigator();
 
 function AuthNavigation() {

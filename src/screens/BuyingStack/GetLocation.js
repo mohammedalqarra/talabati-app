@@ -1,8 +1,9 @@
-import { StyleSheet, Text, View, SafeAreaView, Dimensions } from "react-native";
+import { StyleSheet, Text, View, SafeAreaView } from "react-native";
 import React, { useState } from "react";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import { Button, Input, Radio } from "native-base";
 import { useTranslation } from "react-i18next";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 const GetLocation = ({ navigation }) => {
   const [region, setRegion] = useState({
@@ -16,6 +17,7 @@ const GetLocation = ({ navigation }) => {
     <SafeAreaView>
       <View>
         <MapView
+          provider={PROVIDER_GOOGLE}
           style={styles.map}
           initialRegion={{
             latitude: 24.7136,
@@ -23,7 +25,8 @@ const GetLocation = ({ navigation }) => {
             latitudeDelta: 0.005,
             longitudeDelta: 0.005,
           }}
-          onRegionChangeComplete={(region) => setRegion(region)}
+          // onRegionChangeComplete={(region) => setRegion(region)}
+          onRegionChangeComplete={(region) => console.warn(region)}
         >
           <Marker coordinate={region} />
         </MapView>
@@ -97,13 +100,18 @@ const styles = StyleSheet.create({
   },
   lastview: {
     position: "absolute",
-    top: 420,
+    top: 10,
     zIndex: 5,
     right: "10%",
     backgroundColor: "#FFFFFF",
     width: "80%",
     borderRadius: 10,
     padding: 20,
+    elevation: 20,
+    shadowColor: "#52006A",
+    shadowOffset: { height: 1, width: 1 }, // IOS
+    shadowOpacity: 1, // IOS
+    shadowRadius: 1, //IOS
   },
   firstcontainer: {
     backgroundColor: "#FFEBDF",

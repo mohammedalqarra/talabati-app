@@ -1,19 +1,11 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  Pressable,
-  ScrollView,
-  ActivityIndicator,
-} from "react-native";
-import React, { useState, useEffect } from "react";
-import { useTranslation } from "react-i18next";
-import { useDispatch, useSelector } from "react-redux";
-import { handlelogOut } from "../../../features/auth/authSlice";
-import axios from "axios";
-import { check_token, Api_url } from "../../../utilites/ApiConstants";
-import { storeData, RemoveData } from "../../../features/dataSlice";
+import { StyleSheet, Text, View, Image, Pressable, ScrollView, ActivityIndicator } from 'react-native'
+import React, { useState, useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
+import { useDispatch, useSelector } from 'react-redux'
+import { handlelogOut } from '../../../features/auth/authSlice'
+import axios from 'axios'
+import { check_token, Api_url } from '../../../utilites/ApiConstants'
+import { storeData, RemoveData } from '../../../features/dataSlice'
 
 const MyAccount = ({ navigation }) => {
   const [error, setError] = useState(null);

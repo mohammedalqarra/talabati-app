@@ -1,36 +1,21 @@
-// import { initializeApp } from "firebase/app";
-// import { getFirestore } from "firebase/firestore";
+import firebase from 'firebase/compat/app'
+import 'firebase/compat/auth'
+import 'firebase/compat/firestore'
 
-// const firebaseConfig = {
-//   apiKey: "AIzaSyB8nrzCplZrOUrABseqk8yreGOLbUdVljY",
-//   authDomain: "talabati-72c71.firebaseapp.com",
-//   projectId: "talabati-72c71",
-//   storageBucket: "talabati-72c71.appspot.com",
-//   messagingSenderId: "748532839211",
-//   appId: "1:748532839211:web:e39846421d185646e34b6e",
-// };
-
-// initializeApp(firebaseConfig);
-// export const database = getFirestore();
-import firebase from "firebase/compat/app";
-import "firebase/compat/auth";
-import "firebase/compat/firestore";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyB8nrzCplZrOUrABseqk8yreGOLbUdVljY",
-  authDomain: "talabati-72c71.firebaseapp.com",
-  projectId: "talabati-72c71",
-  storageBucket: "talabati-72c71.appspot.com",
-  messagingSenderId: "748532839211",
-  appId: "1:748532839211:web:e39846421d185646e34b6e",
+export const firebaseConfig = {
+  apiKey: "AIzaSyAhlQDm-rOhbCnA-JiOeLNCFtwbffWZ1ZY",
+  authDomain: "talbati-app.firebaseapp.com",
+  projectId: "talbati-app",
+  storageBucket: "talbati-app.appspot.com",
+  messagingSenderId: "850331880983",
+  appId: "1:850331880983:web:64bb5e154d433a0a8c1652",
+  measurementId: "G-FNG6FRX4Q0"
 };
-
-// if (!firebase.app.length) {
-//   firebase.initializeApp(firebaseConfig);
-// }
 
 firebase.initializeApp(firebaseConfig);
 
 var db = firebase.firestore();
+
+export const GOOGLE_MAP_WEB_KEY = firebaseConfig.apiKey
 
 export { firebase };

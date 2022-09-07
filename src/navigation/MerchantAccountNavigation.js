@@ -1,20 +1,22 @@
 // In App.js in a new project
 
-import React from "react";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import React from 'react'
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
 // the screens
-import MyAccount from "../screens/Merchant/TabNavigation/MyAccount";
-import EditingAccount from "../screens/Merchant/TabNavigation/MerchantAccountNavigation/EditingAccount";
-import ChangePassword from "../screens/Merchant/TabNavigation/MerchantAccountNavigation/ChangePassword";
-import LangSettings from "../screens/TabNavigation/AccountNavigation/LangSettings";
-import NumberOfProducts from "../screens/Merchant/TabNavigation/MerchantAccountNavigation/NumberOfProducts";
-import Offers from "../screens/Merchant/TabNavigation/MerchantAccountNavigation/Offers";
-import PrivacySettings from "../screens/Merchant/TabNavigation/MerchantAccountNavigation/PrivacySettings";
-import RatingApp from "../screens/Merchant/TabNavigation/MerchantAccountNavigation/RatingApp";
-import UsingCondition from "../screens/Merchant/TabNavigation/MerchantAccountNavigation/UsingConditions";
+import MyAccount from '../screens/Merchant/TabNavigation/MyAccount'
+import EditingAccount from '../screens/Merchant/TabNavigation/MerchantAccountNavigation/EditingAccount'
+import ChangePassword from '../screens/Merchant/TabNavigation/MerchantAccountNavigation/ChangePassword'
+import LangSettings from '../screens/TabNavigation/AccountNavigation/LangSettings'
+import NumberOfProducts from '../screens/Merchant/TabNavigation/MerchantAccountNavigation/NumberOfProducts'
+import Offers from '../screens/Merchant/TabNavigation/MerchantAccountNavigation/Offers'
+import PrivacySettings from '../screens/Merchant/TabNavigation/MerchantAccountNavigation/PrivacySettings'
+import RatingApp from '../screens/Merchant/TabNavigation/MerchantAccountNavigation/RatingApp'
+import UsingCondition from '../screens/Merchant/TabNavigation/MerchantAccountNavigation/UsingConditions'
+import { useTranslation } from 'react-i18next'
+import i18n from '../i18n'
+
 const Stack = createNativeStackNavigator();
-import { useTranslation } from "react-i18next";
-import i18n from "../i18n";
+
 function MerchantAccountNavigation() {
   const { t } = useTranslation();
 

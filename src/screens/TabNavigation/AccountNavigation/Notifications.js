@@ -1,17 +1,9 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  FlatList,
-  Image,
-  ActivityIndicator,
-} from "react-native";
-import React, { useState, useEffect } from "react";
-import { useTranslation } from "react-i18next";
-import { Api_url, notifications } from "../../../utilites/ApiConstants";
-import axios from "axios";
-import { Modal } from "native-base";
-import { useSelector } from "react-redux";
+import { StyleSheet, Text, View, FlatList, Image, ActivityIndicator } from 'react-native'
+import React, { useState, useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Api_url, notifications } from '../../../utilites/ApiConstants'
+import axios from 'axios'
+import { useSelector } from 'react-redux'
 
 const Notifications = ({ navigation }) => {
   const { t } = useTranslation();
@@ -90,7 +82,7 @@ const Notifications = ({ navigation }) => {
       })
       .then((res) => {
         if (res && res.status == 200) {
-          console.log(res.data.data);
+          // console.log(res.data.data);
           setLoading(false);
         }
       })

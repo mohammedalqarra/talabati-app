@@ -1,24 +1,16 @@
-import React, { useState, useEffect } from "react";
-import {
-  View,
-  StyleSheet,
-  ScrollView,
-  FlatList,
-  Image,
-  ActivityIndicator,
-} from "react-native";
-import { Text, Button, Box, Modal } from "native-base";
+import React, { useState, useEffect } from 'react'
+import { View, StyleSheet, FlatList, Image, ActivityIndicator } from 'react-native'
+import { Text, Button, Box, Modal } from 'native-base'
 // importing photos
-import SmallLogo4 from "../../images/smallLogo/4.png";
 // importing small icons
-import Checked from "../../images/check.png";
-import Cancel from "../../images/cancel.png";
-import Waiting from "../../images/waiting.png";
-import { useTranslation } from "react-i18next";
-import axios from "axios";
-import { Api_url, get_my_orders } from "../../utilites/ApiConstants";
-import { useDispatch, useSelector } from "react-redux";
-import { handlelogOut } from "../../features/auth/authSlice";
+import Checked from '../../images/check.png'
+import Cancel from '../../images/cancel.png'
+import Waiting from '../../images/waiting.png'
+import { useTranslation } from 'react-i18next'
+import axios from 'axios'
+import { Api_url, get_my_orders } from '../../utilites/ApiConstants'
+import { useDispatch, useSelector } from 'react-redux'
+import { handlelogOut } from '../../features/auth/authSlice'
 
 const Orders = ({ navigation }) => {
   const IsGuest = useSelector((state) => state.auth.IsGuest);
@@ -104,7 +96,7 @@ const Orders = ({ navigation }) => {
         .then((res) => {
           if (res && res.status == 200) {
             setShowModal(false);
-            console.log(res.data.data);
+            // console.log(res.data.data);
             setFlatListData1(res.data.data);
           }
         })

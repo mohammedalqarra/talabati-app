@@ -1,5 +1,5 @@
-import axios from 'axios';
-import {Api_url} from './ApiConstants';
+import axios from 'axios'
+import { Api_url } from './ApiConstants'
 
 // For common config
 axios.defaults.headers.post['Content-Type'] = 'application/json';
